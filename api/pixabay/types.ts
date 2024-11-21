@@ -1,11 +1,16 @@
-enum PixabayImageType {
+export enum PixabayImageType {
   All = "all",
   Photo = "photo",
   illustration = "illustration",
   Vector = "vector",
 }
 
-type PixabayImage = {
+export enum PixabayImageOrder {
+  Popular = "popular",
+  Latest = "latest",
+}
+
+export type PixabayImage = {
   id: number;
   pageURL: string;
   type: Omit<PixabayImageType, PixabayImageType.All>;
@@ -31,7 +36,7 @@ type PixabayImage = {
   userImageURL: string;
 };
 
-type PixabayImageResponse = {
+export type PixabayImageResponse = {
   total: number;
   totalHits: number;
   hits: PixabayImage[];

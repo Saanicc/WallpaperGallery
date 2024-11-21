@@ -1,3 +1,4 @@
+import { PixabayImage } from "@/api/pixabay/types";
 import React from "react";
 import { Pressable, StyleSheet, useWindowDimensions } from "react-native";
 import Animated, {
