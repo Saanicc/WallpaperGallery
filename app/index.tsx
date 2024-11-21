@@ -29,6 +29,7 @@ export default function Index() {
       }}
     >
       <ThemedText
+        style={{ marginVertical: 24 }}
         type="title"
         onPress={() => setOrderBy(PixabayImageOrder.Latest)}
       >
