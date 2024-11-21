@@ -1,11 +1,10 @@
 import { getRandomImages } from "@/api/pixabay";
+import WallpaperItem from "@/components/WallpaperItem";
 import { useEffect, useState } from "react";
-import { FlatList, useWindowDimensions, View } from "react-native";
-import Animated from "react-native-reanimated";
+import { FlatList, View } from "react-native";
 
 export default function Index() {
   const [images, setImages] = useState<PixabayImage[]>();
-  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     getRandomImages().then((res) => setImages(res));
@@ -21,31 +20,10 @@ export default function Index() {
       }}
     >
       <FlatList
-        data={images}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              flex: 1,
-              width: width,
-              padding: 48,
-              justifyContent: "center",
-            }}
-          >
-            <Animated.Image
-              source={{
-                uri: item.largeImageURL,
-              }}
-              style={{
-                width: "100%",
-                height: height / 1.6,
-                borderRadius: 16,
-                resizeMode: "cover",
-              }}
-            />
-          </View>
-        )}
         horizontal
         pagingEnabled
+        data={images}
+        renderItem={({ item }) => <WallpaperItem item={item} />}
       />
     </View>
   );
