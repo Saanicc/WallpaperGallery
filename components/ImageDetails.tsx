@@ -9,11 +9,11 @@ const ImageDetails = ({ item }: { item: PixabayImage }) => {
     <View style={styles.container}>
       <View style={styles.infoWrapper}>
         <View style={styles.infoItem}>
-          <ThemedText>Total downloads</ThemedText>
+          <ThemedText type="defaultSemiBold">Total downloads</ThemedText>
           <ThemedText>{item.downloads}</ThemedText>
         </View>
         <View style={styles.infoItem}>
-          <ThemedText>Total likes</ThemedText>
+          <ThemedText type="defaultSemiBold">Total likes</ThemedText>
           <ThemedText>{item.likes}</ThemedText>
         </View>
       </View>
@@ -39,5 +39,9 @@ const styles = StyleSheet.create({
   },
   infoItem: {
     alignItems: "center",
+    backgroundColor: "#333333",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 16,
   },
 });
