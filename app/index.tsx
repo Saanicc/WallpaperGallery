@@ -3,7 +3,8 @@ import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { ThemedText } from "@/components/ThemedText";
 import WallpaperItem from "@/components/WallpaperItem";
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const [images, setImages] = useState<PixabayImage[]>();
@@ -20,7 +21,7 @@ export default function Index() {
   }, [orderBy]);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: "center",
@@ -29,7 +30,7 @@ export default function Index() {
       }}
     >
       <ThemedText
-        style={{ marginVertical: 24 }}
+        style={{ marginVertical: 12 }}
         type="title"
         onPress={() => setOrderBy(PixabayImageOrder.Latest)}
       >
@@ -42,6 +43,6 @@ export default function Index() {
         data={images}
         renderItem={({ item }) => <WallpaperItem item={item} />}
       />
-    </View>
+    </SafeAreaView>
   );
 }
