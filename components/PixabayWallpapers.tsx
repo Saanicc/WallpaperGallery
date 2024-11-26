@@ -1,7 +1,5 @@
 import { usePixabayImages } from "@/api/pixabay";
 import { PixabayImageOrder } from "@/api/pixabay/types";
-import Photo from "@/components/Photo";
-import { ThemedText } from "@/components/ThemedText";
 import { useState } from "react";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
@@ -11,6 +9,8 @@ import Animated, {
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackdropPhoto from "./BackdropPhoto";
 import Dropdown from "./Dropdown";
+import Photo from "./Photo";
+import { ThemedText } from "./ThemedText";
 
 const PixabayWallpapers = () => {
   const [orderBy, setOrderBy] = useState<PixabayImageOrder>(
@@ -93,7 +93,19 @@ const PixabayWallpapers = () => {
               scrollEventThrottle={1000 / 60}
               ListFooterComponent={
                 isFetchingNextPage ? (
-                  <ThemedText type="defaultSemiBold">Loading...</ThemedText>
+                  <View
+                    style={{
+                      width: _imageWidth,
+                      height: _imageHeight,
+                      borderRadius: _spacing,
+                      backgroundColor: "rgba(0,0,0,0.5)",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ActivityIndicator color="#ffffff" size={50} />
+                    <ThemedText type="defaultSemiBold">Loading...</ThemedText>
+                  </View>
                 ) : null
               }
             />
