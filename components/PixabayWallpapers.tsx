@@ -19,10 +19,17 @@ const PixabayWallpapers = () => {
   const _imageHeight = _imageWidth * 1.76;
   const _spacing = 16;
 
-  const { data, isLoading } = usePixabayImages({
-    queryKey: orderBy,
-    orderBy,
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    usePixabayImages({
+      queryKey: orderBy,
+      orderBy,
+    });
+
+  const loadMore = () => {
+    if (hasNextPage) fetchNextPage();
+  };
+
+  const photos = data?.pages.flatMap((page) => page.hits) || [];
 
   const scrollX = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
@@ -30,15 +37,9 @@ const PixabayWallpapers = () => {
   });
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        alignItems: "center",
-        backgroundColor: "#222222",
-      }}
-    >
+    <>
       <View style={StyleSheet.absoluteFillObject}>
-        {data?.hits.map((photo, index) => (
+        {photos?.map((photo, index) => (
           <BackdropPhoto
             key={photo.id}
             photo={photo}
@@ -47,44 +48,58 @@ const PixabayWallpapers = () => {
           />
         ))}
       </View>
-      <ThemedText
-        style={{ marginVertical: 12 }}
-        type="title"
-        onPress={() => setOrderBy("popular")}
+      <SafeAreaView
+        style={{
+          flex: 1,
+          alignItems: "center",
+        }}
       >
-        {orderBy}
-      </ThemedText>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <Animated.FlatList
-            data={data?.hits}
-            keyExtractor={(item) => String(item.id)}
-            horizontal
-            style={{ flexGrow: 0 }}
-            snapToInterval={_imageWidth + _spacing}
-            decelerationRate={"fast"}
-            contentContainerStyle={{
-              gap: _spacing,
-              paddingHorizontal: (width - _imageWidth) / 2,
-            }}
-            renderItem={({ item, index }) => (
-              <Photo
-                item={item}
-                index={index}
-                width={_imageWidth}
-                height={_imageHeight}
-                scrollX={scrollX}
-              />
-            )}
-            showsHorizontalScrollIndicator={false}
-            onScroll={onScroll}
-            scrollEventThrottle={1000 / 60}
-          />
-        </View>
-      )}
-    </SafeAreaView>
+        <ThemedText
+          style={{ marginVertical: 12 }}
+          type="title"
+          onPress={() => setOrderBy("popular")}
+        >
+          {orderBy}
+        </ThemedText>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <Animated.FlatList
+              data={photos}
+              keyExtractor={(item) => String(item.id)}
+              horizontal
+              style={{ flexGrow: 0 }}
+              snapToInterval={_imageWidth + _spacing}
+              decelerationRate={"fast"}
+              contentContainerStyle={{
+                gap: _spacing,
+                paddingHorizontal: (width - _imageWidth) / 2,
+              }}
+              renderItem={({ item, index }) => (
+                <Photo
+                  item={item}
+                  index={index}
+                  width={_imageWidth}
+                  height={_imageHeight}
+                  scrollX={scrollX}
+                />
+              )}
+              onEndReached={loadMore}
+              onEndReachedThreshold={0.5}
+              showsHorizontalScrollIndicator={false}
+              onScroll={onScroll}
+              scrollEventThrottle={1000 / 60}
+              ListFooterComponent={
+                isFetchingNextPage ? (
+                  <ThemedText type="defaultSemiBold">Loading...</ThemedText>
+                ) : null
+              }
+            />
+          </View>
+        )}
+      </SafeAreaView>
+    </>
   );
 };
 
