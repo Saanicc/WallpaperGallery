@@ -3,21 +3,31 @@ import { PixabayImageOrder } from "@/api/pixabay/types";
 import Photo from "@/components/Photo";
 import { ThemedText } from "@/components/ThemedText";
 import { useState } from "react";
-import { ActivityIndicator, Dimensions, FlatList, View } from "react-native";
+import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BackdropPhoto from "./BackdropPhoto";
 
 const PixabayWallpapers = () => {
   const [orderBy, setOrderBy] = useState<PixabayImageOrder>("popular");
+
+  const { width } = Dimensions.get("screen");
+  const _imageWidth = width * 0.7;
+  const _imageHeight = _imageWidth * 1.76;
+  const _spacing = 16;
 
   const { data, isLoading } = usePixabayImages({
     queryKey: orderBy,
     orderBy,
   });
 
-  const { width } = Dimensions.get("screen");
-  const _imageWidth = width * 0.7;
-  const _imageHeight = _imageWidth * 1.76;
-  const _spacing = 16;
+  const scrollX = useSharedValue(0);
+  const onScroll = useAnimatedScrollHandler((e) => {
+    scrollX.value = e.contentOffset.x / (_imageWidth + _spacing);
+  });
 
   return (
     <SafeAreaView
@@ -38,7 +48,12 @@ const PixabayWallpapers = () => {
         <ActivityIndicator />
       ) : (
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <FlatList
+          <View style={StyleSheet.absoluteFillObject}>
+            {data?.hits.map((photo, index) => (
+              <BackdropPhoto photo={photo} index={index} scrollX={scrollX} />
+            ))}
+          </View>
+          <Animated.FlatList
             data={data?.hits}
             keyExtractor={(item) => String(item.id)}
             horizontal
@@ -55,9 +70,12 @@ const PixabayWallpapers = () => {
                 index={index}
                 width={_imageWidth}
                 height={_imageHeight}
+                scrollX={scrollX}
               />
             )}
             showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            scrollEventThrottle={1000 / 60}
           />
         </View>
       )}
