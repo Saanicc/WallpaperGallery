@@ -37,6 +37,11 @@ const PixabayWallpapers = () => {
         backgroundColor: "#222222",
       }}
     >
+      <View style={StyleSheet.absoluteFillObject}>
+        {data?.hits.map((photo, index) => (
+          <BackdropPhoto photo={photo} index={index} scrollX={scrollX} />
+        ))}
+      </View>
       <ThemedText
         style={{ marginVertical: 12 }}
         type="title"
@@ -48,11 +53,6 @@ const PixabayWallpapers = () => {
         <ActivityIndicator />
       ) : (
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <View style={StyleSheet.absoluteFillObject}>
-            {data?.hits.map((photo, index) => (
-              <BackdropPhoto photo={photo} index={index} scrollX={scrollX} />
-            ))}
-          </View>
           <Animated.FlatList
             data={data?.hits}
             keyExtractor={(item) => String(item.id)}
