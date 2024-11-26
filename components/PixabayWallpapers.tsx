@@ -39,7 +39,12 @@ const PixabayWallpapers = () => {
     >
       <View style={StyleSheet.absoluteFillObject}>
         {data?.hits.map((photo, index) => (
-          <BackdropPhoto photo={photo} index={index} scrollX={scrollX} />
+          <BackdropPhoto
+            key={photo.id}
+            photo={photo}
+            index={index}
+            scrollX={scrollX}
+          />
         ))}
       </View>
       <ThemedText
