@@ -5,7 +5,9 @@ export default function RootLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        statusBarBackgroundColor: "#222222",
+        statusBarBackgroundColor: "rgba(0,0,0,0)",
+        navigationBarTranslucent: true,
+        navigationBarColor: "rgba(0,0,0,0)",
       }}
     />
   );
