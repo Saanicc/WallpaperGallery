@@ -1,15 +1,22 @@
-import { PixabayImageResponse } from "./types";
+import { useQuery } from "@tanstack/react-query";
+import { PixabayImageOrder, PixabayImageResponse } from "./types";
 
 const PIXABAY_API_URL = `https://pixabay.com/api/?key=${process.env.EXPO_PUBLIC_PIXABAY_API_KEY}`;
 
-export const getPopularImages = async () => {
-  const response = await fetch(PIXABAY_API_URL);
-  const data = (await response.json()) as PixabayImageResponse;
-  return data.hits;
-};
-
-export const getLatestImages = async () => {
-  const response = await fetch(`${PIXABAY_API_URL}&order=latest`);
-  const data = (await response.json()) as PixabayImageResponse;
-  return data.hits;
+export const usePixabayImages = ({
+  queryKey,
+  orderBy,
+}: {
+  queryKey: string;
+  orderBy: PixabayImageOrder;
+}) => {
+  return useQuery<PixabayImageResponse>({
+    queryKey: [`${queryKey}-wallpapers`],
+    queryFn: async () => {
+      const response = await fetch(`${PIXABAY_API_URL}&order=${orderBy}`).then(
+        (res) => res.json()
+      );
+      return response;
+    },
+  });
 };
