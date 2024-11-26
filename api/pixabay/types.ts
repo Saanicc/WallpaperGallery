@@ -5,7 +5,10 @@ export enum PixabayImageType {
   Vector = "vector",
 }
 
-export type PixabayImageOrder = "popular" | "latest";
+export enum PixabayImageOrder {
+  POPULAR = "Popular",
+  LATEST = "Latest",
+}
 
 export type PixabayImage = {
   id: number;

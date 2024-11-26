@@ -13,7 +13,7 @@ export const usePixabayImages = ({
   return useInfiniteQuery<PixabayImageResponse>({
     queryKey: [`${queryKey}-wallpapers`],
     queryFn: async ({ pageParam = 1 }) => {
-      const URL = `${PIXABAY_API_URL}&order=${orderBy}&page=${pageParam}`;
+      const URL = `${PIXABAY_API_URL}&order=${orderBy.toLowerCase()}&page=${pageParam}`;
 
       return await fetch(URL).then((res) => res.json());
     },

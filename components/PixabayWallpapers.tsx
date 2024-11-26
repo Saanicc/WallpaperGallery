@@ -10,9 +10,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackdropPhoto from "./BackdropPhoto";
+import Dropdown from "./Dropdown";
 
 const PixabayWallpapers = () => {
-  const [orderBy, setOrderBy] = useState<PixabayImageOrder>("popular");
+  const [orderBy, setOrderBy] = useState<PixabayImageOrder>(
+    PixabayImageOrder.POPULAR
+  );
 
   const { width } = Dimensions.get("screen");
   const _imageWidth = width * 0.7;
@@ -54,13 +57,11 @@ const PixabayWallpapers = () => {
           alignItems: "center",
         }}
       >
-        <ThemedText
-          style={{ marginVertical: 12 }}
-          type="title"
-          onPress={() => setOrderBy("popular")}
-        >
-          {orderBy}
-        </ThemedText>
+        <Dropdown
+          label={orderBy}
+          filterItems={[PixabayImageOrder.LATEST, PixabayImageOrder.POPULAR]}
+          onDropdownSelect={setOrderBy}
+        />
         {isLoading ? (
           <ActivityIndicator />
         ) : (
