@@ -14,14 +14,14 @@ const Photo = ({ item, index, width, height, scrollX }: PhotoProps) => {
           scale: interpolate(
             scrollX.value,
             [index - 1, index, index + 1],
-            [0.8, 1, 0.8]
+            [0.78, 1, 0.78]
           ),
         },
         {
           rotate: `${interpolate(
             scrollX.value,
             [index - 1, index, index + 1],
-            [10, 1, -10]
+            [6, 0, -6]
           )}deg`,
         },
       ],
