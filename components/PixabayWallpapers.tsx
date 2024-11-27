@@ -1,7 +1,14 @@
 import { usePixabayImages } from "@/api/pixabay";
 import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
+import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
-import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -81,6 +88,16 @@ const PixabayWallpapers = () => {
           alignItems: "center",
         }}
       >
+        <LinearGradient
+          colors={["#000000", "transparent"]}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: StatusBar.currentHeight || 53,
+          }}
+        />
         <Header>
           <MenuButton icon="menu" iconColor="#ffffff" onPress={() => {}} />
           <Dropdown

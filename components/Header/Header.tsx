@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Platform, View } from "react-native";
+import { Platform, StatusBar, View } from "react-native";
 
 const Header = ({ children }: PropsWithChildren) => {
   return (
@@ -16,7 +16,7 @@ const Header = ({ children }: PropsWithChildren) => {
             top: 65,
           },
           android: {
-            top: 45,
+            top: (StatusBar.currentHeight || 24) + 16 || 40,
           },
         }),
       }}
