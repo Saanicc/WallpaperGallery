@@ -1,7 +1,7 @@
 import { PixabayImageOrder } from "@/api/pixabay/types";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -69,17 +69,9 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   return (
     <View
       style={{
-        position: "absolute",
         alignItems: "center",
         zIndex: 2,
-        ...Platform.select({
-          ios: {
-            top: 65,
-          },
-          android: {
-            top: 45,
-          },
-        }),
+        height: "100%",
       }}
     >
       <Animated.View
@@ -96,8 +88,8 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
             flexDirection: "row",
             alignItems: "center",
             gap: 5,
+            height: "100%",
             paddingHorizontal: 18,
-            paddingVertical: 12,
           }}
           onPress={toggleDropdown}
         >

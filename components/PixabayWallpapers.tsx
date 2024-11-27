@@ -9,6 +9,8 @@ import Animated, {
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackdropPhoto from "./BackdropPhoto/BackdropPhoto";
 import Dropdown from "./Dropdown/Dropdown";
+import Header from "./Header/Header";
+import MenuButton from "./MenuButton/MenuButton";
 import Photo from "./Photo/Photo";
 import { ThemedText } from "./ThemedText/ThemedText";
 
@@ -54,7 +56,16 @@ const PixabayWallpapers = () => {
 
   return (
     <>
-      <View style={StyleSheet.absoluteFillObject}>
+      <View
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            ...(isLoading && {
+              backgroundColor: "#222222",
+            }),
+          },
+        ]}
+      >
         {photos?.map((photo, index) => (
           <BackdropPhoto
             key={photo.id}
@@ -70,15 +81,26 @@ const PixabayWallpapers = () => {
           alignItems: "center",
         }}
       >
-        <Dropdown
-          label={orderBy}
-          filterItems={[PixabayImageOrder.LATEST, PixabayImageOrder.POPULAR]}
-          onDropdownSelect={setOrderBy}
-        />
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <View style={{ flex: 1, justifyContent: "center" }}>
+        <Header>
+          <MenuButton icon="menu" iconColor="#ffffff" onPress={() => {}} />
+          <Dropdown
+            label={orderBy}
+            filterItems={[PixabayImageOrder.LATEST, PixabayImageOrder.POPULAR]}
+            onDropdownSelect={setOrderBy}
+          />
+          <MenuButton icon="heart" iconColor="#E00000" onPress={() => {}} />
+        </Header>
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {isLoading ? (
+            <ActivityIndicator size={50} />
+          ) : (
             <Animated.FlatList
               data={photos}
               keyExtractor={(item) => String(item.id)}
@@ -114,8 +136,8 @@ const PixabayWallpapers = () => {
                 ) : null
               }
             />
-          </View>
-        )}
+          )}
+        </View>
       </SafeAreaView>
     </>
   );
