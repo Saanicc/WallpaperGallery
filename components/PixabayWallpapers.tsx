@@ -3,13 +3,13 @@ import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
-import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StatusBar, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import BackdropPhoto from "./BackdropPhoto/BackdropPhoto";
+import BackdropPhotos from "./Backdrop/BackdropPhotos";
 import Dropdown from "./Dropdown/Dropdown";
 import Header from "./Header/Header";
 import MenuButton from "./MenuButton/MenuButton";
@@ -61,25 +61,7 @@ const PixabayWallpapers = () => {
 
   return (
     <>
-      <View
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            ...(isLoading && {
-              backgroundColor: "#222222",
-            }),
-          },
-        ]}
-      >
-        {photos?.map((photo, index) => (
-          <BackdropPhoto
-            key={photo.id}
-            photo={photo}
-            index={index}
-            scrollX={scrollX}
-          />
-        ))}
-      </View>
+      <BackdropPhotos photos={photos} scrollX={scrollX} isLoading={isLoading} />
       <SafeAreaView
         style={{
           flex: 1,
