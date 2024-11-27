@@ -1,6 +1,6 @@
 import { usePixabayImages } from "@/api/pixabay";
-import { PixabayImageOrder } from "@/api/pixabay/types";
-import { useState } from "react";
+import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
+import { useCallback, useState } from "react";
 import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -38,6 +38,19 @@ const PixabayWallpapers = () => {
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = e.contentOffset.x / (_imageWidth + _spacing);
   });
+
+  const renderItem = useCallback(
+    ({ item, index }: { item: PixabayImage; index: number }) => (
+      <Photo
+        item={item}
+        index={index}
+        width={_imageWidth}
+        height={_imageHeight}
+        scrollX={scrollX}
+      />
+    ),
+    []
+  );
 
   return (
     <>
@@ -77,15 +90,7 @@ const PixabayWallpapers = () => {
                 gap: _spacing,
                 paddingHorizontal: (width - _imageWidth) / 2,
               }}
-              renderItem={({ item, index }) => (
-                <Photo
-                  item={item}
-                  index={index}
-                  width={_imageWidth}
-                  height={_imageHeight}
-                  scrollX={scrollX}
-                />
-              )}
+              renderItem={renderItem}
               onEndReached={loadMore}
               onEndReachedThreshold={0.5}
               showsHorizontalScrollIndicator={false}
