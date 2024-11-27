@@ -2,7 +2,7 @@ import { PixabayImage } from "@/api/pixabay/types";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import PixabayLink from "./Link";
-import { ThemedText } from "./ThemedText";
+import { ThemedText } from "./ThemedText/ThemedText";
 
 const ImageDetails = ({ item }: { item: PixabayImage }) => {
   return (

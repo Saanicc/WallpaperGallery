@@ -1,21 +1,12 @@
-import { PixabayImage } from "@/api/pixabay/types";
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
   interpolate,
-  SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { BackdropPhotoProps } from "./BackdropPhoto.config";
 
-const BackdropPhoto = ({
-  photo,
-  index,
-  scrollX,
-}: {
-  photo: PixabayImage;
-  index: number;
-  scrollX: SharedValue<number>;
-}) => {
+const BackdropPhoto = ({ photo, index, scrollX }: BackdropPhotoProps) => {
   const stylez = useAnimatedStyle(() => {
     return {
       opacity: interpolate(

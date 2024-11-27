@@ -7,10 +7,10 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import BackdropPhoto from "./BackdropPhoto";
-import Dropdown from "./Dropdown";
-import Photo from "./Photo";
-import { ThemedText } from "./ThemedText";
+import BackdropPhoto from "./BackdropPhoto/BackdropPhoto";
+import Dropdown from "./Dropdown/Dropdown";
+import Photo from "./Photo/Photo";
+import { ThemedText } from "./ThemedText/ThemedText";
 
 const PixabayWallpapers = () => {
   const [orderBy, setOrderBy] = useState<PixabayImageOrder>(

@@ -1,25 +1,12 @@
-import { PixabayImage } from "@/api/pixabay/types";
 import React from "react";
 import { Image } from "react-native";
 import Animated, {
   interpolate,
-  SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { PhotoProps } from "./Photo.config";
 
-const Photo = ({
-  item,
-  index,
-  width,
-  height,
-  scrollX,
-}: {
-  item: PixabayImage;
-  index: number;
-  width: number;
-  height: number;
-  scrollX: SharedValue<number>;
-}) => {
+const Photo = ({ item, index, width, height, scrollX }: PhotoProps) => {
   const stylez = useAnimatedStyle(() => {
     return {
       transform: [

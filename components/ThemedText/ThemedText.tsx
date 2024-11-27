@@ -1,10 +1,5 @@
-import { StyleSheet, Text, type TextProps } from "react-native";
-
-export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
-  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
-};
+import { StyleSheet, Text } from "react-native";
+import { ThemedTextProps } from "./ThemedText.config";
 
 export function ThemedText({
   style,

@@ -1,6 +1,6 @@
 import React from "react";
 import { Linking, StyleSheet } from "react-native";
-import { ThemedText } from "./ThemedText";
+import { ThemedText } from "./ThemedText/ThemedText";
 
 const PixabayLink = () => {
   const openUrl = () => Linking.openURL("https://pixabay.com");

@@ -7,17 +7,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { ThemedText } from "./ThemedText";
+import { ThemedText } from "../ThemedText/ThemedText";
+import { DropdownProps } from "./Dropdown.config";
 
-const Dropdown = ({
-  label,
-  filterItems,
-  onDropdownSelect,
-}: {
-  label: string;
-  filterItems: PixabayImageOrder[];
-  onDropdownSelect: (item: any) => void;
-}) => {
+const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const borderRadius = useSharedValue(30);
