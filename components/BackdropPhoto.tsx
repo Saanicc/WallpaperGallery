@@ -25,15 +25,14 @@ const BackdropPhoto = ({
       ),
     };
   });
+
   return (
     <Animated.Image
-      source={{ uri: photo.largeImageURL }}
+      source={{ uri: photo.previewURL }}
       style={[StyleSheet.absoluteFillObject, stylez]}
-      blurRadius={50}
+      blurRadius={5}
     />
   );
 };
 
 export default BackdropPhoto;
-
-const styles = StyleSheet.create({});
