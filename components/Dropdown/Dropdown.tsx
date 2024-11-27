@@ -1,7 +1,7 @@
 import { PixabayImageOrder } from "@/api/pixabay/types";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -16,10 +16,10 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   const borderRadius = useSharedValue(30);
 
   const toggleDropdown = () => {
+    setVisible(!visible);
     borderRadius.value = !visible
       ? withTiming(0, { duration: 100 })
       : withTiming(30, { duration: 100 });
-    setVisible(!visible);
   };
 
   const handleDropdownItemPress = (item: PixabayImageOrder) => {
@@ -30,12 +30,10 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   const renderDropdown = () => {
     if (visible) {
       return (
-        <Animated.View
+        <View
           style={{
             width: "100%",
-            overflow: "hidden",
-            alignItems: "center",
-            backgroundColor: "#00000025",
+            backgroundColor: "#00000075",
             borderBottomLeftRadius: 30,
             borderBottomRightRadius: 30,
           }}
@@ -53,12 +51,12 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
               <ThemedText type="defaultSemiBold">{item}</ThemedText>
             </TouchableOpacity>
           ))}
-        </Animated.View>
+        </View>
       );
     }
   };
 
-  const stylez = useAnimatedStyle(() => {
+  const rotateStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
@@ -69,12 +67,24 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   });
 
   return (
-    <Animated.View
-      style={{ position: "absolute", top: 60, alignItems: "center" }}
+    <View
+      style={{
+        position: "absolute",
+        alignItems: "center",
+        zIndex: 2,
+        ...Platform.select({
+          ios: {
+            top: 65,
+          },
+          android: {
+            top: 45,
+          },
+        }),
+      }}
     >
       <Animated.View
         style={{
-          backgroundColor: "#00000025",
+          backgroundColor: "#00000075",
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           borderBottomLeftRadius: borderRadius,
@@ -86,21 +96,19 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
             flexDirection: "row",
             alignItems: "center",
             gap: 5,
-            paddingHorizontal: 24,
-            paddingVertical: 2,
+            paddingHorizontal: 18,
+            paddingVertical: 12,
           }}
           onPress={toggleDropdown}
         >
-          <ThemedText style={{ marginVertical: 12 }} type="title">
-            {label}
-          </ThemedText>
-          <Animated.View style={stylez}>
+          <ThemedText type="subtitle">{label}</ThemedText>
+          <Animated.View style={rotateStyle}>
             <Ionicons name="chevron-down" size={30} color="#fff" />
           </Animated.View>
         </TouchableOpacity>
       </Animated.View>
       {renderDropdown()}
-    </Animated.View>
+    </View>
   );
 };
 

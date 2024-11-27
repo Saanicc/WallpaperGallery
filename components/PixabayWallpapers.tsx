@@ -83,7 +83,7 @@ const PixabayWallpapers = () => {
               data={photos}
               keyExtractor={(item) => String(item.id)}
               horizontal
-              style={{ flexGrow: 0 }}
+              style={{ flexGrow: 0, zIndex: 1 }}
               snapToInterval={_imageWidth + _spacing}
               decelerationRate={"fast"}
               contentContainerStyle={{
