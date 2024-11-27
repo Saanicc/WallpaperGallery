@@ -1,14 +1,9 @@
 import { usePixabayImages } from "@/api/pixabay";
 import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
+import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
-import {
-  ActivityIndicator,
-  Dimensions,
-  StatusBar,
-  StyleSheet,
-  View,
-} from "react-native";
+import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -26,15 +21,14 @@ const PixabayWallpapers = () => {
     PixabayImageOrder.POPULAR
   );
 
-  const { width } = Dimensions.get("screen");
-  const _imageWidth = width * 0.7;
-  const _imageHeight = _imageWidth * 1.76;
-  const _spacing = 16;
+  const { width, actualWidthInPixels, actualHeightInPixels } = useScreenSize();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     usePixabayImages({
       queryKey: orderBy,
       orderBy,
+      minWidth: actualWidthInPixels,
+      minHeight: actualHeightInPixels,
     });
 
   const loadMore = () => {
@@ -42,6 +36,10 @@ const PixabayWallpapers = () => {
   };
 
   const photos = data?.pages.flatMap((page) => page.hits) || [];
+
+  const _imageWidth = width * 0.7;
+  const _imageHeight = _imageWidth * 1.76;
+  const _spacing = 16;
 
   const scrollX = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
@@ -105,7 +103,11 @@ const PixabayWallpapers = () => {
             filterItems={[PixabayImageOrder.LATEST, PixabayImageOrder.POPULAR]}
             onDropdownSelect={setOrderBy}
           />
-          <MenuButton icon="heart" iconColor="#E00000" onPress={() => {}} />
+          <MenuButton
+            icon="heart-outline"
+            iconColor="#E00000"
+            onPress={() => {}}
+          />
         </Header>
         <View
           style={{
