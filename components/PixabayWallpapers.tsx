@@ -10,10 +10,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackdropPhotos from "./Backdrop/BackdropPhotos";
-import Dropdown from "./Dropdown/Dropdown";
 import Header from "./Header/Header";
-import MenuButton from "./MenuButton/MenuButton";
 import Photo from "./Photo/Photo";
+import Pills from "./Pill/Pills";
 import { ThemedText } from "./ThemedText/ThemedText";
 
 const PixabayWallpapers = () => {
@@ -94,16 +93,10 @@ const PixabayWallpapers = () => {
           }}
         />
         <Header>
-          <MenuButton icon="menu" iconColor="#ffffff" onPress={() => {}} />
-          <Dropdown
-            label={orderBy}
-            filterItems={[PixabayImageOrder.LATEST, PixabayImageOrder.POPULAR]}
-            onDropdownSelect={setOrderBy}
-          />
-          <MenuButton
-            icon="heart-outline"
-            iconColor="#E00000"
-            onPress={() => {}}
+          <Pills
+            selectedPill={orderBy}
+            items={[PixabayImageOrder.POPULAR, PixabayImageOrder.LATEST]}
+            onPillSelect={setOrderBy}
           />
         </Header>
         <View
