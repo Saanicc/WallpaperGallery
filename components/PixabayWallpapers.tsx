@@ -3,7 +3,7 @@ import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, StatusBar, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -60,6 +60,7 @@ const PixabayWallpapers = () => {
 
   return (
     <>
+      <StatusBar barStyle="light-content" backgroundColor={"#00000000"} />
       <BackdropPhotos photos={photos} scrollX={scrollX} isLoading={isLoading} />
       <SafeAreaView
         style={{
