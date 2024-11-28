@@ -33,7 +33,7 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
         <View
           style={{
             width: "100%",
-            backgroundColor: "#00000075",
+            backgroundColor: "#00000020",
             borderBottomLeftRadius: 30,
             borderBottomRightRadius: 30,
           }}
@@ -69,14 +69,12 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   return (
     <View
       style={{
-        alignItems: "center",
         zIndex: 2,
-        height: "100%",
       }}
     >
       <Animated.View
         style={{
-          backgroundColor: "#00000075",
+          backgroundColor: "#00000020",
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           borderBottomLeftRadius: borderRadius,

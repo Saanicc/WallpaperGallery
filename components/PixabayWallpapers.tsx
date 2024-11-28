@@ -3,7 +3,7 @@ import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
-import { ActivityIndicator, StatusBar, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -69,13 +69,28 @@ const PixabayWallpapers = () => {
         }}
       >
         <LinearGradient
-          colors={["#000000", "transparent"]}
+          colors={[
+            "#000000",
+            "#00000020",
+            "#00000019",
+            "#00000018",
+            "#00000017",
+            "#00000016",
+            "#00000015",
+            "#00000010",
+            "#00000009",
+            "#00000008",
+            "#00000007",
+            "#00000006",
+            "#00000005",
+            "transparent",
+          ]}
           style={{
             position: "absolute",
             top: 0,
             left: 0,
             right: 0,
-            height: StatusBar.currentHeight || 53,
+            height: actualHeightInPixels,
           }}
         />
         <Header>

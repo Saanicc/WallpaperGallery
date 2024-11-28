@@ -11,7 +11,6 @@ const MenuButton = ({ icon, iconColor, onPress }: MenuButtonProps) => {
         alignItems: "center",
         justifyContent: "center",
         width: 50,
-        backgroundColor: "#00000075",
         borderRadius: 50,
       }}
       onPress={onPress}
