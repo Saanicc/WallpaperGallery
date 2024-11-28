@@ -1,7 +1,8 @@
 import { PixabayImageOrder } from "@/api/pixabay/types";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import OutsidePressHandler from "react-native-outside-press";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -17,10 +18,13 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
 
   const toggleDropdown = () => {
     setVisible(!visible);
-    borderRadius.value = !visible
+  };
+
+  useEffect(() => {
+    borderRadius.value = visible
       ? withTiming(0, { duration: 100 })
       : withTiming(30, { duration: 100 });
-  };
+  }, [visible]);
 
   const handleDropdownItemPress = (item: PixabayImageOrder) => {
     toggleDropdown();
@@ -30,22 +34,11 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   const renderDropdown = () => {
     if (visible) {
       return (
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: "#00000020",
-            borderBottomLeftRadius: 30,
-            borderBottomRightRadius: 30,
-          }}
-        >
+        <View style={styles.dropdownItemsWrapper}>
           {filterItems.map((item) => (
             <TouchableOpacity
               key={item}
-              style={{
-                width: "100%",
-                alignItems: "center",
-                paddingVertical: 8,
-              }}
+              style={styles.dropdownItem}
               onPress={() => handleDropdownItemPress(item)}
             >
               <ThemedText type="defaultSemiBold">{item}</ThemedText>
@@ -67,10 +60,9 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
   });
 
   return (
-    <View
-      style={{
-        zIndex: 2,
-      }}
+    <OutsidePressHandler
+      onOutsidePress={() => setVisible(false)}
+      style={styles.wrapper}
     >
       <Animated.View
         style={{
@@ -81,16 +73,7 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
           borderBottomRightRadius: borderRadius,
         }}
       >
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 5,
-            height: "100%",
-            paddingHorizontal: 18,
-          }}
-          onPress={toggleDropdown}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
           <ThemedText type="subtitle">{label}</ThemedText>
           <Animated.View style={rotateStyle}>
             <Ionicons name="chevron-down" size={30} color="#fff" />
@@ -98,10 +81,33 @@ const Dropdown = ({ label, filterItems, onDropdownSelect }: DropdownProps) => {
         </TouchableOpacity>
       </Animated.View>
       {renderDropdown()}
-    </View>
+    </OutsidePressHandler>
   );
 };
 
 export default Dropdown;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  wrapper: {
+    height: "100%",
+    zIndex: 2,
+  },
+  dropdown: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    height: "100%",
+    paddingHorizontal: 18,
+  },
+  dropdownItemsWrapper: {
+    width: "100%",
+    backgroundColor: "#00000020",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  dropdownItem: {
+    width: "100%",
+    alignItems: "center",
+    paddingVertical: 8,
+  },
+});
