@@ -1,8 +1,8 @@
-import { usePixabayImages } from "@/api/pixabay";
 import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
+import { useWallpaperContext } from "@/contexts/photos-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { ActivityIndicator, StatusBar, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -16,25 +16,16 @@ import Pills from "./Pill/Pills";
 import { ThemedText } from "./ThemedText/ThemedText";
 
 const PixabayWallpapers = () => {
-  const [orderBy, setOrderBy] = useState<PixabayImageOrder>(
-    PixabayImageOrder.POPULAR
-  );
+  const {
+    allWallpapers,
+    loading,
+    loadMore,
+    isLoadingMore,
+    orderBy,
+    setOrderBy,
+  } = useWallpaperContext();
 
-  const { width, actualWidthInPixels, actualHeightInPixels } = useScreenSize();
-
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    usePixabayImages({
-      queryKey: orderBy,
-      orderBy,
-      minWidth: actualWidthInPixels,
-      minHeight: actualHeightInPixels,
-    });
-
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-
-  const photos = data?.pages.flatMap((page) => page.hits) || [];
+  const { width, actualHeightInPixels } = useScreenSize();
 
   const _imageWidth = width * 0.7;
   const _imageHeight = _imageWidth * 1.76;
@@ -61,7 +52,11 @@ const PixabayWallpapers = () => {
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={"#00000000"} />
-      <BackdropPhotos photos={photos} scrollX={scrollX} isLoading={isLoading} />
+      <BackdropPhotos
+        photos={allWallpapers}
+        scrollX={scrollX}
+        isLoading={loading}
+      />
       <SafeAreaView
         style={{
           flex: 1,
@@ -108,11 +103,11 @@ const PixabayWallpapers = () => {
             alignItems: "center",
           }}
         >
-          {isLoading ? (
+          {loading ? (
             <ActivityIndicator size={50} />
           ) : (
             <Animated.FlatList
-              data={photos}
+              data={allWallpapers}
               keyExtractor={(item) => String(item.id)}
               horizontal
               style={{ flexGrow: 0, zIndex: 1 }}
@@ -129,7 +124,7 @@ const PixabayWallpapers = () => {
               onScroll={onScroll}
               scrollEventThrottle={1000 / 60}
               ListFooterComponent={
-                isFetchingNextPage ? (
+                isLoadingMore ? (
                   <View
                     style={{
                       width: _imageWidth,
