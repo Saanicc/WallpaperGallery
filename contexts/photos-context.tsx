@@ -22,7 +22,7 @@ export interface WallpaperContextValue {
   isLoadingMore: boolean;
   orderBy: PixabayImageOrder;
   loadMore: () => void;
-  getWallpaper: (wallpaperId: number) => PixabayImage | undefined;
+  getWallpaper: (wallpaperId: string) => PixabayImage | undefined;
   setOrderBy: Dispatch<SetStateAction<PixabayImageOrder>>;
 }
 
@@ -75,8 +75,9 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const getWallpaper = useCallback(
-    (wallpaperId: number) => photos.find((photo) => photo.id === wallpaperId),
-    []
+    (wallpaperId: string) =>
+      photos.find((photo) => String(photo.id) === wallpaperId),
+    [photos]
   );
 
   const value = useMemo(() => {
@@ -89,7 +90,15 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
       orderBy,
       setOrderBy,
     };
-  }, [photos, loadMore, isLoading, isFetchingNextPage, orderBy, setOrderBy]);
+  }, [
+    photos,
+    loadMore,
+    isLoading,
+    isFetchingNextPage,
+    orderBy,
+    setOrderBy,
+    getWallpaper,
+  ]);
 
   return (
     <WallpaperContext.Provider value={value}>
