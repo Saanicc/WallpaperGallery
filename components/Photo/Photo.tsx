@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";
 import Animated, {
@@ -9,6 +10,7 @@ import Animated, {
 import { PhotoProps } from "./Photo.config";
 
 const Photo = ({ item, index, width, height, scrollX }: PhotoProps) => {
+  const route = useRouter();
   const imageCardScale = useSharedValue(1);
 
   const stylez = useAnimatedStyle(() => {
@@ -38,15 +40,18 @@ const Photo = ({ item, index, width, height, scrollX }: PhotoProps) => {
     >
       <Pressable
         style={{ flex: 1 }}
+        onPress={() => {
+          route.navigate(`/image/${item.id}`);
+        }}
         onPressIn={() => {
-          imageCardScale.value = withSpring(0.9, { mass: 0.5, damping: 0.5 });
+          imageCardScale.value = withSpring(0.9, { mass: 0.5, damping: 5 });
         }}
         onPressOut={() => {
-          imageCardScale.value = withSpring(1, { mass: 0.5, damping: 0.5 });
+          imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 });
         }}
       >
         <Animated.Image
-          source={{ uri: item.largeImageURL }}
+          source={{ uri: item.webformatURL }}
           style={{ flex: 1 }}
         />
       </Pressable>

@@ -19,7 +19,13 @@ export default function RootLayout() {
             }}
           >
             <Stack.Screen name="index" />
-            <Stack.Screen name="image/[id]" options={{ animation: "fade" }} />
+            <Stack.Screen
+              name="image/[id]"
+              options={{
+                animation: "fade",
+                presentation: "transparentModal",
+              }}
+            />
           </Stack>
         </EventProvider>
       </WallpaperContextProvider>
