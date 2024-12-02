@@ -12,6 +12,7 @@ export enum PixabayImageOrder {
 
 export type PixabayImage = {
   id: number;
+  collections: number;
   pageURL: string;
   type: Omit<PixabayImageType, PixabayImageType.All>;
   tags: string;
@@ -22,8 +23,8 @@ export type PixabayImage = {
   webformatWidth: number;
   webformatHeight: number;
   largeImageURL: string;
-  fullHDURL: string;
-  imageURL: string;
+  fullHDURL?: string;
+  imageURL?: string;
   imageWidth: number;
   imageHeight: number;
   imageSize: number;
