@@ -1,9 +1,13 @@
 import Header from "@/components/Header/Header";
 import MenuButton from "@/components/MenuButton/MenuButton";
+import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useRef } from "react";
 import { Image, Platform, Pressable, StyleSheet } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -12,62 +16,108 @@ export default function DetailedImage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { getWallpaper } = useWallpaperContext();
 
+  const wallpaper = getWallpaper(id);
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
   const _headerHeight = Platform.OS === "ios" ? 140 : 100;
   const headerShadowHeight = useSharedValue(_headerHeight);
   const opacity = useSharedValue(1);
 
-  const handlePressIn = () => {
-    headerShadowHeight.value = withTiming(0, { duration: 500 });
-    opacity.value = withTiming(0, { duration: 500 });
+  const ANIMATION_DURATION = 500;
+
+  const handleLongPress = () => {
+    headerShadowHeight.value = withTiming(0, { duration: ANIMATION_DURATION });
+    opacity.value = withTiming(0, { duration: ANIMATION_DURATION });
+    bottomSheetRef.current?.close({ duration: ANIMATION_DURATION });
   };
 
   const handlePressOut = () => {
-    headerShadowHeight.value = withTiming(_headerHeight, { duration: 500 });
-    opacity.value = withTiming(1, { duration: 500 });
+    headerShadowHeight.value = withTiming(_headerHeight, {
+      duration: ANIMATION_DURATION,
+    });
+    opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
+    bottomSheetRef.current?.snapToIndex(1, { duration: ANIMATION_DURATION });
   };
 
   const AnimatedLinearGradient =
     Animated.createAnimatedComponent(LinearGradient);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "#222222",
-      }}
-    >
-      <Pressable
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        style={StyleSheet.absoluteFillObject}
-      >
-        <Image
-          defaultSource={{ uri: getWallpaper(id)?.previewURL }}
-          source={{ uri: getWallpaper(id)?.largeImageURL }}
-          style={{ flex: 1 }}
+    <GestureHandlerRootView style={styles.gestureContainer}>
+      <SafeAreaView style={styles.container}>
+        <Pressable
+          onLongPress={handleLongPress}
+          onPressOut={handlePressOut}
+          style={StyleSheet.absoluteFillObject}
+        >
+          <Image
+            defaultSource={{ uri: wallpaper?.previewURL }}
+            source={{ uri: wallpaper?.largeImageURL }}
+            style={{ flex: 1 }}
+          />
+        </Pressable>
+        <AnimatedLinearGradient
+          colors={["#000000", "transparent"]}
+          style={{
+            height: headerShadowHeight,
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+          }}
         />
-      </Pressable>
-      <AnimatedLinearGradient
-        colors={["#000000", "transparent"]}
-        style={{
-          height: headerShadowHeight,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
-      />
 
-      <Animated.View style={{ opacity }}>
-        <Header
-          leftComponent={
-            <MenuButton icon="arrow-back" onPress={() => navigation.goBack()} />
-          }
-          rightComponent={
-            <MenuButton icon="heart-outline" onPress={() => {}} />
-          }
-        />
-      </Animated.View>
-    </SafeAreaView>
+        <Animated.View style={{ opacity }}>
+          <Header
+            leftComponent={
+              <MenuButton
+                icon="arrow-back"
+                onPress={() => navigation.goBack()}
+              />
+            }
+            rightComponent={
+              <MenuButton icon="heart-outline" onPress={() => {}} />
+            }
+          />
+        </Animated.View>
+
+        <BottomSheet
+          ref={bottomSheetRef}
+          backgroundStyle={styles.bottomSheetBackgroundStyle}
+          handleStyle={styles.bottomSheetHandleStyle}
+          handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
+          snapPoints={["10%", "40%"]}
+        >
+          <BottomSheetView
+            style={{
+              padding: 16,
+            }}
+          >
+            <ThemedText>HELLO WORLD</ThemedText>
+          </BottomSheetView>
+        </BottomSheet>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  gestureContainer: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#222222",
+  },
+  bottomSheetBackgroundStyle: {
+    backgroundColor: "#222222",
+  },
+  bottomSheetHandleStyle: {
+    backgroundColor: "#222222",
+    borderRadius: 16,
+  },
+  bottomSheetHandleIndicatorStyle: {
+    backgroundColor: "#FFFFFF",
+  },
+});
