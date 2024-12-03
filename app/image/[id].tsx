@@ -1,12 +1,13 @@
 import Header from "@/components/Header/Header";
+import ImageDetails from "@/components/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useWallpaperContext } from "@/contexts/photos-context";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useRef } from "react";
-import { Image, Platform, Pressable, StyleSheet } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -37,7 +38,7 @@ export default function DetailedImage() {
       duration: ANIMATION_DURATION,
     });
     opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
-    bottomSheetRef.current?.snapToIndex(1, { duration: ANIMATION_DURATION });
+    bottomSheetRef.current?.snapToIndex(0, { duration: ANIMATION_DURATION });
   };
 
   const AnimatedLinearGradient =
@@ -89,13 +90,18 @@ export default function DetailedImage() {
           handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
           snapPoints={["10%", "40%"]}
         >
-          <BottomSheetView
-            style={{
-              padding: 16,
-            }}
+          <BottomSheetScrollView
+            contentContainerStyle={styles.bottomSheetScrollViewContainerStyle}
           >
-            <ThemedText>HELLO WORLD</ThemedText>
-          </BottomSheetView>
+            {wallpaper && <ImageDetails item={wallpaper} />}
+            {!wallpaper && (
+              <View style={{ alignItems: "center" }}>
+                <ThemedText type="default">
+                  No wallpaper information was found.
+                </ThemedText>
+              </View>
+            )}
+          </BottomSheetScrollView>
         </BottomSheet>
       </SafeAreaView>
     </GestureHandlerRootView>
@@ -119,5 +125,9 @@ const styles = StyleSheet.create({
   },
   bottomSheetHandleIndicatorStyle: {
     backgroundColor: "#FFFFFF",
+  },
+  bottomSheetScrollViewContainerStyle: {
+    flex: 1,
+    padding: 16,
   },
 });
