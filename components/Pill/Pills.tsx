@@ -12,20 +12,27 @@ const Pills = ({ selectedPill, items, onPillSelect }: PillsProps) => {
       {items.map((pill) => (
         <TouchableOpacity
           key={pill}
+          disabled={isPillSelected(pill)}
           style={[
             styles.sortButton,
             {
-              backgroundColor: isPillSelected(pill)
-                ? "#00000020"
-                : "transparent",
+              backgroundColor: isPillSelected(pill) ? "#FFFFFF" : "transparent",
+              ...(selectedPill === PixabayImageOrder.POPULAR && {
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              }),
+              ...(selectedPill === PixabayImageOrder.LATEST && {
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+              }),
             },
           ]}
           onPress={() => onPillSelect(pill)}
         >
           <ThemedText
-            type={isPillSelected(pill) ? "defaultSemiBold" : "default"}
+            type="defaultSemiBold"
             style={{
-              textDecorationLine: isPillSelected(pill) ? "underline" : "none",
+              color: isPillSelected(pill) ? "#000000" : "#FFFFFF",
             }}
           >
             {pill}
@@ -41,13 +48,15 @@ export default Pills;
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
-    height: "100%",
     zIndex: 2,
-    gap: 16,
+    borderWidth: 1,
+    borderColor: "#FFFFFF",
+    borderRadius: 16,
   },
   sortButton: {
     justifyContent: "center",
-    paddingHorizontal: 18,
-    borderRadius: 30,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 16,
   },
 });

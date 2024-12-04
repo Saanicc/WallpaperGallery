@@ -6,8 +6,8 @@ export enum PixabayImageType {
 }
 
 export enum PixabayImageOrder {
-  POPULAR = "Popular",
-  LATEST = "Latest",
+  POPULAR = "POPULAR",
+  LATEST = "LATEST",
 }
 
 export type PixabayImage = {
