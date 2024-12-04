@@ -49,13 +49,14 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
     useInfiniteQuery<PixabayImageResponse>({
       queryKey: [`${orderBy.toLowerCase()}-wallpapers`],
       queryFn: async ({ pageParam = 1 }) => {
+        const imageType = `&image_type=photo`;
         const width = `&min_width=${actualWidthInPixels}`;
         const height = `&min_height=${actualHeightInPixels}`;
         const order = `&order=${orderBy.toLowerCase()}`;
         const page = `&page=${pageParam}`;
         const perPage = `&per_page=10`;
 
-        const URL = `${PIXABAY_API_URL}${width}${height}${order}${page}${perPage}`;
+        const URL = `${PIXABAY_API_URL}${imageType}${width}${height}${order}${page}${perPage}`;
 
         return await fetch(URL).then((res) => res.json());
       },
