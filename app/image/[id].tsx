@@ -10,10 +10,11 @@ import { useRef } from "react";
 import { Image, Platform, Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function DetailedImage() {
   const navigation = useNavigation();
+  const { top } = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { getWallpaper } = useWallpaperContext();
 
@@ -46,64 +47,59 @@ export default function DetailedImage() {
 
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
-      <SafeAreaView style={styles.container}>
-        <Pressable
-          onLongPress={handleLongPress}
-          onPressOut={handlePressOut}
-          style={StyleSheet.absoluteFillObject}
-        >
-          <Image
-            defaultSource={{ uri: wallpaper?.previewURL }}
-            source={{ uri: wallpaper?.largeImageURL }}
-            style={{ flex: 1 }}
-          />
-        </Pressable>
-        <AnimatedLinearGradient
-          colors={["#000000", "transparent"]}
-          style={{
-            height: headerShadowHeight,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-          }}
+      <Pressable
+        onLongPress={handleLongPress}
+        onPressOut={handlePressOut}
+        style={StyleSheet.absoluteFillObject}
+      >
+        <Image
+          defaultSource={{ uri: wallpaper?.previewURL }}
+          source={{ uri: wallpaper?.largeImageURL }}
+          style={{ flex: 1 }}
         />
+      </Pressable>
+      <AnimatedLinearGradient
+        colors={["#000000", "transparent"]}
+        style={{
+          height: headerShadowHeight,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
 
-        <Animated.View style={{ opacity }}>
-          <Header
-            leftComponent={
-              <MenuButton
-                icon="arrow-back"
-                onPress={() => navigation.goBack()}
-              />
-            }
-            rightComponent={
-              <MenuButton icon="heart-outline" onPress={() => {}} />
-            }
-          />
-        </Animated.View>
+      <Animated.View style={{ opacity, top }}>
+        <Header
+          leftComponent={
+            <MenuButton icon="arrow-back" onPress={() => navigation.goBack()} />
+          }
+          rightComponent={
+            <MenuButton icon="heart-outline" onPress={() => {}} />
+          }
+        />
+      </Animated.View>
 
-        <BottomSheet
-          ref={bottomSheetRef}
-          backgroundStyle={styles.bottomSheetBackgroundStyle}
-          handleStyle={styles.bottomSheetHandleStyle}
-          handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
-          snapPoints={["10%", "40%"]}
+      <BottomSheet
+        ref={bottomSheetRef}
+        backgroundStyle={styles.bottomSheetBackgroundStyle}
+        handleStyle={styles.bottomSheetHandleStyle}
+        handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
+        snapPoints={["10%", "40%"]}
+      >
+        <BottomSheetScrollView
+          contentContainerStyle={styles.bottomSheetScrollViewContainerStyle}
         >
-          <BottomSheetScrollView
-            contentContainerStyle={styles.bottomSheetScrollViewContainerStyle}
-          >
-            {wallpaper && <ImageDetails item={wallpaper} />}
-            {!wallpaper && (
-              <View style={{ alignItems: "center" }}>
-                <ThemedText type="default">
-                  No wallpaper information was found.
-                </ThemedText>
-              </View>
-            )}
-          </BottomSheetScrollView>
-        </BottomSheet>
-      </SafeAreaView>
+          {wallpaper && <ImageDetails item={wallpaper} />}
+          {!wallpaper && (
+            <View style={{ alignItems: "center" }}>
+              <ThemedText type="default">
+                No wallpaper information was found.
+              </ThemedText>
+            </View>
+          )}
+        </BottomSheetScrollView>
+      </BottomSheet>
     </GestureHandlerRootView>
   );
 }
