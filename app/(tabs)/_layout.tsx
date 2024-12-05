@@ -28,12 +28,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="categories"
         options={{
+          headerShown: true,
+          headerStyle: { backgroundColor: "#222222" },
+          headerTitleStyle: { color: "#FFFFFF" },
           title: "Categories",
           tabBarActiveTintColor: "#FFFFFF",
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons name="apps-sharp" size={size} color={color} />
           ),
           tabBarLabelStyle: { fontSize: 12 },
+          tabBarStyle: {
+            backgroundColor: "#222222",
+          },
         }}
       />
     </Tabs>
