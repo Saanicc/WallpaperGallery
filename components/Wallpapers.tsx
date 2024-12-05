@@ -24,7 +24,7 @@ const Wallpapers = () => {
     setOrderBy,
   } = useWallpaperContext();
 
-  const { width, actualHeightInPixels } = useScreenSize();
+  const { width } = useScreenSize();
 
   const _imageWidth = width * 0.7;
   const _imageHeight = _imageWidth * 1.76;
