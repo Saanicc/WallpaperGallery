@@ -13,6 +13,7 @@ export default function TabLayout() {
           right: 0,
           borderTopWidth: 0,
           backgroundColor: "transparent",
+          elevation: 0,
         },
       }}
     >
