@@ -20,7 +20,7 @@ export default function RootLayout() {
                 navigationBarColor: "rgba(0,0,0,0)",
               }}
             >
-              <Stack.Screen name="index" />
+              <Stack.Screen name="(tabs)" />
               <Stack.Screen
                 name="image/[id]"
                 options={{
