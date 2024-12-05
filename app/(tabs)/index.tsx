@@ -1,5 +1,5 @@
-import PixabayWallpapers from "@/components/PixabayWallpapers";
+import Wallpapers from "@/components/Wallpapers";
 
 export default function Index() {
-  return <PixabayWallpapers />;
+  return <Wallpapers />;
 }

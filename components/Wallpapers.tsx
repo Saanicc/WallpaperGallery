@@ -15,7 +15,7 @@ import Photo from "./Photo/Photo";
 import Pills from "./Pill/Pills";
 import { ThemedText } from "./ThemedText/ThemedText";
 
-const PixabayWallpapers = () => {
+const Wallpapers = () => {
   const {
     allWallpapers,
     loading,
@@ -143,9 +143,34 @@ const PixabayWallpapers = () => {
             />
           )}
         </View>
+        <LinearGradient
+          colors={[
+            "transparent",
+            "#00000005",
+            "#00000006",
+            "#00000007",
+            "#00000008",
+            "#00000009",
+            "#00000010",
+            "#00000015",
+            "#00000016",
+            "#00000017",
+            "#00000018",
+            "#00000019",
+            "#00000020",
+            "#000000",
+          ]}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: actualHeightInPixels,
+          }}
+        />
       </SafeAreaView>
     </>
   );
 };
 
-export default PixabayWallpapers;
+export default Wallpapers;
