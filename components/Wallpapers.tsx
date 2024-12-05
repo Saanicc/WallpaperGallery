@@ -10,7 +10,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackdropPhotos from "./Backdrop/BackdropPhotos";
-import Header from "./Header/Header";
 import Photo from "./Photo/Photo";
 import Pills from "./Pill/Pills";
 import { ThemedText } from "./ThemedText/ThemedText";
@@ -60,112 +59,95 @@ const Wallpapers = () => {
       <SafeAreaView
         style={{
           flex: 1,
+          width: "100%",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <LinearGradient
           colors={[
             "#000000",
+            "#00000080",
+            "#00000040",
             "#00000020",
-            "#00000019",
-            "#00000018",
-            "#00000017",
-            "#00000016",
-            "#00000015",
-            "#00000010",
-            "#00000009",
-            "#00000008",
-            "#00000007",
-            "#00000006",
-            "#00000005",
             "transparent",
           ]}
+          locations={[0, 0.25, 0.5, 0.75, 1]}
           style={{
             position: "absolute",
             top: 0,
             left: 0,
             right: 0,
-            height: actualHeightInPixels,
+            height: "25%",
           }}
         />
-        <Header>
+        <View
+          style={{
+            flexGrow: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Pills
             selectedPill={orderBy}
             items={[PixabayImageOrder.POPULAR, PixabayImageOrder.LATEST]}
             onPillSelect={setOrderBy}
           />
-        </Header>
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {loading ? (
-            <ActivityIndicator size={50} />
-          ) : (
-            <Animated.FlatList
-              data={allWallpapers}
-              keyExtractor={(item) => String(item.id)}
-              horizontal
-              style={{ flexGrow: 0, zIndex: 1 }}
-              snapToInterval={_imageWidth + _spacing}
-              decelerationRate={"fast"}
-              contentContainerStyle={{
-                gap: _spacing,
-                paddingHorizontal: (width - _imageWidth) / 2,
-              }}
-              renderItem={renderItem}
-              onEndReached={loadMore}
-              onEndReachedThreshold={0.5}
-              showsHorizontalScrollIndicator={false}
-              onScroll={onScroll}
-              scrollEventThrottle={1000 / 60}
-              ListFooterComponent={
-                isLoadingMore ? (
-                  <View
-                    style={{
-                      width: _imageWidth,
-                      height: _imageHeight,
-                      borderRadius: _spacing,
-                      backgroundColor: "rgba(0,0,0,0.5)",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <ActivityIndicator color="#ffffff" size={50} />
-                    <ThemedText type="defaultSemiBold">Loading...</ThemedText>
-                  </View>
-                ) : null
-              }
-            />
-          )}
         </View>
+        {loading ? (
+          <ActivityIndicator size={50} />
+        ) : (
+          <Animated.FlatList
+            data={allWallpapers}
+            keyExtractor={(item) => String(item.id)}
+            horizontal
+            style={{ zIndex: 1 }}
+            snapToInterval={_imageWidth + _spacing}
+            decelerationRate={"fast"}
+            contentContainerStyle={{
+              gap: _spacing,
+              paddingHorizontal: (width - _imageWidth) / 2,
+            }}
+            renderItem={renderItem}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.5}
+            showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            scrollEventThrottle={1000 / 60}
+            ListFooterComponent={
+              isLoadingMore ? (
+                <View
+                  style={{
+                    width: _imageWidth,
+                    height: _imageHeight,
+                    borderRadius: _spacing,
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ActivityIndicator color="#ffffff" size={50} />
+                  <ThemedText type="defaultSemiBold">Loading...</ThemedText>
+                </View>
+              ) : null
+            }
+          />
+        )}
         <LinearGradient
           colors={[
             "transparent",
-            "#00000005",
-            "#00000006",
-            "#00000007",
-            "#00000008",
-            "#00000009",
-            "#00000010",
-            "#00000015",
-            "#00000016",
-            "#00000017",
-            "#00000018",
-            "#00000019",
             "#00000020",
+            "#00000040",
+            "#00000080",
             "#000000",
           ]}
+          locations={[0, 0.25, 0.5, 0.75, 1]}
           style={{
             position: "absolute",
             bottom: 0,
             left: 0,
             right: 0,
-            height: actualHeightInPixels,
+            height: "25%",
           }}
         />
       </SafeAreaView>

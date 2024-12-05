@@ -107,9 +107,6 @@ export default function DetailedImage() {
 const styles = StyleSheet.create({
   gestureContainer: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
     backgroundColor: "#222222",
   },
   bottomSheetBackgroundStyle: {
