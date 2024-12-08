@@ -64,4 +64,6 @@ export const categories = [
   "buildings",
   "business",
   "music",
-];
+] as const;
+
+export type Category = (typeof categories)[number];

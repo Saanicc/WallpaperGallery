@@ -1,4 +1,5 @@
 import {
+  Category,
   PixabayImage,
   PixabayImageOrder,
   PixabayImageResponse,
@@ -21,9 +22,11 @@ export interface WallpaperContextValue {
   loading: boolean;
   isLoadingMore: boolean;
   orderBy: PixabayImageOrder;
+  selectedCategory: Category | undefined;
   loadMore: () => void;
   getWallpaper: (wallpaperId: string) => PixabayImage | undefined;
   setOrderBy: Dispatch<SetStateAction<PixabayImageOrder>>;
+  setSelectedCategory: Dispatch<SetStateAction<Category | undefined>>;
 }
 
 export const WallpaperContext = createContext<WallpaperContextValue>({
@@ -31,9 +34,11 @@ export const WallpaperContext = createContext<WallpaperContextValue>({
   loading: false,
   isLoadingMore: false,
   orderBy: PixabayImageOrder.POPULAR,
+  selectedCategory: undefined,
   loadMore: () => Promise.resolve(),
   getWallpaper: () => undefined,
   setOrderBy: () => Promise.resolve(),
+  setSelectedCategory: () => Promise.resolve(),
 });
 
 const PIXABAY_API_URL = `https://pixabay.com/api/?key=${process.env.EXPO_PUBLIC_PIXABAY_API_KEY}`;
@@ -42,21 +47,27 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
   const [orderBy, setOrderBy] = useState<PixabayImageOrder>(
     PixabayImageOrder.POPULAR
   );
+  const [selectedCategory, setSelectedCategory] = useState<
+    Category | undefined
+  >();
 
   const { actualWidthInPixels, actualHeightInPixels } = useScreenSize();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<PixabayImageResponse>({
-      queryKey: [`${orderBy.toLowerCase()}-wallpapers`],
+      queryKey: [
+        `${orderBy.toLowerCase()}${selectedCategory?.toLowerCase()}-wallpapers`,
+      ],
       queryFn: async ({ pageParam = 1 }) => {
         const imageType = `&image_type=photo`;
+        const category = `&category=${selectedCategory}`;
         const width = `&min_width=${actualWidthInPixels}`;
         const height = `&min_height=${actualHeightInPixels}`;
         const order = `&order=${orderBy.toLowerCase()}`;
         const page = `&page=${pageParam}`;
         const perPage = `&per_page=10`;
 
-        const URL = `${PIXABAY_API_URL}${imageType}${width}${height}${order}${page}${perPage}`;
+        const URL = `${PIXABAY_API_URL}${imageType}${category}${width}${height}${order}${page}${perPage}`;
 
         return await fetch(URL).then((res) => res.json());
       },
@@ -86,19 +97,23 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
       allWallpapers: photos,
       loading: isLoading,
       isLoadingMore: isFetchingNextPage,
+      orderBy,
+      selectedCategory,
       loadMore,
       getWallpaper,
-      orderBy,
       setOrderBy,
+      setSelectedCategory,
     };
   }, [
     photos,
-    loadMore,
     isLoading,
     isFetchingNextPage,
     orderBy,
+    selectedCategory,
+    loadMore,
     setOrderBy,
     getWallpaper,
+    setSelectedCategory,
   ]);
 
   return (

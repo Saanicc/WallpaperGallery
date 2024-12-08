@@ -18,9 +18,10 @@ const Wallpapers = () => {
   const {
     allWallpapers,
     loading,
-    loadMore,
     isLoadingMore,
     orderBy,
+    selectedCategory,
+    loadMore,
     setOrderBy,
   } = useWallpaperContext();
 
@@ -83,11 +84,16 @@ const Wallpapers = () => {
         />
         <View
           style={{
-            flexGrow: 1,
+            flex: 1,
             alignItems: "center",
             justifyContent: "center",
           }}
         >
+          {!!selectedCategory && (
+            <ThemedText type="title" style={{ marginBottom: 16 }}>
+              {selectedCategory}
+            </ThemedText>
+          )}
           <Pills
             selectedPill={orderBy}
             items={[PixabayImageOrder.POPULAR, PixabayImageOrder.LATEST]}

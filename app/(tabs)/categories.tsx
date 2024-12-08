@@ -1,8 +1,11 @@
-import { categories } from "@/api/pixabay/types";
+import { categories, Category } from "@/api/pixabay/types";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { useWallpaperContext } from "@/contexts/photos-context";
+import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { useRouter } from "expo-router";
 import React from "react";
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { FlatList, Pressable, View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -13,7 +16,10 @@ import Animated, {
 const PADDING = 16;
 const GAP = 10;
 
-const Category = ({ item, index }: { item: string; index: number }) => {
+const CategoryCard = ({ item, index }: { item: Category; index: number }) => {
+  const { setSelectedCategory } = useWallpaperContext();
+  const route = useRouter();
+
   const imageCardScale = useSharedValue(1);
   const { width } = useScreenSize();
 
@@ -24,12 +30,23 @@ const Category = ({ item, index }: { item: string; index: number }) => {
           scale: interpolate(
             index,
             [index - 1, index, index + 1],
-            [0.78, imageCardScale.value, 0.78]
+            [0, imageCardScale.value, 0]
           ),
         },
       ],
     };
   });
+
+  const handlePress = () => {
+    setSelectedCategory(item);
+    route.navigate("/");
+  };
+
+  const handlePressIn = () =>
+    (imageCardScale.value = withSpring(0.9, { mass: 0.5, damping: 5 }));
+
+  const handlePressOut = () =>
+    (imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 }));
 
   return (
     <Animated.View style={[{ flex: 1 }, stylez]}>
@@ -42,17 +59,13 @@ const Category = ({ item, index }: { item: string; index: number }) => {
           padding: PADDING,
           height: width / 2 - (PADDING + GAP),
         }}
-        onPress={() => {
-          // route.navigate(`/image/${item.id}`);
-        }}
-        onPressIn={() => {
-          imageCardScale.value = withSpring(0.9, { mass: 0.5, damping: 5 });
-        }}
-        onPressOut={() => {
-          imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 });
-        }}
+        onPress={handlePress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
       >
-        <ThemedText type="defaultSemiBold">{item}</ThemedText>
+        <ThemedText type="defaultSemiBold">
+          {capitalizeFirstChar(item)}
+        </ThemedText>
       </Pressable>
     </Animated.View>
   );
@@ -69,7 +82,9 @@ const Categories = () => {
       <FlatList
         data={categories}
         keyExtractor={(_, index) => categories[index]}
-        renderItem={({ item, index }) => <Category item={item} index={index} />}
+        renderItem={({ item, index }) => (
+          <CategoryCard item={item} index={index} />
+        )}
         numColumns={2}
         columnWrapperStyle={{ gap: 10 }}
         contentContainerStyle={{
@@ -82,5 +97,3 @@ const Categories = () => {
 };
 
 export default Categories;
-
-const styles = StyleSheet.create({});
