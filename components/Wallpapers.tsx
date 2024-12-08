@@ -2,8 +2,8 @@ import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCallback } from "react";
-import { ActivityIndicator, StatusBar, View } from "react-native";
+import { useCallback, useEffect, useRef } from "react";
+import { ActivityIndicator, FlatList, StatusBar, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -27,6 +27,8 @@ const Wallpapers = () => {
 
   const { width } = useScreenSize();
 
+  const flatListRef = useRef<FlatList<any>>(null);
+
   const _imageWidth = width * 0.7;
   const _imageHeight = _imageWidth * 1.76;
   const _spacing = 16;
@@ -35,6 +37,11 @@ const Wallpapers = () => {
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = e.contentOffset.x / (_imageWidth + _spacing);
   });
+
+  useEffect(() => {
+    scrollX.value = 0;
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  }, [orderBy, selectedCategory]);
 
   const renderItem = useCallback(
     ({ item, index }: { item: PixabayImage; index: number }) => (
@@ -84,7 +91,7 @@ const Wallpapers = () => {
         />
         <View
           style={{
-            flex: 1,
+            flex: 0.25,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -104,10 +111,11 @@ const Wallpapers = () => {
           <ActivityIndicator size={50} />
         ) : (
           <Animated.FlatList
+            ref={flatListRef}
             data={allWallpapers}
             keyExtractor={(item) => String(item.id)}
             horizontal
-            style={{ zIndex: 1 }}
+            style={{ flex: 1, zIndex: 1 }}
             snapToInterval={_imageWidth + _spacing}
             decelerationRate={"fast"}
             contentContainerStyle={{
