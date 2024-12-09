@@ -53,39 +53,32 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
 
   const { actualWidthInPixels, actualHeightInPixels } = useScreenSize();
 
-  const {
-    data,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isPending,
-    isFetching,
-  } = useInfiniteQuery<PixabayImageResponse>({
-    queryKey: [
-      orderBy.toLowerCase(),
-      selectedCategory?.toLowerCase(),
-      "wallpapers",
-    ],
-    queryFn: async ({ pageParam = 1 }) => {
-      const imageType = `&image_type=photo`;
-      const category = `&category=${selectedCategory}`;
-      const width = `&min_width=${actualWidthInPixels}`;
-      const height = `&min_height=${actualHeightInPixels}`;
-      const order = `&order=${orderBy.toLowerCase()}`;
-      const page = `&page=${pageParam}`;
-      const perPage = `&per_page=10`;
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<PixabayImageResponse>({
+      queryKey: [
+        orderBy.toLowerCase(),
+        selectedCategory?.toLowerCase(),
+        "wallpapers",
+      ],
+      queryFn: async ({ pageParam = 1 }) => {
+        const imageType = `&image_type=photo`;
+        const category = `&category=${selectedCategory}`;
+        const width = `&min_width=${actualWidthInPixels}`;
+        const height = `&min_height=${actualHeightInPixels}`;
+        const order = `&order=${orderBy.toLowerCase()}`;
+        const page = `&page=${pageParam}`;
+        const perPage = `&per_page=10`;
 
-      const URL = `${PIXABAY_API_URL}${imageType}${category}${width}${height}${order}${page}${perPage}`;
+        const URL = `${PIXABAY_API_URL}${imageType}${category}${width}${height}${order}${page}${perPage}`;
 
-      return await fetch(URL).then((res) => res.json());
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) =>
-      lastPage?.hits?.length ? pages.length + 1 : undefined,
-    staleTime:
-      orderBy === PixabayImageOrder.POPULAR ? 1000 * 60 * 5 : 1000 * 60,
-  });
+        return await fetch(URL).then((res) => res.json());
+      },
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, pages) =>
+        lastPage?.hits?.length ? pages.length + 1 : undefined,
+      staleTime:
+        orderBy === PixabayImageOrder.POPULAR ? 1000 * 60 * 5 : 1000 * 60,
+    });
 
   const photos = data?.pages.flatMap((page) => page.hits) || [];
 
@@ -104,7 +97,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
   const value = useMemo(() => {
     return {
       allWallpapers: photos,
-      loading: isLoading || isPending || isFetching,
+      loading: isLoading,
       isLoadingMore: isFetchingNextPage,
       orderBy,
       selectedCategory,
