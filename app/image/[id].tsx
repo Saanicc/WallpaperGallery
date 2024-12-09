@@ -103,7 +103,7 @@ export default function DetailedImage() {
       });
   }, [wallpaper?.largeImageURL]);
 
-  const centerContent = (width: number, height: number) => {
+  const centerContent = (width: number) => {
     const offsetX = (width - screenWidth) / 2;
     scrollViewRef.current?.scrollTo({ x: offsetX, animated: false });
   };
@@ -118,7 +118,7 @@ export default function DetailedImage() {
           contentContainerStyle={{
             flexGrow: 1,
           }}
-          onContentSizeChange={(w, h) => centerContent(w, h)}
+          onContentSizeChange={(w) => centerContent(w)}
         >
           <Pressable
             onLongPress={handleLongPress}
