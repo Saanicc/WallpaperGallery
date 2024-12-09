@@ -4,14 +4,28 @@ import MenuButton from "@/components/MenuButton/MenuButton";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import { useScreenSize } from "@/hooks/useScreenSize";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useRef } from "react";
-import { Image, Platform, Pressable, StyleSheet, View } from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+type ImageDimensions = {
+  width: number;
+  height: number;
+  aspectRatio: number;
+};
 
 export default function DetailedImage() {
   const navigation = useNavigation();
@@ -20,10 +34,19 @@ export default function DetailedImage() {
   const { getWallpaper } = useWallpaperContext();
   const { addToFavorites, isWallpaperFavorited } = useFavoriteContext();
 
-  const { data, isLoading } = getWallpaper(id);
+  const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
+    width: 0,
+    height: 0,
+    aspectRatio: 0,
+  });
+
+  const { width: screenWidth } = useScreenSize();
+
+  const { data } = getWallpaper(id);
 
   const wallpaper = data?.hits[0];
 
+  const scrollViewRef = useRef<ScrollView>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const _headerHeight = Platform.OS === "ios" ? 140 : 100;
@@ -49,19 +72,76 @@ export default function DetailedImage() {
   const AnimatedLinearGradient =
     Animated.createAnimatedComponent(LinearGradient);
 
+  const getAspectRatio = useCallback((imageUri: string) => {
+    return new Promise<ImageDimensions>((resolve, reject) => {
+      Image.getSize(
+        imageUri,
+        (width, height) => {
+          resolve({
+            width,
+            height,
+            aspectRatio: width / height,
+          });
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!wallpaper) return;
+
+    const imageUri = wallpaper?.largeImageURL;
+    getAspectRatio(imageUri)
+      .then((imageDim) => {
+        setImageDimensions(imageDim);
+      })
+      .catch((error) => {
+        console.error("Error fetching image dimensions:", error);
+      });
+  }, [wallpaper?.largeImageURL]);
+
+  useEffect(() => {
+    if (imageDimensions.width > 0 && scrollViewRef.current) {
+      const offsetX = (imageDimensions.width - screenWidth) / 2;
+      scrollViewRef.current.scrollTo({ x: offsetX, animated: false });
+    }
+  }, [imageDimensions.width, screenWidth]);
+
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
-      <Pressable
-        onLongPress={handleLongPress}
-        onPressOut={handlePressOut}
-        style={StyleSheet.absoluteFillObject}
-      >
-        <Image
-          defaultSource={{ uri: wallpaper?.previewURL }}
-          source={{ uri: wallpaper?.largeImageURL }}
-          style={{ flex: 1 }}
-        />
-      </Pressable>
+      {wallpaper && (
+        <ScrollView
+          ref={scrollViewRef}
+          horizontal
+          style={StyleSheet.absoluteFillObject}
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+        >
+          <Pressable
+            onLongPress={handleLongPress}
+            onPressOut={handlePressOut}
+            style={{
+              flex: 1,
+              aspectRatio: imageDimensions.aspectRatio,
+            }}
+          >
+            <Image
+              defaultSource={{ uri: wallpaper.previewURL }}
+              source={{ uri: wallpaper.largeImageURL }}
+              style={{
+                width: undefined,
+                height: "100%",
+                aspectRatio: imageDimensions.aspectRatio,
+              }}
+              resizeMode="cover"
+            />
+          </Pressable>
+        </ScrollView>
+      )}
       <AnimatedLinearGradient
         colors={["#000000", "transparent"]}
         style={{
