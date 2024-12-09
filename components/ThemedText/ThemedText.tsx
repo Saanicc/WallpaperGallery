@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { ThemedTextProps } from "./ThemedText.config";
+import { Font, ThemedTextProps } from "./ThemedText.config";
 
 export function ThemedText({
   style,
@@ -20,17 +20,6 @@ export function ThemedText({
       {...rest}
     />
   );
-}
-
-enum Font {
-  ArimaMadurai_100Thin = "ArimaMadurai_100Thin",
-  ArimaMadurai_200ExtraLight = "ArimaMadurai_200ExtraLight",
-  ArimaMadurai_300Light = "ArimaMadurai_300Light",
-  ArimaMadurai_400Regular = "ArimaMadurai_400Regular",
-  ArimaMadurai_500Medium = "ArimaMadurai_500Medium",
-  ArimaMadurai_700Bold = "ArimaMadurai_700Bold",
-  ArimaMadurai_800ExtraBold = "ArimaMadurai_800ExtraBold",
-  ArimaMadurai_900Black = "ArimaMadurai_900Black",
 }
 
 const styles = StyleSheet.create({
