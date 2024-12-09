@@ -103,16 +103,14 @@ export default function DetailedImage() {
       });
   }, [wallpaper?.largeImageURL]);
 
-  useEffect(() => {
-    if (imageDimensions.width > 0 && scrollViewRef.current) {
-      const offsetX = (imageDimensions.width - screenWidth) / 2;
-      scrollViewRef.current.scrollTo({ x: offsetX, animated: false });
-    }
-  }, [imageDimensions.width, screenWidth]);
+  const centerContent = (width: number, height: number) => {
+    const offsetX = (width - screenWidth) / 2;
+    scrollViewRef.current?.scrollTo({ x: offsetX, animated: false });
+  };
 
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
-      {wallpaper && (
+      {imageDimensions.width >= screenWidth && (
         <ScrollView
           ref={scrollViewRef}
           horizontal
@@ -120,6 +118,7 @@ export default function DetailedImage() {
           contentContainerStyle={{
             flexGrow: 1,
           }}
+          onContentSizeChange={(w, h) => centerContent(w, h)}
         >
           <Pressable
             onLongPress={handleLongPress}
@@ -130,8 +129,8 @@ export default function DetailedImage() {
             }}
           >
             <Image
-              defaultSource={{ uri: wallpaper.previewURL }}
-              source={{ uri: wallpaper.largeImageURL }}
+              defaultSource={{ uri: wallpaper?.previewURL }}
+              source={{ uri: wallpaper?.largeImageURL }}
               style={{
                 width: undefined,
                 height: "100%",
