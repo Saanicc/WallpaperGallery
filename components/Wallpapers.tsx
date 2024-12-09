@@ -99,7 +99,7 @@ const Wallpapers = () => {
         >
           {!!selectedCategory && (
             <ThemedText type="title" style={{ marginBottom: 16 }}>
-              {selectedCategory}
+              {selectedCategory.toUpperCase()}
             </ThemedText>
           )}
           <Pills
