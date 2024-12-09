@@ -3,13 +3,14 @@ import { useWallpaperContext } from "@/contexts/photos-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useEffect, useRef } from "react";
-import { ActivityIndicator, FlatList, StatusBar, View } from "react-native";
+import { FlatList, StatusBar, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackdropPhotos from "./Backdrop/BackdropPhotos";
+import LoadingSkeleton from "./LoadingSkeleton/LoadingSkeleton";
 import Photo from "./Photo/Photo";
 import Pills from "./Pill/Pills";
 import { ThemedText } from "./ThemedText/ThemedText";
@@ -108,7 +109,13 @@ const Wallpapers = () => {
           />
         </View>
         {loading ? (
-          <ActivityIndicator size={50} />
+          <View style={{ flex: 1 }}>
+            <LoadingSkeleton
+              width={_imageWidth}
+              height={_imageHeight}
+              borderRadius={_spacing}
+            />
+          </View>
         ) : (
           <Animated.FlatList
             ref={flatListRef}
@@ -130,19 +137,11 @@ const Wallpapers = () => {
             scrollEventThrottle={1000 / 60}
             ListFooterComponent={
               isLoadingMore ? (
-                <View
-                  style={{
-                    width: _imageWidth,
-                    height: _imageHeight,
-                    borderRadius: _spacing,
-                    backgroundColor: "rgba(0,0,0,0.5)",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <ActivityIndicator color="#ffffff" size={50} />
-                  <ThemedText type="defaultSemiBold">Loading...</ThemedText>
-                </View>
+                <LoadingSkeleton
+                  width={_imageWidth}
+                  height={_imageHeight}
+                  borderRadius={_spacing}
+                />
               ) : null
             }
           />
