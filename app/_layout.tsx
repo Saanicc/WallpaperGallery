@@ -1,3 +1,4 @@
+import { FavoriteContextProvider } from "@/contexts/favorite-context";
 import { WallpaperContextProvider } from "@/contexts/photos-context";
 import {
   ArimaMadurai_100Thin,
@@ -36,25 +37,27 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
         <WallpaperContextProvider>
-          <EventProvider>
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                statusBarBackgroundColor: "rgba(0,0,0,0)",
-                navigationBarTranslucent: true,
-                navigationBarColor: "rgba(0,0,0,0)",
-              }}
-            >
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen
-                name="image/[id]"
-                options={{
-                  animation: "fade",
-                  presentation: "transparentModal",
+          <FavoriteContextProvider>
+            <EventProvider>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                  statusBarBackgroundColor: "rgba(0,0,0,0)",
+                  navigationBarTranslucent: true,
+                  navigationBarColor: "rgba(0,0,0,0)",
                 }}
-              />
-            </Stack>
-          </EventProvider>
+              >
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen
+                  name="image/[id]"
+                  options={{
+                    animation: "fade",
+                    presentation: "transparentModal",
+                  }}
+                />
+              </Stack>
+            </EventProvider>
+          </FavoriteContextProvider>
         </WallpaperContextProvider>
       </QueryClientProvider>
     </SafeAreaProvider>
