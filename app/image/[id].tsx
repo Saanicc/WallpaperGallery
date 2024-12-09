@@ -2,6 +2,7 @@ import Header from "@/components/Header/Header";
 import ImageDetails from "@/components/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
@@ -17,6 +18,7 @@ export default function DetailedImage() {
   const { top } = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { getWallpaper } = useWallpaperContext();
+  const { addToFavorites, isWallpaperFavorited } = useFavoriteContext();
 
   const wallpaper = getWallpaper(id);
 
@@ -75,7 +77,10 @@ export default function DetailedImage() {
             <MenuButton icon="arrow-back" onPress={() => navigation.goBack()} />
           }
           rightComponent={
-            <MenuButton icon="heart-outline" onPress={() => {}} />
+            <MenuButton
+              icon={isWallpaperFavorited(id) ? "heart" : "heart-outline"}
+              onPress={() => wallpaper && addToFavorites(wallpaper)}
+            />
           }
         />
       </Animated.View>
