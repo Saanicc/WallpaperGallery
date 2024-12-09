@@ -1,5 +1,6 @@
 import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import { BORDER_RADIUS, GAP } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useEffect, useRef } from "react";
@@ -30,18 +31,17 @@ const Wallpapers = () => {
 
   const flatListRef = useRef<FlatList<any>>(null);
 
-  const _imageWidth = width * 0.7;
-  const _imageHeight = _imageWidth * 1.76;
-  const _spacing = 16;
+  const IMAGE_WIDTH = width * 0.7;
+  const IMAGE_HEIGHT = IMAGE_WIDTH * 1.76;
 
   const scrollX = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
-    scrollX.value = e.contentOffset.x / (_imageWidth + _spacing);
+    scrollX.value = e.contentOffset.x / (IMAGE_WIDTH + GAP);
   });
 
   useEffect(() => {
     scrollX.value = 0;
-    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
   }, [orderBy, selectedCategory]);
 
   const renderItem = useCallback(
@@ -49,8 +49,8 @@ const Wallpapers = () => {
       <Photo
         item={item}
         index={index}
-        width={_imageWidth}
-        height={_imageHeight}
+        width={IMAGE_WIDTH}
+        height={IMAGE_HEIGHT}
         scrollX={scrollX}
       />
     ),
@@ -111,9 +111,9 @@ const Wallpapers = () => {
         {loading ? (
           <View style={{ flex: 1 }}>
             <LoadingSkeleton
-              width={_imageWidth}
-              height={_imageHeight}
-              borderRadius={_spacing}
+              width={IMAGE_WIDTH}
+              height={IMAGE_HEIGHT}
+              borderRadius={BORDER_RADIUS}
             />
           </View>
         ) : (
@@ -123,11 +123,11 @@ const Wallpapers = () => {
             keyExtractor={(item) => String(item.id)}
             horizontal
             style={{ flex: 1, zIndex: 1 }}
-            snapToInterval={_imageWidth + _spacing}
+            snapToInterval={IMAGE_WIDTH + GAP}
             decelerationRate={"fast"}
             contentContainerStyle={{
-              gap: _spacing,
-              paddingHorizontal: (width - _imageWidth) / 2,
+              gap: GAP,
+              paddingHorizontal: (width - IMAGE_WIDTH) / 2,
             }}
             renderItem={renderItem}
             onEndReached={loadMore}
@@ -138,9 +138,9 @@ const Wallpapers = () => {
             ListFooterComponent={
               isLoadingMore ? (
                 <LoadingSkeleton
-                  width={_imageWidth}
-                  height={_imageHeight}
-                  borderRadius={_spacing}
+                  width={IMAGE_WIDTH}
+                  height={IMAGE_HEIGHT}
+                  borderRadius={BORDER_RADIUS}
                 />
               ) : null
             }
