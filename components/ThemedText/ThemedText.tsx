@@ -22,32 +22,36 @@ export function ThemedText({
   );
 }
 
+enum Font {
+  ArimaMadurai_100Thin = "ArimaMadurai_100Thin",
+  ArimaMadurai_200ExtraLight = "ArimaMadurai_200ExtraLight",
+  ArimaMadurai_300Light = "ArimaMadurai_300Light",
+  ArimaMadurai_400Regular = "ArimaMadurai_400Regular",
+  ArimaMadurai_500Medium = "ArimaMadurai_500Medium",
+  ArimaMadurai_700Bold = "ArimaMadurai_700Bold",
+  ArimaMadurai_800ExtraBold = "ArimaMadurai_800ExtraBold",
+  ArimaMadurai_900Black = "ArimaMadurai_900Black",
+}
+
 const styles = StyleSheet.create({
   default: {
-    fontFamily: "ArimaMadurai",
+    fontFamily: Font.ArimaMadurai_400Regular,
     fontSize: 16,
-    lineHeight: 24,
   },
   defaultSemiBold: {
-    fontFamily: "ArimaMadurai",
+    fontFamily: Font.ArimaMadurai_900Black,
     fontSize: 16,
-    lineHeight: 24,
-    fontWeight: "600",
   },
   title: {
-    fontFamily: "ArimaMadurai",
+    fontFamily: Font.ArimaMadurai_700Bold,
     fontSize: 28,
-    fontWeight: "bold",
-    lineHeight: 28,
   },
   subtitle: {
-    fontFamily: "ArimaMadurai",
+    fontFamily: Font.ArimaMadurai_700Bold,
     fontSize: 20,
-    fontWeight: "bold",
   },
   link: {
-    fontFamily: "ArimaMadurai",
-    lineHeight: 30,
+    fontFamily: Font.ArimaMadurai_700Bold,
     fontSize: 16,
     color: "#0a7ea4",
   },
