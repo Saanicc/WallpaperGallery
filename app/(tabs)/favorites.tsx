@@ -1,3 +1,4 @@
+import { PixabayImage } from "@/api/pixabay/types";
 import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useFavoriteContext } from "@/contexts/favorite-context";
@@ -6,7 +7,13 @@ import React from "react";
 import { FlatList, View } from "react-native";
 
 const favorites = () => {
-  const { favoriteWallpapers, deleteFavorite } = useFavoriteContext();
+  const { favoriteWallpapers } = useFavoriteContext();
+
+  const getData = () => {
+    if (favoriteWallpapers.length % 2 > 0)
+      return [...favoriteWallpapers, {} as PixabayImage];
+    return favoriteWallpapers;
+  };
 
   return (
     <View
@@ -16,13 +23,13 @@ const favorites = () => {
       }}
     >
       <FlatList
-        data={favoriteWallpapers}
+        data={getData()}
         keyExtractor={(wallpaper) => String(wallpaper.id)}
         renderItem={({ item, index }) => (
           <FavoriteCard item={item} index={index} />
         )}
         numColumns={2}
-        columnWrapperStyle={{ gap: 10 }}
+        columnWrapperStyle={{ gap: GAP }}
         contentContainerStyle={{
           padding: PADDING,
           gap: GAP,

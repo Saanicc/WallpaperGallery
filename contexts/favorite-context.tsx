@@ -10,14 +10,14 @@ import {
 export interface FavoriteContextValue {
   favoriteWallpapers: PixabayImage[];
   addToFavorites: (wallpaper: PixabayImage) => void;
-  deleteFavorite: (wallpaperId: string) => void;
+  deleteAllFavorites: () => void;
   isWallpaperFavorited: (wallpaperId: string) => boolean;
 }
 
 export const FavoriteContext = createContext<FavoriteContextValue>({
   favoriteWallpapers: [],
   addToFavorites: () => Promise.resolve(),
-  deleteFavorite: () => Promise.resolve(),
+  deleteAllFavorites: () => Promise.resolve(),
   isWallpaperFavorited: () => false,
 });
 
@@ -26,21 +26,14 @@ export const FavoriteContextProvider = ({ children }: PropsWithChildren) => {
 
   const addToFavorites = (wallpaper: PixabayImage) => {
     setFavorites((prev) => {
-      if (!prev.some((img) => img.id === wallpaper.id))
+      if (!isWallpaperFavorited(String(wallpaper.id)))
         return [...prev, wallpaper];
 
-      const indexOfItemToRemove = prev.findIndex(
-        (img) => img.id === wallpaper.id
-      );
-      return prev.toSpliced(indexOfItemToRemove, 1);
+      return prev.filter((item) => item.id !== wallpaper.id);
     });
   };
 
-  const deleteFavorite = (wallpaperId: string) => {
-    setFavorites((prev) =>
-      prev.filter((img) => String(img.id) !== wallpaperId)
-    );
-  };
+  const deleteAllFavorites = () => setFavorites([]);
 
   const isWallpaperFavorited = (wallpaperId: string) =>
     favorites.some((img) => String(img.id) === wallpaperId);
@@ -49,10 +42,10 @@ export const FavoriteContextProvider = ({ children }: PropsWithChildren) => {
     return {
       favoriteWallpapers: favorites,
       addToFavorites,
-      deleteFavorite,
+      deleteAllFavorites,
       isWallpaperFavorited,
     };
-  }, [favorites, addToFavorites, deleteFavorite, isWallpaperFavorited]);
+  }, [favorites, addToFavorites, deleteAllFavorites, isWallpaperFavorited]);
 
   return (
     <FavoriteContext.Provider value={value}>

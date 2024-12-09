@@ -48,7 +48,7 @@ const FavoriteCard = ({
     (imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 }));
 
   return (
-    <Animated.View style={[{ flex: 1, borderRadius: 16 }, stylez]}>
+    <Animated.View style={[{ flex: 1 / 2, borderRadius: 16 }, stylez]}>
       <ImageBackground
         source={{ uri: item.previewURL }}
         imageStyle={{ borderRadius: 16 }}
@@ -61,6 +61,7 @@ const FavoriteCard = ({
           onPress={handlePress}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
+          disabled={!item.id}
         />
       </ImageBackground>
     </Animated.View>

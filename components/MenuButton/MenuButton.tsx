@@ -3,12 +3,22 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { MenuButtonProps } from "./MenuButton.config";
 
-const MenuButton = ({ icon, iconColor, onPress }: MenuButtonProps) => {
+const MenuButton = ({
+  icon,
+  iconColor,
+  size,
+  disabled,
+  onPress,
+}: MenuButtonProps) => {
   return (
-    <TouchableOpacity style={styles.menuButton} onPress={onPress}>
+    <TouchableOpacity
+      disabled={disabled ? disabled : false}
+      style={styles.menuButton}
+      onPress={onPress}
+    >
       <Ionicons
         name={icon}
-        size={30}
+        size={size ? size : 30}
         color={iconColor ? iconColor : "#ffffff"}
       />
     </TouchableOpacity>
