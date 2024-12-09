@@ -1,3 +1,4 @@
+import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { GAP, PADDING } from "@/helpers/constants";
@@ -17,7 +18,9 @@ const favorites = () => {
       <FlatList
         data={favoriteWallpapers}
         keyExtractor={(wallpaper) => String(wallpaper.id)}
-        renderItem={({ item, index }) => <ThemedText>{item.id}</ThemedText>}
+        renderItem={({ item, index }) => (
+          <FavoriteCard item={item} index={index} />
+        )}
         numColumns={2}
         columnWrapperStyle={{ gap: 10 }}
         contentContainerStyle={{
