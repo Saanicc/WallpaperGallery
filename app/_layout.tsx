@@ -1,4 +1,15 @@
 import { WallpaperContextProvider } from "@/contexts/photos-context";
+import {
+  ArimaMadurai_100Thin,
+  ArimaMadurai_200ExtraLight,
+  ArimaMadurai_300Light,
+  ArimaMadurai_400Regular,
+  ArimaMadurai_500Medium,
+  ArimaMadurai_700Bold,
+  ArimaMadurai_800ExtraBold,
+  ArimaMadurai_900Black,
+  useFonts,
+} from "@expo-google-fonts/arima-madurai";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { EventProvider } from "react-native-outside-press";
@@ -6,6 +17,20 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   const queryClient = new QueryClient();
+
+  const [fontsLoaded] = useFonts({
+    ArimaMadurai_100Thin,
+    ArimaMadurai_200ExtraLight,
+    ArimaMadurai_300Light,
+    ArimaMadurai_400Regular,
+    ArimaMadurai_500Medium,
+    ArimaMadurai_700Bold,
+    ArimaMadurai_800ExtraBold,
+    ArimaMadurai_900Black,
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaProvider>

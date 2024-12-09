@@ -24,24 +24,29 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
+    fontFamily: "ArimaMadurai",
     fontSize: 16,
     lineHeight: 24,
   },
   defaultSemiBold: {
+    fontFamily: "ArimaMadurai",
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "600",
   },
   title: {
+    fontFamily: "ArimaMadurai",
     fontSize: 28,
     fontWeight: "bold",
     lineHeight: 28,
   },
   subtitle: {
+    fontFamily: "ArimaMadurai",
     fontSize: 20,
     fontWeight: "bold",
   },
   link: {
+    fontFamily: "ArimaMadurai",
     lineHeight: 30,
     fontSize: 16,
     color: "#0a7ea4",
