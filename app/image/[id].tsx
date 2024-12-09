@@ -20,7 +20,9 @@ export default function DetailedImage() {
   const { getWallpaper } = useWallpaperContext();
   const { addToFavorites, isWallpaperFavorited } = useFavoriteContext();
 
-  const wallpaper = getWallpaper(id);
+  const { data, isLoading } = getWallpaper(id);
+
+  const wallpaper = data?.hits[0];
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 

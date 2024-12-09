@@ -5,7 +5,11 @@ import {
   PixabayImageResponse,
 } from "@/api/pixabay/types";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import {
   createContext,
   Dispatch,
@@ -24,7 +28,9 @@ export interface WallpaperContextValue {
   orderBy: PixabayImageOrder;
   selectedCategory: Category | undefined;
   loadMore: () => void;
-  getWallpaper: (wallpaperId: string) => PixabayImage | undefined;
+  getWallpaper: (
+    wallpaperId: string
+  ) => UseQueryResult<PixabayImageResponse, Error>;
   setOrderBy: Dispatch<SetStateAction<PixabayImageOrder>>;
   setSelectedCategory: Dispatch<SetStateAction<Category | undefined>>;
 }
@@ -36,7 +42,7 @@ export const WallpaperContext = createContext<WallpaperContextValue>({
   orderBy: PixabayImageOrder.POPULAR,
   selectedCategory: undefined,
   loadMore: () => Promise.resolve(),
-  getWallpaper: () => undefined,
+  getWallpaper: () => ({} as UseQueryResult<PixabayImageResponse, Error>),
   setOrderBy: () => Promise.resolve(),
   setSelectedCategory: () => Promise.resolve(),
 });
@@ -90,8 +96,14 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
 
   const getWallpaper = useCallback(
     (wallpaperId: string) =>
-      photos.find((photo) => String(photo.id) === wallpaperId),
-    [photos]
+      useQuery<PixabayImageResponse>({
+        queryKey: ["wallpaper", wallpaperId],
+        queryFn: async () => {
+          const URL = `${PIXABAY_API_URL}&id=${wallpaperId}`;
+          return await fetch(URL).then((res) => res.json());
+        },
+      }),
+    []
   );
 
   const value = useMemo(() => {
