@@ -1,3 +1,4 @@
+import { BORDER_RADIUS } from "@/helpers/constants";
 import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { Pressable } from "react-native";
@@ -38,7 +39,7 @@ const Photo = memo(
     return (
       <Animated.View
         style={[
-          { width, height, overflow: "hidden", borderRadius: 16 },
+          { width, height, overflow: "hidden", borderRadius: BORDER_RADIUS },
           stylez,
         ]}
       >

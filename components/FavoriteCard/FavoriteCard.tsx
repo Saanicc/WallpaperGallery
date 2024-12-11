@@ -1,4 +1,4 @@
-import { GAP, PADDING } from "@/helpers/constants";
+import { BORDER_RADIUS, GAP, PADDING } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { PixabayImage } from "@/types/types";
 import { useRouter } from "expo-router";
@@ -48,15 +48,14 @@ const FavoriteCard = ({
     (imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 }));
 
   return (
-    <Animated.View style={[{ flex: 1 / 2, borderRadius: 16 }, stylez]}>
+    <Animated.View style={[{ flex: 1 / 2 }, stylez]}>
       <ImageBackground
         source={{ uri: item.previewURL }}
-        imageStyle={{ borderRadius: 16 }}
+        imageStyle={{ borderRadius: BORDER_RADIUS }}
       >
         <Pressable
           style={{
             height: width / 2 - (PADDING + GAP),
-            borderRadius: 16,
           }}
           onPress={handlePress}
           onPressIn={handlePressIn}

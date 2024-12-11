@@ -1,3 +1,4 @@
+import { PADDING } from "@/helpers/constants";
 import React, { PropsWithChildren } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     flexDirection: "row",
-    paddingHorizontal: 16,
+    paddingHorizontal: PADDING,
     top: Platform.OS === "android" ? 10 : 0,
   },
   leftAction: {

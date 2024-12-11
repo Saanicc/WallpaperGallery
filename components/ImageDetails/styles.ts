@@ -1,10 +1,11 @@
+import { BORDER_RADIUS, PADDING, PADDING_VERTICAL } from "@/helpers/constants";
 import { StyleSheet } from "react-native";
 
 export const sharedStyles = StyleSheet.create({
   infoItem: {
     alignItems: "center",
-    borderRadius: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    borderRadius: BORDER_RADIUS,
+    paddingVertical: PADDING_VERTICAL,
+    paddingHorizontal: PADDING,
   },
 });

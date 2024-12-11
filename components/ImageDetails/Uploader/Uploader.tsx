@@ -1,4 +1,5 @@
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { PADDING, PADDING_VERTICAL } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import React from "react";
 import { Image, Linking, TouchableOpacity, View } from "react-native";
@@ -8,38 +9,36 @@ const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
   const { width } = useScreenSize();
 
   return (
-    <View style={{ gap: 16 }}>
-      <View
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: PADDING,
+      }}
+    >
+      <Image
+        source={{ uri: imageUrl }}
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 16,
+          width: width / 5,
+          height: width / 5,
+          borderRadius: 50,
         }}
-      >
-        <Image
-          source={{ uri: imageUrl }}
+      />
+      <View>
+        <ThemedText type="subtitle">{username}</ThemedText>
+        <TouchableOpacity
           style={{
-            width: width / 5,
-            height: width / 5,
+            backgroundColor: "#333333",
             borderRadius: 50,
+            paddingVertical: PADDING_VERTICAL,
+            paddingHorizontal: PADDING,
           }}
-        />
-        <View style={{ gap: 8 }}>
-          <ThemedText type="subtitle">{username}</ThemedText>
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#333333",
-              borderRadius: 50,
-              paddingVertical: 8,
-              paddingHorizontal: 16,
-            }}
-            onPress={() =>
-              Linking.openURL(`https://pixabay.com/users/${username}-${userId}`)
-            }
-          >
-            <ThemedText>Visit user profile</ThemedText>
-          </TouchableOpacity>
-        </View>
+          onPress={() =>
+            Linking.openURL(`https://pixabay.com/users/${username}-${userId}`)
+          }
+        >
+          <ThemedText>Visit user profile</ThemedText>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -1,8 +1,8 @@
-import { Category } from "@/api/pixabay/types";
 import { useWallpaperContext } from "@/contexts/photos-context";
-import { GAP, PADDING } from "@/helpers/constants";
+import { BORDER_RADIUS, GAP, PADDING } from "@/helpers/constants";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { Category } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -71,15 +71,14 @@ const CategoryCard = ({ item, index }: { item: Category; index: number }) => {
     (imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 }));
 
   return (
-    <Animated.View style={[{ flex: 1, borderRadius: 16 }, stylez]}>
+    <Animated.View style={[{ flex: 1 }, stylez]}>
       <ImageBackground
         source={categoryImageMap[item]}
-        imageStyle={{ borderRadius: 16 }}
+        imageStyle={{ borderRadius: BORDER_RADIUS }}
       >
         <Pressable
           style={{
             height: width / 2 - (PADDING + GAP),
-            borderRadius: 16,
           }}
           onPress={handlePress}
           onPressIn={handlePressIn}
@@ -99,12 +98,12 @@ const CategoryCard = ({ item, index }: { item: Category; index: number }) => {
               bottom: 0,
               left: 0,
               right: 0,
-              borderRadius: 16,
+              borderRadius: BORDER_RADIUS,
             }}
           />
           <ThemedText
             type="defaultSemiBold"
-            style={{ position: "absolute", bottom: 16, left: 16 }}
+            style={{ position: "absolute", bottom: PADDING, left: PADDING }}
           >
             {capitalizeFirstChar(item)}
           </ThemedText>

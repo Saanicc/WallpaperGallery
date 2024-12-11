@@ -1,4 +1,5 @@
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { GAP, PADDING } from "@/helpers/constants";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { sharedStyles } from "../styles";
@@ -30,8 +31,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginVertical: 16,
-    paddingHorizontal: 16,
-    gap: 16,
+    marginVertical: PADDING,
+    paddingHorizontal: PADDING,
+    gap: GAP,
   },
 });

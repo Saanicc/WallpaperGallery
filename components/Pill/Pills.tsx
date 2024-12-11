@@ -1,3 +1,4 @@
+import { BORDER_RADIUS, PADDING, PADDING_VERTICAL } from "@/helpers/constants";
 import { PixabayImageOrder } from "@/types/types";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -51,12 +52,12 @@ const styles = StyleSheet.create({
     zIndex: 2,
     borderWidth: 1,
     borderColor: "#FFFFFF",
-    borderRadius: 16,
+    borderRadius: BORDER_RADIUS,
   },
   sortButton: {
     justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: PADDING_VERTICAL,
+    paddingHorizontal: PADDING,
     borderRadius: 14,
   },
 });

@@ -4,6 +4,7 @@ import MenuButton from "@/components/MenuButton/MenuButton";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import { BORDER_RADIUS, PADDING } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
@@ -200,13 +201,13 @@ const styles = StyleSheet.create({
   },
   bottomSheetHandleStyle: {
     backgroundColor: "#222222",
-    borderRadius: 16,
+    borderRadius: BORDER_RADIUS,
   },
   bottomSheetHandleIndicatorStyle: {
     backgroundColor: "#FFFFFF",
   },
   bottomSheetScrollViewContainerStyle: {
     flex: 1,
-    padding: 16,
+    padding: PADDING,
   },
 });
