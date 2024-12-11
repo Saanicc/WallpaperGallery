@@ -1,8 +1,8 @@
-import { PixabayImage } from "@/api/pixabay/types";
 import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { GAP, PADDING } from "@/helpers/constants";
+import { PixabayImage } from "@/types/types";
 import React from "react";
 import { FlatList, View } from "react-native";
 

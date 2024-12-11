@@ -1,6 +1,6 @@
-import { PixabayImage } from "@/api/pixabay/types";
 import { GAP, PADDING } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { PixabayImage } from "@/types/types";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Animated, ImageBackground, Pressable } from "react-native";

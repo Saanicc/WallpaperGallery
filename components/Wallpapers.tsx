@@ -1,7 +1,7 @@
-import { PixabayImage, PixabayImageOrder } from "@/api/pixabay/types";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { BORDER_RADIUS, GAP } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { PixabayImage, PixabayImageOrder } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useEffect, useRef } from "react";
 import { FlatList, StatusBar, View } from "react-native";

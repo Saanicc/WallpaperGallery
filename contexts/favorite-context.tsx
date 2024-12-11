@@ -1,4 +1,4 @@
-import { PixabayImage } from "@/api/pixabay/types";
+import { PixabayImage } from "@/types/types";
 import {
   createContext,
   PropsWithChildren,

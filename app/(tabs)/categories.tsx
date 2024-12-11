@@ -1,6 +1,6 @@
-import { categories } from "@/api/pixabay/types";
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
 import { GAP, PADDING } from "@/helpers/constants";
+import { categories } from "@/types/types";
 import React from "react";
 import { FlatList, View } from "react-native";
 

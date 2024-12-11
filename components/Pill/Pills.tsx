@@ -1,4 +1,4 @@
-import { PixabayImageOrder } from "@/api/pixabay/types";
+import { PixabayImageOrder } from "@/types/types";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "../ThemedText/ThemedText";

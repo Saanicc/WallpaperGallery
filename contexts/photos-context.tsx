@@ -1,10 +1,10 @@
+import { useScreenSize } from "@/hooks/useScreenSize";
 import {
   Category,
   PixabayImage,
   PixabayImageOrder,
   PixabayImageResponse,
-} from "@/api/pixabay/types";
-import { useScreenSize } from "@/hooks/useScreenSize";
+} from "@/types/types";
 import {
   useInfiniteQuery,
   useQuery,

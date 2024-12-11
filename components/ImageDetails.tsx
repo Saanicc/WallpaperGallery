@@ -1,5 +1,5 @@
-import { PixabayImage } from "@/api/pixabay/types";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { PixabayImage } from "@/types/types";
 import React from "react";
 import {
   Image,
