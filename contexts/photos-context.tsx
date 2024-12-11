@@ -68,6 +68,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
       ],
       queryFn: async ({ pageParam = 1 }) => {
         const imageType = `&image_type=photo`;
+        const safeSearch = `&safesearch=true`;
         const category = `&category=${selectedCategory}`;
         const width = `&min_width=${actualWidthInPixels}`;
         const height = `&min_height=${actualHeightInPixels}`;
@@ -75,15 +76,20 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
         const page = `&page=${pageParam}`;
         const perPage = `&per_page=10`;
 
-        const URL = `${PIXABAY_API_URL}${imageType}${category}${width}${height}${order}${page}${perPage}`;
+        const URL = `${PIXABAY_API_URL}${imageType}${safeSearch}${
+          selectedCategory ? category : ""
+        }${width}${height}${order}${page}${perPage}`;
 
-        return await fetch(URL).then((res) => res.json());
+        return await fetch(URL).then((res) => {
+          const rateLimitRemaining = res.headers.get("X-RateLimit-Remaining");
+          console.log("X-RateLimit-Remaining:", rateLimitRemaining);
+
+          return res.json();
+        });
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
         lastPage?.hits?.length ? pages.length + 1 : undefined,
-      staleTime:
-        orderBy === PixabayImageOrder.POPULAR ? 1000 * 60 * 5 : 1000 * 60,
     });
 
   const photos = data?.pages.flatMap((page) => page.hits) || [];
@@ -100,7 +106,11 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
         queryKey: ["wallpaper", wallpaperId],
         queryFn: async () => {
           const URL = `${PIXABAY_API_URL}&id=${wallpaperId}`;
-          return await fetch(URL).then((res) => res.json());
+          return await fetch(URL).then((res) => {
+            const rateLimitRemaining = res.headers.get("X-RateLimit-Remaining");
+            console.log("X-RateLimit-Remaining:", rateLimitRemaining);
+            return res.json();
+          });
         },
       }),
     []
