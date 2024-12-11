@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import PixabayLink from "./Link";
+import Link from "./Link/Link";
 import { ThemedText } from "./ThemedText/ThemedText";
 
 const ImageDetails = ({ item }: { item: PixabayImage }) => {
@@ -97,7 +97,8 @@ const ImageDetails = ({ item }: { item: PixabayImage }) => {
       </View>
       <View style={{ marginTop: 16, alignItems: "center" }}>
         <ThemedText style={{ marginBottom: 24 }}>
-          Image provided by <PixabayLink />
+          Image provided by{" "}
+          <Link url="https://pixabay.com" linkText="Pixabay" />
         </ThemedText>
       </View>
     </>
