@@ -1,5 +1,5 @@
 import Header from "@/components/Header/Header";
-import ImageDetails from "@/components/ImageDetails";
+import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
 import { useFavoriteContext } from "@/contexts/favorite-context";
