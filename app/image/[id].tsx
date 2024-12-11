@@ -159,7 +159,7 @@ export default function DetailedImage() {
           }
           rightComponent={
             <MenuButton
-              icon={isWallpaperFavorited(id) ? "heart" : "heart-outline"}
+              icon={isWallpaperFavorited(id) ? "star" : "star-outline"}
               onPress={() => wallpaper && addToFavorites(wallpaper)}
             />
           }

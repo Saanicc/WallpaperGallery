@@ -1,5 +1,5 @@
 export type MenuButtonProps = {
-  icon: "arrow-back" | "heart" | "heart-outline" | "trash-outline";
+  icon: "arrow-back" | "star" | "star-outline" | "trash-outline";
   onPress: (...args: any) => void;
   disabled?: boolean;
   size?: number;
