@@ -25,9 +25,7 @@ const favorites = () => {
       <FlatList
         data={getData()}
         keyExtractor={(wallpaper) => String(wallpaper.id)}
-        renderItem={({ item, index }) => (
-          <FavoriteCard item={item} index={index} />
-        )}
+        renderItem={({ item }) => <FavoriteCard item={item} />}
         numColumns={2}
         columnWrapperStyle={{ gap: GAP }}
         contentContainerStyle={{

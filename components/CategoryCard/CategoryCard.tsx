@@ -1,18 +1,14 @@
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { BORDER_RADIUS, GAP, PADDING } from "@/helpers/constants";
 import { capitalizeFirstChar } from "@/helpers/functions";
+import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { Category } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ImageBackground, Pressable } from "react-native";
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { ThemedText } from "../ThemedText/ThemedText";
 
 const categoryImageMap: Record<Category, any> = {
@@ -38,37 +34,17 @@ const categoryImageMap: Record<Category, any> = {
   music: require(`@/assets/images/category/music.jpg`),
 };
 
-const CategoryCard = ({ item, index }: { item: Category; index: number }) => {
-  const { setSelectedCategory } = useWallpaperContext();
+const CategoryCard = ({ item }: { item: Category }) => {
   const route = useRouter();
+  const { setSelectedCategory } = useWallpaperContext();
+  const { stylez, handlePressIn, handlePressOut } = useScaleAnimation();
 
-  const imageCardScale = useSharedValue(1);
   const { width } = useScreenSize();
-
-  const stylez = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          scale: interpolate(
-            index,
-            [index - 1, index, index + 1],
-            [0, imageCardScale.value, 0]
-          ),
-        },
-      ],
-    };
-  });
 
   const handlePress = () => {
     setSelectedCategory(item);
     route.navigate("/");
   };
-
-  const handlePressIn = () =>
-    (imageCardScale.value = withSpring(0.9, { mass: 0.5, damping: 5 }));
-
-  const handlePressOut = () =>
-    (imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 }));
 
   return (
     <Animated.View style={[{ flex: 1 }, stylez]}>
