@@ -19,7 +19,7 @@ const FavoriteCard = ({ item }: { item: PixabayImage }) => {
   return (
     <Animated.View style={[{ flex: 1 / 2 }, stylez]}>
       <ImageBackground
-        source={{ uri: item.previewURL }}
+        source={{ uri: item.webformatURL }}
         imageStyle={{ borderRadius: BORDER_RADIUS }}
       >
         <Pressable
