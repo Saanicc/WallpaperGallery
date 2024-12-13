@@ -1,50 +1,35 @@
-# Welcome to your Expo app 👋
+# Wallpaper Gallery
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a simple wallpaper app (built using [Expo](https://expo.dev)) where you can sort, filter by category and favorite wallpapers (stored locally).
 
 ## Get started
 
-1. Install dependencies
+1. Get your own API key from Pixabay. 
+   *Instructions can be found [here](https://pixabay.com/api/docs/)* 
 
+2. Create a `.env` file in the root of the project
+3. Store the API key under `EXPO_PUBLIC_PIXABAY_API_KEY`
+
+4. Install dependencies
    ```bash
    npm install
    ```
 
-2. Start the app
-
+5. Start the app
    ```bash
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+6. Follow the instructions in the console output
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### App preview
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<div style="width: 100%; display: flex; flex-wrap: wrap">
+   <img src="docs/preview_images/homescreen.png" width="350" title="Homescreen">
+   <img src="docs/preview_images/image.png" width="350" title="Image">
+   <img src="docs/preview_images/image_details.png" width="350" title="Image details">
+   <img src="docs/preview_images/categories.png" width="350" title="Categories">
+   <img src="docs/preview_images/empty_favorites.png" width="350" title="Empty favorties">
+   <img src="docs/preview_images/favorites.png" width="350" title="Favorites">
+</div>
