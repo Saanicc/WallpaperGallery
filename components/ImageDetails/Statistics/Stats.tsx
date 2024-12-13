@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/ThemedText/ThemedText";
-import { GAP, PADDING } from "@/helpers/constants";
+import { GAP, PADDING } from "@/constants/style";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { sharedStyles } from "../styles";

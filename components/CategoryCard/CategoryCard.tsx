@@ -1,5 +1,5 @@
+import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useWallpaperContext } from "@/contexts/photos-context";
-import { BORDER_RADIUS, GAP, PADDING } from "@/helpers/constants";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";

@@ -1,7 +1,8 @@
 import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { colors } from "@/constants/colors";
+import { GAP, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
-import { GAP, PADDING } from "@/helpers/constants";
 import { PixabayImage } from "@/types/types";
 import React from "react";
 import { FlatList, View } from "react-native";
@@ -19,7 +20,7 @@ const favorites = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#333333",
+        backgroundColor: colors.background,
       }}
     >
       <FlatList

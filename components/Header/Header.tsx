@@ -1,4 +1,4 @@
-import { PADDING } from "@/helpers/constants";
+import { PADDING } from "@/constants/style";
 import React, { PropsWithChildren } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 

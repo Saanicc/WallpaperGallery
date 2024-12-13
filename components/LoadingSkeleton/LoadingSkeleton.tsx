@@ -1,3 +1,4 @@
+import { colors } from "@/constants/colors";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 import { ThemedText } from "../ThemedText/ThemedText";
@@ -22,7 +23,7 @@ const LoadingSkeleton = ({
         justifyContent: "center",
       }}
     >
-      <ActivityIndicator color="#ffffff" size={50} />
+      <ActivityIndicator color={colors.primary} size={50} />
       <ThemedText type="defaultSemiBold">Loading...</ThemedText>
     </View>
   );

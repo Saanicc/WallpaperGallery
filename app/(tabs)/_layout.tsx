@@ -1,5 +1,6 @@
 import MenuButton from "@/components/MenuButton/MenuButton";
 import { Font } from "@/components/ThemedText/ThemedText.config";
+import { colors } from "@/constants/colors";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -24,7 +25,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Wallpapers",
-          tabBarActiveTintColor: "#FFFFFF",
+          tabBarActiveTintColor: colors.primary,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons name="image-outline" size={size} color={color} />
           ),
@@ -38,10 +39,10 @@ export default function TabLayout() {
         name="categories"
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: "#222222" },
-          headerTitleStyle: { color: "#FFFFFF" },
+          headerStyle: { backgroundColor: colors.darkerBackground },
+          headerTitleStyle: { color: colors.primary },
           title: "Categories",
-          tabBarActiveTintColor: "#FFFFFF",
+          tabBarActiveTintColor: colors.primary,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons name="apps-sharp" size={size} color={color} />
           ),
@@ -50,7 +51,7 @@ export default function TabLayout() {
             fontFamily: Font.ArimaMadurai_500Medium,
           },
           tabBarStyle: {
-            backgroundColor: "#222222",
+            backgroundColor: colors.darkerBackground,
             borderTopWidth: 0,
           },
         }}
@@ -59,15 +60,17 @@ export default function TabLayout() {
         name="favorites"
         options={{
           headerShown: true,
-          headerStyle: { backgroundColor: "#222222" },
-          headerTitleStyle: { color: "#FFFFFF" },
+          headerStyle: { backgroundColor: colors.darkerBackground },
+          headerTitleStyle: { color: colors.primary },
           headerRight: () => (
             <View style={{ marginRight: 16 }}>
               <MenuButton
                 disabled={favoriteWallpapers.length === 0 && true}
                 icon="trash-outline"
                 iconColor={
-                  favoriteWallpapers.length === 0 ? "#666666" : "#FFFFFF"
+                  favoriteWallpapers.length === 0
+                    ? colors.disabled
+                    : colors.primary
                 }
                 size={25}
                 onPress={() =>
@@ -92,7 +95,7 @@ export default function TabLayout() {
             </View>
           ),
           title: "Favorites",
-          tabBarActiveTintColor: "#FFFFFF",
+          tabBarActiveTintColor: colors.primary,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons name="star-outline" size={size} color={color} />
           ),
@@ -101,7 +104,7 @@ export default function TabLayout() {
             fontFamily: Font.ArimaMadurai_500Medium,
           },
           tabBarStyle: {
-            backgroundColor: "#222222",
+            backgroundColor: colors.darkerBackground,
             borderTopWidth: 0,
           },
         }}

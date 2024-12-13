@@ -1,4 +1,4 @@
-import { BORDER_RADIUS } from "@/helpers/constants";
+import { BORDER_RADIUS } from "@/constants/style";
 import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { Pressable } from "react-native";

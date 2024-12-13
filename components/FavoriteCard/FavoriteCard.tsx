@@ -1,4 +1,4 @@
-import { BORDER_RADIUS, GAP, PADDING } from "@/helpers/constants";
+import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { PixabayImage } from "@/types/types";

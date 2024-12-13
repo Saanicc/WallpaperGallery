@@ -1,4 +1,4 @@
-import { BORDER_RADIUS, PADDING, PADDING_VERTICAL } from "@/helpers/constants";
+import { BORDER_RADIUS, PADDING, PADDING_VERTICAL } from "@/constants/style";
 import { StyleSheet } from "react-native";
 
 export const sharedStyles = StyleSheet.create({

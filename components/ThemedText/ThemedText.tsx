@@ -1,3 +1,4 @@
+import { colors } from "@/constants/colors";
 import { StyleSheet, Text } from "react-native";
 import { Font, ThemedTextProps } from "./ThemedText.config";
 
@@ -9,7 +10,7 @@ export function ThemedText({
   return (
     <Text
       style={[
-        { color: "#fff" },
+        { color: colors.primary },
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
@@ -42,6 +43,6 @@ const styles = StyleSheet.create({
   link: {
     fontFamily: Font.ArimaMadurai_700Bold,
     fontSize: 16,
-    color: "#0a7ea4",
+    color: colors.link,
   },
 });

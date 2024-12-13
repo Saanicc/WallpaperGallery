@@ -1,3 +1,4 @@
+import { colors } from "@/constants/colors";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
@@ -37,7 +38,7 @@ const BackdropPhotos = ({
         StyleSheet.absoluteFillObject,
         {
           ...(isLoading && {
-            backgroundColor: "#222222",
+            backgroundColor: colors.background,
           }),
         },
       ]}

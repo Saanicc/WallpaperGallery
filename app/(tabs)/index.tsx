@@ -3,8 +3,8 @@ import LoadingSkeleton from "@/components/LoadingSkeleton/LoadingSkeleton";
 import Photo from "@/components/Photo/Photo";
 import Pills from "@/components/Pill/Pills";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { BORDER_RADIUS, GAP } from "@/constants/style";
 import { useWallpaperContext } from "@/contexts/photos-context";
-import { BORDER_RADIUS, GAP } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { PixabayImage, PixabayImageOrder } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
@@ -59,7 +59,7 @@ export default function Index() {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor={"#00000000"} />
+      <StatusBar barStyle="light-content" backgroundColor={"transparent"} />
       <BackdropPhotos
         photos={allWallpapers}
         scrollX={scrollX}

@@ -1,7 +1,8 @@
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { colors } from "@/constants/colors";
+import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useWallpaperContext } from "@/contexts/photos-context";
-import { BORDER_RADIUS, GAP, PADDING } from "@/helpers/constants";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { categories } from "@/types/types";
 import { useRouter } from "expo-router";
@@ -24,13 +25,13 @@ const Categories = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#333333",
+        backgroundColor: colors.background,
       }}
     >
       <Animated.View
         style={[
           {
-            backgroundColor: "#444444",
+            backgroundColor: colors.button,
             borderRadius: BORDER_RADIUS,
             margin: PADDING,
           },

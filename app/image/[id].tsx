@@ -2,9 +2,10 @@ import Header from "@/components/Header/Header";
 import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { colors } from "@/constants/colors";
+import { BORDER_RADIUS, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
-import { BORDER_RADIUS, PADDING } from "@/helpers/constants";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
@@ -194,17 +195,17 @@ export default function DetailedImage() {
 const styles = StyleSheet.create({
   gestureContainer: {
     flex: 1,
-    backgroundColor: "#222222",
+    backgroundColor: colors.darkerBackground,
   },
   bottomSheetBackgroundStyle: {
-    backgroundColor: "#222222",
+    backgroundColor: colors.darkerBackground,
   },
   bottomSheetHandleStyle: {
-    backgroundColor: "#222222",
+    backgroundColor: colors.darkerBackground,
     borderRadius: BORDER_RADIUS,
   },
   bottomSheetHandleIndicatorStyle: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.primary,
   },
   bottomSheetScrollViewContainerStyle: {
     flex: 1,

@@ -1,4 +1,5 @@
-import { BORDER_RADIUS, PADDING, PADDING_VERTICAL } from "@/helpers/constants";
+import { colors } from "@/constants/colors";
+import { BORDER_RADIUS, PADDING, PADDING_VERTICAL } from "@/constants/style";
 import { PixabayImageOrder } from "@/types/types";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -17,7 +18,9 @@ const Pills = ({ selectedPill, items, onPillSelect }: PillsProps) => {
           style={[
             styles.sortButton,
             {
-              backgroundColor: isPillSelected(pill) ? "#FFFFFF" : "transparent",
+              backgroundColor: isPillSelected(pill)
+                ? colors.primary
+                : "transparent",
               ...(selectedPill === PixabayImageOrder.POPULAR && {
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
@@ -33,7 +36,7 @@ const Pills = ({ selectedPill, items, onPillSelect }: PillsProps) => {
           <ThemedText
             type="defaultSemiBold"
             style={{
-              color: isPillSelected(pill) ? "#000000" : "#FFFFFF",
+              color: isPillSelected(pill) ? "#000000" : colors.primary,
             }}
           >
             {pill}
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     zIndex: 2,
     borderWidth: 1,
-    borderColor: "#FFFFFF",
+    borderColor: colors.primary,
     borderRadius: BORDER_RADIUS,
   },
   sortButton: {

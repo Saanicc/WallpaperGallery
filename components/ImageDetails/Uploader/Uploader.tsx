@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/ThemedText/ThemedText";
-import { PADDING, PADDING_VERTICAL } from "@/helpers/constants";
+import { colors } from "@/constants/colors";
+import { PADDING, PADDING_VERTICAL } from "@/constants/style";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import React from "react";
 import { Image, Linking, TouchableOpacity, View } from "react-native";
@@ -28,7 +29,7 @@ const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
         <ThemedText type="subtitle">{username}</ThemedText>
         <TouchableOpacity
           style={{
-            backgroundColor: "#333333",
+            backgroundColor: colors.button,
             borderRadius: 50,
             paddingVertical: PADDING_VERTICAL,
             paddingHorizontal: PADDING,

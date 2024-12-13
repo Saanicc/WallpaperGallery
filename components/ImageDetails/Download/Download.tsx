@@ -1,4 +1,5 @@
 import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { colors } from "@/constants/colors";
 import React from "react";
 import { Linking, TouchableOpacity } from "react-native";
 import { sharedStyles } from "../styles";
@@ -9,7 +10,7 @@ const Download = ({ pageURL }: { pageURL: string }) => {
       style={[
         sharedStyles.infoItem,
         {
-          backgroundColor: "#333333",
+          backgroundColor: colors.button,
           marginVertical: 16,
           alignSelf: "center",
         },
