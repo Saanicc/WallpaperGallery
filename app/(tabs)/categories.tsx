@@ -28,29 +28,6 @@ const Categories = () => {
         backgroundColor: colors.background,
       }}
     >
-      <Animated.View
-        style={[
-          {
-            backgroundColor: colors.button,
-            borderRadius: BORDER_RADIUS,
-            margin: PADDING,
-          },
-          stylez,
-        ]}
-      >
-        <Pressable
-          onPress={handlePress}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: PADDING,
-          }}
-        >
-          <ThemedText type="defaultSemiBold">All</ThemedText>
-        </Pressable>
-      </Animated.View>
       <FlatList
         data={categories}
         keyExtractor={(_, index) => categories[index]}
@@ -62,6 +39,31 @@ const Categories = () => {
           paddingTop: 0,
           gap: GAP,
         }}
+        ListHeaderComponent={
+          <Animated.View
+            style={[
+              {
+                backgroundColor: colors.button,
+                borderRadius: BORDER_RADIUS,
+                marginTop: PADDING,
+              },
+              stylez,
+            ]}
+          >
+            <Pressable
+              onPress={handlePress}
+              onPressIn={handlePressIn}
+              onPressOut={handlePressOut}
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                padding: PADDING,
+              }}
+            >
+              <ThemedText type="defaultSemiBold">All</ThemedText>
+            </Pressable>
+          </Animated.View>
+        }
       />
     </View>
   );
