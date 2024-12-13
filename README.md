@@ -23,13 +23,51 @@ This is a simple wallpaper app (built using [Expo](https://expo.dev)) where you 
 6. Follow the instructions in the console output
 
 
-### App preview
+## App preview
+
+
 
 <div style="width: 100%; display: flex; flex-wrap: wrap">
-   <img src="docs/preview_images/homescreen.png" width="350" title="Homescreen">
-   <img src="docs/preview_images/image.png" width="350" title="Image">
-   <img src="docs/preview_images/image_details.png" width="350" title="Image details">
-   <img src="docs/preview_images/categories.png" width="350" title="Categories">
-   <img src="docs/preview_images/empty_favorites.png" width="350" title="Empty favorties">
-   <img src="docs/preview_images/favorites.png" width="350" title="Favorites">
+   <div>
+      <div style="display: flex; justify-content: space-between;">
+         <p style="padding: 0 0rem 0 4.5rem; font-weight: bold">iOS</p>
+         <p style="padding: 0 3.3rem 0 0rem; font-weight: bold">Android</p>
+      </div>
+      <img src="docs/preview_images/homescreen.png" width="350" title="Homescreen">
+   </div>
+   <div>
+      <div style="display: flex; justify-content: space-between;">
+         <p style="padding: 0 0rem 0 4.5rem; font-weight: bold">iOS</p>
+         <p style="padding: 0 3.3rem 0 0rem; font-weight: bold">Android</p>
+      </div>
+      <img src="docs/preview_images/image.png" width="350" title="Image">
+   </div>
+   <div>
+      <div style="display: flex; justify-content: space-between;">
+         <p style="padding: 0 0rem 0 4.5rem; font-weight: bold">iOS</p>
+         <p style="padding: 0 3.3rem 0 0rem; font-weight: bold">Android</p>
+      </div>
+      <img src="docs/preview_images/image_details.png" width="350" title="Image details">
+   </div>
+   <div>
+      <div style="display: flex; justify-content: space-between;">
+         <p style="padding: 0 0rem 0 4.5rem; font-weight: bold">iOS</p>
+         <p style="padding: 0 3.3rem 0 0rem; font-weight: bold">Android</p>
+      </div>
+      <img src="docs/preview_images/categories.png" width="350" title="Categories">
+   </div>
+   <div>
+      <div style="display: flex; justify-content: space-between;">
+         <p style="padding: 0 0rem 0 4.5rem; font-weight: bold">iOS</p>
+         <p style="padding: 0 3.3rem 0 0rem; font-weight: bold">Android</p>
+      </div>
+      <img src="docs/preview_images/empty_favorites.png" width="350" title="Empty favorties">
+   </div>
+   <div>
+      <div style="display: flex; justify-content: space-between;">
+         <p style="padding: 0 0rem 0 4.5rem; font-weight: bold">iOS</p>
+         <p style="padding: 0 3.3rem 0 0rem; font-weight: bold">Android</p>
+      </div>
+      <img src="docs/preview_images/favorites.png" width="350" title="Favorites">
+   </div>
 </div>
