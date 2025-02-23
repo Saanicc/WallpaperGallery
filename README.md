@@ -31,10 +31,10 @@ Here are some screenshots of the app in action:
 ## 📦 Setup & Installation
 ```sh
 # Clone the repository
-git clone https://github.com/your-username/photo-gallery-app.git
+git clone https://github.com/Saanicc/WallpaperGallery.git
 
 # Navigate to the project folder
-cd photo-gallery-app
+cd WallpaperGallery
 
 # Install dependencies
 npm install
@@ -48,9 +48,3 @@ If you have any questions or feedback, feel free to reach out!
 
 ---
 📷 Built with passion using React Native, Expo, and Pixabay API!
-
-
-
-
-### App preview
-
