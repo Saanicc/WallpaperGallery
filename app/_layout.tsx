@@ -60,9 +60,6 @@ export default function RootLayout() {
               <Stack
                 screenOptions={{
                   headerShown: false,
-                  statusBarBackgroundColor: "rgba(0,0,0,0)",
-                  navigationBarTranslucent: true,
-                  navigationBarColor: "rgba(0,0,0,0)",
                 }}
               >
                 <Stack.Screen name="(tabs)" />
