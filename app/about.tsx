@@ -4,7 +4,7 @@ import useTheme from "@/hooks/useTheme";
 import Constants from "expo-constants";
 import { Stack } from "expo-router";
 import React from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AboutScreen() {
@@ -32,6 +32,10 @@ export default function AboutScreen() {
           gap: 16,
         }}
       >
+        <Image
+          source={require("@/assets/images/adaptive-icon.png")}
+          className="w-48 h-48"
+        />
         <Text variant="h1" className="text-primary">
           Wallpaper Gallery
         </Text>
