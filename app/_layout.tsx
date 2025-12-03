@@ -14,6 +14,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/arima-madurai";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PortalHost } from "@rn-primitives/portal";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
@@ -73,6 +74,7 @@ export default function RootLayout() {
                   }}
                 />
               </Stack>
+              <PortalHost />
             </EventProvider>
           </FavoriteContextProvider>
         </WallpaperContextProvider>
