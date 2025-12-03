@@ -1,6 +1,6 @@
 import HorizontalList from "@/components/HorizontalList/HorizontalList";
-import { colors } from "@/constants/colors";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import useTheme from "@/hooks/useTheme";
 import { PixabayImageOrder } from "@/types/types";
 import { useRouter } from "expo-router";
 import { View } from "react-native";
@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function Index() {
   const { getWallpapers } = useWallpaperContext();
   const router = useRouter();
+  const theme = useTheme();
 
   const { data: popularData, isLoading: popularLoading } = getWallpapers(
     PixabayImageOrder.POPULAR,
@@ -30,10 +31,8 @@ export default function Index() {
     <View
       style={{
         flex: 1,
-        paddingTop: useSafeAreaInsets().top + 16,
-        paddingBottom: 16,
-        backgroundColor: colors.background,
-        gap: 16,
+        paddingTop: useSafeAreaInsets().top,
+        backgroundColor: theme.colors.background,
       }}
     >
       <HorizontalList

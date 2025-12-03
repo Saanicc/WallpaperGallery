@@ -1,8 +1,8 @@
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
-import { colors } from "@/constants/colors";
 import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useScaleAnimation } from "@/hooks/animations/scale";
+import useTheme from "@/hooks/useTheme";
 import { categories, PixabayImageOrder } from "@/types/types";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -11,6 +11,7 @@ import Animated from "react-native-reanimated";
 
 const Categories = () => {
   const router = useRouter();
+  const theme = useTheme();
 
   const { stylez, handlePressIn, handlePressOut } = useScaleAnimation();
 
@@ -25,7 +26,7 @@ const Categories = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: theme.colors.background,
       }}
     >
       <FlatList
@@ -43,9 +44,10 @@ const Categories = () => {
           <Animated.View
             style={[
               {
-                backgroundColor: colors.button,
                 borderRadius: BORDER_RADIUS,
                 marginTop: PADDING,
+                borderColor: theme.colors.border,
+                borderWidth: 1,
               },
               stylez,
             ]}

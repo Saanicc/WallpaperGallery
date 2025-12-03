@@ -1,14 +1,15 @@
 import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
 import { ThemedText } from "@/components/ThemedText/ThemedText";
-import { colors } from "@/constants/colors";
 import { GAP, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
+import useTheme from "@/hooks/useTheme";
 import { PixabayImage } from "@/types/types";
 import React from "react";
 import { FlatList, View } from "react-native";
 
 const favorites = () => {
   const { favoriteWallpapers } = useFavoriteContext();
+  const theme = useTheme();
 
   const getData = () => {
     if (favoriteWallpapers.length % 2 > 0)
@@ -20,7 +21,7 @@ const favorites = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: theme.colors.background,
       }}
     >
       <FlatList

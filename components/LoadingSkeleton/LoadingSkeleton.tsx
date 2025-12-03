@@ -1,4 +1,4 @@
-import { colors } from "@/constants/colors";
+import useTheme from "@/hooks/useTheme";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 import { ThemedText } from "../ThemedText/ThemedText";
@@ -8,22 +8,24 @@ const LoadingSkeleton = ({
   height,
   borderRadius,
 }: {
-  width: number;
-  height: number;
-  borderRadius: number;
+  width?: number;
+  height?: number;
+  borderRadius?: number;
 }) => {
+  const theme = useTheme();
+
   return (
     <View
       style={{
-        width,
-        height,
-        borderRadius,
+        width: width || 100,
+        height: height || 100,
+        borderRadius: borderRadius || 8,
         backgroundColor: "rgba(0,0,0,0.5)",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <ActivityIndicator color={colors.primary} size={50} />
+      <ActivityIndicator color={theme.colors.primary} size={50} />
       <ThemedText type="defaultSemiBold">Loading...</ThemedText>
     </View>
   );

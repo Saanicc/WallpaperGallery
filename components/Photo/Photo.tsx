@@ -42,10 +42,22 @@ const Photo = memo(
             route.navigate(`/image/${item.id}`);
           }}
           onPressIn={() => {
-            imageCardScale.value = withSpring(0.9, { mass: 0.5, damping: 5 });
+            imageCardScale.value = withSpring(0.95, {
+              stiffness: 900,
+              damping: 90,
+              mass: 4,
+              overshootClamping: false,
+              velocity: 0,
+            });
           }}
           onPressOut={() => {
-            imageCardScale.value = withSpring(1, { mass: 0.5, damping: 5 });
+            imageCardScale.value = withSpring(1, {
+              stiffness: 900,
+              damping: 90,
+              mass: 4,
+              overshootClamping: false,
+              velocity: 0,
+            });
           }}
         >
           <Animated.Image

@@ -1,4 +1,4 @@
-import { colors } from "@/constants/colors";
+import useTheme from "@/hooks/useTheme";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -11,6 +11,8 @@ const MenuButton = ({
   disabled,
   onPress,
 }: MenuButtonProps) => {
+  const theme = useTheme();
+
   return (
     <TouchableOpacity
       disabled={disabled ? disabled : false}
@@ -20,7 +22,7 @@ const MenuButton = ({
       <Ionicons
         name={icon}
         size={size ? size : 30}
-        color={iconColor ? iconColor : colors.primary}
+        color={iconColor ? iconColor : theme.colors.primary}
       />
     </TouchableOpacity>
   );
