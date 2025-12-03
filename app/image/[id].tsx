@@ -1,7 +1,7 @@
 import Header from "@/components/Header/Header";
 import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
-import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { Text } from "@/components/ui/text";
 import { colors } from "@/constants/colors";
 import { BORDER_RADIUS, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
@@ -181,9 +181,7 @@ export default function DetailedImage() {
           {wallpaper && <ImageDetails item={wallpaper} />}
           {!wallpaper && (
             <View style={{ alignItems: "center" }}>
-              <ThemedText type="default">
-                No wallpaper information was found.
-              </ThemedText>
+              <Text>No wallpaper information was found.</Text>
             </View>
           )}
         </BottomSheetScrollView>

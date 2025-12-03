@@ -1,7 +1,7 @@
 import useTheme from "@/hooks/useTheme";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
-import { ThemedText } from "../ThemedText/ThemedText";
+import { Text } from "../ui/text";
 
 const LoadingSkeleton = ({
   width,
@@ -26,7 +26,7 @@ const LoadingSkeleton = ({
       }}
     >
       <ActivityIndicator color={theme.colors.primary} size={50} />
-      <ThemedText type="defaultSemiBold">Loading...</ThemedText>
+      <Text>Loading...</Text>
     </View>
   );
 };

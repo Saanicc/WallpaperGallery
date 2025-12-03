@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { Text } from "@/components/ui/text";
 import { colors } from "@/constants/colors";
 import { PADDING, PADDING_VERTICAL } from "@/constants/style";
 import { useScreenSize } from "@/hooks/useScreenSize";
@@ -26,7 +26,7 @@ const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
         }}
       />
       <View>
-        <ThemedText type="subtitle">{username}</ThemedText>
+        <Text variant="h4">{username}</Text>
         <TouchableOpacity
           style={{
             backgroundColor: colors.button,
@@ -38,7 +38,7 @@ const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
             Linking.openURL(`https://pixabay.com/users/${username}-${userId}`)
           }
         >
-          <ThemedText>Visit user profile</ThemedText>
+          <Text>Visit user profile</Text>
         </TouchableOpacity>
       </View>
     </View>

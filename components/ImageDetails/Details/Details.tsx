@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { Text } from "@/components/ui/text";
 import React from "react";
 import { View } from "react-native";
 import { sharedStyles } from "../styles";
@@ -13,14 +13,14 @@ const Details = ({ tags, imageDim }: DetailsProps) => {
       }}
     >
       <View style={sharedStyles.infoItem}>
-        <ThemedText type="defaultSemiBold">Image tags</ThemedText>
-        <ThemedText>{tags}</ThemedText>
+        <Text variant="large">Image tags</Text>
+        <Text>{tags}</Text>
       </View>
       <View style={sharedStyles.infoItem}>
-        <ThemedText type="defaultSemiBold">Image dimensions</ThemedText>
-        <ThemedText>
+        <Text variant="large">Image dimensions</Text>
+        <Text>
           {imageDim.width} x {imageDim.height}
-        </ThemedText>
+        </Text>
       </View>
     </View>
   );

@@ -1,5 +1,5 @@
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
-import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { Text } from "@/components/ui/text";
 import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import useTheme from "@/hooks/useTheme";
@@ -62,7 +62,7 @@ const Categories = () => {
                 padding: PADDING,
               }}
             >
-              <ThemedText type="defaultSemiBold">All</ThemedText>
+              <Text>All</Text>
             </Pressable>
           </Animated.View>
         }

@@ -1,5 +1,4 @@
 import MenuButton from "@/components/MenuButton/MenuButton";
-import { Font } from "@/components/ThemedText/ThemedText.config";
 import { colors } from "@/constants/colors";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import useTheme from "@/hooks/useTheme";
@@ -31,7 +30,6 @@ export default function TabLayout() {
           ),
           tabBarLabelStyle: {
             fontSize: 12,
-            fontFamily: Font.ArimaMadurai_500Medium,
           },
         }}
       />
@@ -50,7 +48,6 @@ export default function TabLayout() {
           ),
           tabBarLabelStyle: {
             fontSize: 12,
-            fontFamily: Font.ArimaMadurai_500Medium,
           },
           tabBarStyle: {
             backgroundColor: theme.colors.background,
@@ -105,7 +102,6 @@ export default function TabLayout() {
           ),
           tabBarLabelStyle: {
             fontSize: 12,
-            fontFamily: Font.ArimaMadurai_500Medium,
           },
           tabBarStyle: {
             backgroundColor: theme.colors.background,

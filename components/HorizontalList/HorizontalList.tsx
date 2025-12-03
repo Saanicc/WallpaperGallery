@@ -8,6 +8,7 @@ import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import React from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
+import { Text } from "../ui/text";
 
 interface HorizontalListProps {
   title: string;
@@ -32,7 +33,9 @@ const HorizontalList = ({
         <Card className="w-full h-full p-4 rounded-none border-0">
           <Pressable onPress={onViewMore}>
             <CardHeader className="flex-row items-center justify-between p-0">
-              <CardTitle className="text-xl">{title}</CardTitle>
+              <CardTitle>
+                <Text variant="h4">{title}</Text>
+              </CardTitle>
               <Ionicons
                 name="chevron-forward"
                 size={20}

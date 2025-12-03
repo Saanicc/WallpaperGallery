@@ -1,5 +1,5 @@
 import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
-import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { Text } from "@/components/ui/text";
 import { GAP, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import useTheme from "@/hooks/useTheme";
@@ -38,9 +38,7 @@ const favorites = () => {
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <ThemedText>
-              You haven't added any favorite wallpapers yet.
-            </ThemedText>
+            <Text>You haven't added any favorite wallpapers yet.</Text>
           </View>
         )}
       />

@@ -8,7 +8,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { ImageBackground, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
-import { ThemedText } from "../ThemedText/ThemedText";
+import { Text } from "../ui/text";
 
 const categoryImageMap: Record<Category, any> = {
   backgrounds: require(`@/assets/images/category/backgrounds.jpg`),
@@ -77,12 +77,11 @@ const CategoryCard = ({ item }: { item: Category }) => {
               borderRadius: BORDER_RADIUS,
             }}
           />
-          <ThemedText
-            type="defaultSemiBold"
+          <Text
             style={{ position: "absolute", bottom: PADDING, left: PADDING }}
           >
             {capitalizeFirstChar(item)}
-          </ThemedText>
+          </Text>
         </Pressable>
       </ImageBackground>
     </Animated.View>

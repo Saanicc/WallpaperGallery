@@ -1,4 +1,4 @@
-import { ThemedText } from "@/components/ThemedText/ThemedText";
+import { Text } from "@/components/ui/text";
 import { GAP, PADDING } from "@/constants/style";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -9,16 +9,16 @@ const Statistics = ({ views, downloads, likes }: StatisticsProps) => {
   return (
     <View style={styles.infoWrapper}>
       <View style={sharedStyles.infoItem}>
-        <ThemedText type="defaultSemiBold">Views</ThemedText>
-        <ThemedText>{views}</ThemedText>
+        <Text variant="large">Views</Text>
+        <Text>{views}</Text>
       </View>
       <View style={sharedStyles.infoItem}>
-        <ThemedText type="defaultSemiBold">Downloads</ThemedText>
-        <ThemedText>{downloads}</ThemedText>
+        <Text variant="large">Downloads</Text>
+        <Text>{downloads}</Text>
       </View>
       <View style={sharedStyles.infoItem}>
-        <ThemedText type="defaultSemiBold">Likes</ThemedText>
-        <ThemedText>{likes}</ThemedText>
+        <Text variant="large">Likes</Text>
+        <Text>{likes}</Text>
       </View>
     </View>
   );
