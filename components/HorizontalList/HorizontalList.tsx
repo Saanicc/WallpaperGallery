@@ -1,7 +1,7 @@
 import Photo from "@/components/Photo/Photo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { colors } from "@/constants/colors";
 import { GAP } from "@/constants/style";
+import useTheme from "@/hooks/useTheme";
 import { PixabayImage } from "@/types/types";
 import { Ionicons } from "@expo/vector-icons";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
@@ -23,6 +23,8 @@ const HorizontalList = ({
   onViewMore,
   isLoading,
 }: HorizontalListProps) => {
+  const theme = useTheme();
+
   return (
     <View className="flex-1">
       {isLoading ? (
@@ -39,7 +41,7 @@ const HorizontalList = ({
               <Ionicons
                 name="chevron-forward"
                 size={20}
-                color={colors.primary}
+                color={theme.colors.primary}
               />
             </CardHeader>
           </Pressable>

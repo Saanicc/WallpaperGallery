@@ -4,7 +4,6 @@ import useTheme from "@/hooks/useTheme";
 import { PixabayImageOrder } from "@/types/types";
 import { useRouter } from "expo-router";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Index() {
   const { getWallpapers } = useWallpaperContext();
@@ -31,7 +30,6 @@ export default function Index() {
     <View
       style={{
         flex: 1,
-        paddingTop: useSafeAreaInsets().top,
         backgroundColor: theme.colors.background,
       }}
     >

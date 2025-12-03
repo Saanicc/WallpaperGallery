@@ -2,11 +2,12 @@ import Header from "@/components/Header/Header";
 import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
 import { Text } from "@/components/ui/text";
-import { colors } from "@/constants/colors";
 import { BORDER_RADIUS, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import useTheme from "@/hooks/useTheme";
+import { NAV_THEME } from "@/lib/theme";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -43,6 +44,7 @@ export default function DetailedImage() {
   });
 
   const { width: screenWidth } = useScreenSize();
+  const theme = useTheme();
 
   const { data } = getWallpaper(id);
 
@@ -113,7 +115,9 @@ export default function DetailedImage() {
   const snapPoints = useMemo(() => ["25%", "50%", "100%"], []);
 
   return (
-    <GestureHandlerRootView style={styles.gestureContainer}>
+    <GestureHandlerRootView
+      style={{ flex: 1, backgroundColor: theme.colors.background }}
+    >
       {imageDimensions.width >= screenWidth && (
         <ScrollView
           ref={scrollViewRef}
@@ -159,12 +163,17 @@ export default function DetailedImage() {
       <Animated.View style={{ opacity, top }}>
         <Header
           leftComponent={
-            <MenuButton icon="arrow-back" onPress={() => navigation.goBack()} />
+            <MenuButton
+              icon="arrow-back"
+              onPress={() => navigation.goBack()}
+              iconColor={NAV_THEME.dark.colors.text}
+            />
           }
           rightComponent={
             <MenuButton
               icon={isWallpaperFavorited(id) ? "star" : "star-outline"}
               onPress={() => wallpaper && addToFavorites(wallpaper)}
+              iconColor={NAV_THEME.dark.colors.text}
             />
           }
         />
@@ -175,13 +184,16 @@ export default function DetailedImage() {
         index={0}
         snapPoints={snapPoints}
         enablePanDownToClose={false}
-        backgroundStyle={styles.bottomSheetBackgroundStyle}
-        handleStyle={styles.bottomSheetHandleStyle}
-        handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
+        backgroundStyle={{ backgroundColor: theme.colors.background }}
+        handleStyle={{
+          backgroundColor: theme.colors.background,
+          borderRadius: BORDER_RADIUS,
+        }}
+        handleIndicatorStyle={{ backgroundColor: theme.colors.primary }}
         containerStyle={{ marginTop: Platform.OS === "ios" ? top + 10 : top }}
       >
         <BottomSheetScrollView
-          contentContainerStyle={styles.bottomSheetScrollViewContainerStyle}
+          contentContainerStyle={{ flex: 1, padding: PADDING }}
         >
           {wallpaper && <ImageDetails item={wallpaper} />}
           {!wallpaper && (
@@ -194,24 +206,3 @@ export default function DetailedImage() {
     </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  gestureContainer: {
-    flex: 1,
-    backgroundColor: colors.darkerBackground,
-  },
-  bottomSheetBackgroundStyle: {
-    backgroundColor: colors.darkerBackground,
-  },
-  bottomSheetHandleStyle: {
-    backgroundColor: colors.darkerBackground,
-    borderRadius: BORDER_RADIUS,
-  },
-  bottomSheetHandleIndicatorStyle: {
-    backgroundColor: colors.primary,
-  },
-  bottomSheetScrollViewContainerStyle: {
-    flex: 1,
-    padding: PADDING,
-  },
-});

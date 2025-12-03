@@ -2,6 +2,7 @@ import "../global.css";
 
 import { FavoriteContextProvider } from "@/contexts/favorite-context";
 import { WallpaperContextProvider } from "@/contexts/photos-context";
+import { SettingsProvider } from "@/contexts/settings-context";
 import {
   ArimaMadurai_100Thin,
   ArimaMadurai_200ExtraLight,
@@ -57,27 +58,29 @@ export default function RootLayout() {
         client={queryClient}
         persistOptions={{ persister: asyncStoragePersister }}
       >
-        <WallpaperContextProvider>
-          <FavoriteContextProvider>
-            <EventProvider>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                }}
-              >
-                <Stack.Screen name="(tabs)" options={{ headerTitle: "" }} />
-                <Stack.Screen
-                  name="image/[id]"
-                  options={{
-                    animation: "fade",
-                    presentation: "transparentModal",
+        <SettingsProvider>
+          <WallpaperContextProvider>
+            <FavoriteContextProvider>
+              <EventProvider>
+                <Stack
+                  screenOptions={{
+                    headerShown: false,
                   }}
-                />
-              </Stack>
-              <PortalHost />
-            </EventProvider>
-          </FavoriteContextProvider>
-        </WallpaperContextProvider>
+                >
+                  <Stack.Screen name="(tabs)" options={{ headerTitle: "" }} />
+                  <Stack.Screen
+                    name="image/[id]"
+                    options={{
+                      animation: "fade",
+                      presentation: "transparentModal",
+                    }}
+                  />
+                </Stack>
+                <PortalHost />
+              </EventProvider>
+            </FavoriteContextProvider>
+          </WallpaperContextProvider>
+        </SettingsProvider>
       </PersistQueryClientProvider>
     </SafeAreaProvider>
   );

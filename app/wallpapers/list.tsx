@@ -4,6 +4,7 @@ import { BORDER_RADIUS, GAP } from "@/constants/style";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import useTheme from "@/hooks/useTheme";
 import { Category, PixabayImage, PixabayImageOrder } from "@/types/types";
 import { Stack, useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -16,6 +17,7 @@ export default function ListScreen() {
   }>();
   const { getWallpapers } = useWallpaperContext();
   const { width } = useScreenSize();
+  const theme = useTheme();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     getWallpapers(orderBy, category);
@@ -31,15 +33,15 @@ export default function ListScreen() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "black" }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <Stack.Screen
         options={{
           headerShown: true,
           headerTitle: capitalizeFirstChar(
             (category || orderBy || "Wallpapers").toLowerCase()
           ),
-          headerTintColor: "white",
-          headerStyle: { backgroundColor: "black" },
+          headerTintColor: theme.colors.text,
+          headerStyle: { backgroundColor: theme.colors.background },
           animation: "slide_from_right",
         }}
       />

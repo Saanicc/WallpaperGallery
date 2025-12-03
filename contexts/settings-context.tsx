@@ -1,0 +1,95 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Appearance } from "react-native";
+
+type Theme = "system" | "light" | "dark";
+type WallpaperProvider = "pixabay" | "unsplash" | "pexels";
+
+interface SettingsContextType {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  wallpaperProvider: WallpaperProvider;
+  setWallpaperProvider: (provider: WallpaperProvider) => void;
+  accentColor: string;
+  setAccentColor: (color: string) => void;
+}
+
+const SettingsContext = createContext<SettingsContextType | undefined>(
+  undefined
+);
+
+export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [theme, setThemeState] = useState<Theme>("system");
+  const [wallpaperProvider, setWallpaperProviderState] =
+    useState<WallpaperProvider>("pixabay");
+  const [accentColor, setAccentColorState] = useState<string>("");
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
+  useEffect(() => {
+    if (theme === "system") {
+      Appearance.setColorScheme(null);
+    } else {
+      Appearance.setColorScheme(theme);
+    }
+  }, [theme]);
+
+  const loadSettings = async () => {
+    try {
+      const storedTheme = await AsyncStorage.getItem("settings.theme");
+      const storedProvider = await AsyncStorage.getItem(
+        "settings.wallpaperProvider"
+      );
+      const storedAccent = await AsyncStorage.getItem("settings.accentColor");
+
+      if (storedTheme) setThemeState(storedTheme as Theme);
+      if (storedProvider)
+        setWallpaperProviderState(storedProvider as WallpaperProvider);
+      if (storedAccent) setAccentColorState(storedAccent);
+    } catch (error) {
+      console.error("Failed to load settings:", error);
+    }
+  };
+
+  const setTheme = async (newTheme: Theme) => {
+    setThemeState(newTheme);
+    await AsyncStorage.setItem("settings.theme", newTheme);
+  };
+
+  const setWallpaperProvider = async (provider: WallpaperProvider) => {
+    setWallpaperProviderState(provider);
+    await AsyncStorage.setItem("settings.wallpaperProvider", provider);
+  };
+
+  const setAccentColor = async (color: string) => {
+    setAccentColorState(color);
+    await AsyncStorage.setItem("settings.accentColor", color);
+  };
+
+  return (
+    <SettingsContext.Provider
+      value={{
+        theme,
+        setTheme,
+        wallpaperProvider,
+        setWallpaperProvider,
+        accentColor,
+        setAccentColor,
+      }}
+    >
+      {children}
+    </SettingsContext.Provider>
+  );
+};
+
+export const useSettings = () => {
+  const context = useContext(SettingsContext);
+  if (!context) {
+    throw new Error("useSettings must be used within a SettingsProvider");
+  }
+  return context;
+};

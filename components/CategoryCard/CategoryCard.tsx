@@ -2,6 +2,7 @@ import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { NAV_THEME } from "@/lib/theme";
 import { Category, PixabayImageOrder } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
@@ -78,7 +79,12 @@ const CategoryCard = ({ item }: { item: Category }) => {
             }}
           />
           <Text
-            style={{ position: "absolute", bottom: PADDING, left: PADDING }}
+            style={{
+              position: "absolute",
+              bottom: PADDING,
+              left: PADDING,
+              color: NAV_THEME.dark.colors.text,
+            }}
           >
             {capitalizeFirstChar(item)}
           </Text>
