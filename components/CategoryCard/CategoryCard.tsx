@@ -1,9 +1,8 @@
 import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
-import { useWallpaperContext } from "@/contexts/photos-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { Category } from "@/types/types";
+import { Category, PixabayImageOrder } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -35,15 +34,16 @@ const categoryImageMap: Record<Category, any> = {
 };
 
 const CategoryCard = ({ item }: { item: Category }) => {
-  const route = useRouter();
-  const { setSelectedCategory } = useWallpaperContext();
+  const router = useRouter();
   const { stylez, handlePressIn, handlePressOut } = useScaleAnimation();
 
   const { width } = useScreenSize();
 
   const handlePress = () => {
-    setSelectedCategory(item);
-    route.navigate("/");
+    router.push({
+      pathname: "/wallpapers/list",
+      params: { orderBy: PixabayImageOrder.LATEST, category: item },
+    });
   };
 
   return (
