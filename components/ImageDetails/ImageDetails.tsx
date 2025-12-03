@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import { PixabayImage } from "@/types/types";
 import React from "react";
 import Attribution from "./Attribution/Attribution";
@@ -8,12 +9,13 @@ import Uploader from "./Uploader/Uploader";
 
 const ImageDetails = ({ item }: { item: PixabayImage }) => {
   return (
-    <>
+    <React.Fragment>
       <Uploader
         imageUrl={item.userImageURL}
         username={item.user}
         userId={item.user_id}
       />
+      <Separator className="my-6" />
       <Statistics
         views={item.views}
         downloads={item.downloads}
@@ -22,10 +24,12 @@ const ImageDetails = ({ item }: { item: PixabayImage }) => {
       <Details
         tags={item.tags}
         imageDim={{ width: item.imageWidth, height: item.imageHeight }}
+        type={item.type as string}
+        size={item.imageSize}
       />
       <Download pageURL={item.pageURL} />
       <Attribution />
-    </>
+    </React.Fragment>
   );
 };
 

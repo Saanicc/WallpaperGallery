@@ -5,8 +5,8 @@ import { View } from "react-native";
 
 const Attribution = () => {
   return (
-    <View style={{ marginTop: 16, alignItems: "center" }}>
-      <Text style={{ marginBottom: 24 }}>
+    <View className="items-center mt-4 mb-8">
+      <Text className="text-muted-foreground text-sm">
         Image provided by <Link url="https://pixabay.com" linkText="Pixabay" />
       </Text>
     </View>

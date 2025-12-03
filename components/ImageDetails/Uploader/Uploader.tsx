@@ -1,46 +1,44 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { colors } from "@/constants/colors";
-import { PADDING, PADDING_VERTICAL } from "@/constants/style";
-import { useScreenSize } from "@/hooks/useScreenSize";
+import { PADDING } from "@/constants/style";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import React from "react";
-import { Image, Linking, TouchableOpacity, View } from "react-native";
+import { Linking, View } from "react-native";
 import { UploaderProps } from "./Uploader.config";
 
 const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
-  const { width } = useScreenSize();
-
   return (
     <View
       style={{
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "space-between",
         gap: PADDING,
       }}
     >
-      <Image
-        source={{ uri: imageUrl }}
-        style={{
-          width: width / 5,
-          height: width / 5,
-          borderRadius: 50,
-        }}
-      />
-      <View>
-        <Text variant="h4">{username}</Text>
-        <TouchableOpacity
-          style={{
-            backgroundColor: colors.button,
-            borderRadius: 50,
-            paddingVertical: PADDING_VERTICAL,
-            paddingHorizontal: PADDING,
-          }}
-          onPress={() =>
-            Linking.openURL(`https://pixabay.com/users/${username}-${userId}`)
-          }
+      <View className="flex-row items-center gap-4">
+        <Avatar
+          alt="User Avatar"
+          style={{ width: SCREEN_WIDTH / 8, height: SCREEN_WIDTH / 8 }}
+          className="w-12 h-12"
         >
-          <Text>Visit user profile</Text>
-        </TouchableOpacity>
+          <AvatarImage source={{ uri: imageUrl }} />
+          <AvatarFallback>
+            <Text>{username.charAt(0).toUpperCase()}</Text>
+          </AvatarFallback>
+        </Avatar>
+        <Text variant="h4">{username}</Text>
       </View>
+      <Button
+        variant="secondary"
+        size="default"
+        onPress={() =>
+          Linking.openURL(`https://pixabay.com/users/${username}-${userId}`)
+        }
+      >
+        <Text>Visit Profile</Text>
+      </Button>
     </View>
   );
 };

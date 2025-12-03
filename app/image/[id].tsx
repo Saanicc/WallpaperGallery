@@ -10,7 +10,7 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Image,
   Platform,
@@ -110,6 +110,8 @@ export default function DetailedImage() {
     scrollViewRef.current?.scrollTo({ x: offsetX, animated: false });
   };
 
+  const snapPoints = useMemo(() => ["25%", "50%", "100%"], []);
+
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
       {imageDimensions.width >= screenWidth && (
@@ -170,10 +172,13 @@ export default function DetailedImage() {
 
       <BottomSheet
         ref={bottomSheetRef}
+        index={0}
+        snapPoints={snapPoints}
+        enablePanDownToClose={false}
         backgroundStyle={styles.bottomSheetBackgroundStyle}
         handleStyle={styles.bottomSheetHandleStyle}
         handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
-        snapPoints={["10%", "40%"]}
+        containerStyle={{ marginTop: Platform.OS === "ios" ? top + 10 : top }}
       >
         <BottomSheetScrollView
           contentContainerStyle={styles.bottomSheetScrollViewContainerStyle}
