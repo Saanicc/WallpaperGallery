@@ -1,9 +1,12 @@
+import CategoryList from "@/components/CategoryList/CategoryList";
 import HorizontalList from "@/components/HorizontalList/HorizontalList";
+import { GAP } from "@/constants/style";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import useTheme from "@/hooks/useTheme";
 import { PixabayImageOrder } from "@/types/types";
+import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 
 export default function Index() {
   const { getWallpapers } = useWallpaperContext();
@@ -26,36 +29,40 @@ export default function Index() {
     popularData?.pages.flatMap((page) => page.hits) || [];
   const latestWallpapers = latestData?.pages.flatMap((page) => page.hits) || [];
 
+  const navigateToWallpapers = (orderBy: PixabayImageOrder) => {
+    router.push({
+      pathname: "/wallpapers/list",
+      params: { orderBy },
+    });
+  };
+
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
+        minHeight: SCREEN_HEIGHT,
         backgroundColor: theme.colors.background,
+        paddingHorizontal: 16,
+      }}
+      contentContainerStyle={{
+        gap: GAP,
+        paddingBottom: 180,
       }}
     >
+      <CategoryList />
       <HorizontalList
         title="Latest Wallpapers"
         data={latestWallpapers}
         isLoading={latestLoading}
-        onViewMore={() =>
-          router.push({
-            pathname: "/wallpapers/list",
-            params: { orderBy: PixabayImageOrder.LATEST },
-          })
-        }
+        onViewMore={() => navigateToWallpapers(PixabayImageOrder.LATEST)}
       />
 
       <HorizontalList
-        title="Popular Wallpapers"
+        title="Trending Wallpapers"
         data={popularWallpapers}
         isLoading={popularLoading}
-        onViewMore={() =>
-          router.push({
-            pathname: "/wallpapers/list",
-            params: { orderBy: PixabayImageOrder.POPULAR },
-          })
-        }
+        onViewMore={() => navigateToWallpapers(PixabayImageOrder.POPULAR)}
       />
-    </View>
+    </ScrollView>
   );
 }

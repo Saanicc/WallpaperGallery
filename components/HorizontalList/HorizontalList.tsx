@@ -4,7 +4,7 @@ import { GAP } from "@/constants/style";
 import useTheme from "@/hooks/useTheme";
 import { PixabayImage } from "@/types/types";
 import { Ionicons } from "@expo/vector-icons";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import React from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
@@ -26,13 +26,13 @@ const HorizontalList = ({
   const theme = useTheme();
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 w-full h-full">
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
           <LoadingSkeleton />
         </View>
       ) : (
-        <Card className="w-full h-full p-4 rounded-none border-0">
+        <Card className="w-full h-full p-4">
           <Pressable onPress={onViewMore}>
             <CardHeader className="flex-row items-center justify-between p-0">
               <CardTitle>
@@ -53,7 +53,13 @@ const HorizontalList = ({
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.listContent}
               renderItem={({ item }) => (
-                <View key={item.id} style={{ width: SCREEN_WIDTH / 2 }}>
+                <View
+                  key={item.id}
+                  style={{
+                    width: SCREEN_WIDTH / 4,
+                    aspectRatio: SCREEN_WIDTH / SCREEN_HEIGHT,
+                  }}
+                >
                   <Photo item={item} />
                 </View>
               )}

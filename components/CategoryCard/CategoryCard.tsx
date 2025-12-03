@@ -3,36 +3,13 @@ import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { NAV_THEME } from "@/lib/theme";
-import { Category, PixabayImageOrder } from "@/types/types";
+import { Category, categoryImageMap, PixabayImageOrder } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ImageBackground, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 import { Text } from "../ui/text";
-
-const categoryImageMap: Record<Category, any> = {
-  backgrounds: require(`@/assets/images/category/backgrounds.jpg`),
-  fashion: require(`@/assets/images/category/fashion.jpg`),
-  nature: require(`@/assets/images/category/nature.jpg`),
-  science: require(`@/assets/images/category/science.jpg`),
-  education: require(`@/assets/images/category/education.jpg`),
-  feelings: require(`@/assets/images/category/feelings.jpg`),
-  health: require(`@/assets/images/category/health.jpg`),
-  people: require(`@/assets/images/category/people.jpg`),
-  religion: require(`@/assets/images/category/religion.jpg`),
-  places: require(`@/assets/images/category/places.jpg`),
-  animals: require(`@/assets/images/category/animals.jpg`),
-  industry: require(`@/assets/images/category/industry.jpg`),
-  computer: require(`@/assets/images/category/computer.jpg`),
-  food: require(`@/assets/images/category/food.jpg`),
-  sports: require(`@/assets/images/category/sports.jpg`),
-  transportation: require(`@/assets/images/category/transportation.jpg`),
-  travel: require(`@/assets/images/category/travel.jpg`),
-  buildings: require(`@/assets/images/category/buildings.jpg`),
-  business: require(`@/assets/images/category/business.jpg`),
-  music: require(`@/assets/images/category/music.jpg`),
-};
 
 const CategoryCard = ({ item }: { item: Category }) => {
   const router = useRouter();
