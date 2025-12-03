@@ -25,26 +25,33 @@ const CategoryList = () => {
   };
 
   const Category = ({ item }: { item: Category }) => (
-    <Card className="h-12 p-0">
+    <Card className="h-14 p-0">
       <ImageBackground
         source={categoryImageMap[item]}
         imageClassName="rounded-xl w-full h-full"
       >
         <Pressable
           onPress={() => navigateToWallpapers(PixabayImageOrder.LATEST, item)}
-          className="h-full flex-row items-center justify-between px-8 py-4"
+          className="h-full flex-row items-center justify-between px-4 rounded-xl"
           style={{
             backgroundColor: "rgba(0, 0, 0, 0.4)",
           }}
         >
-          <Text variant="small">{capitalizeFirstChar(item)}</Text>
+          <Text
+            className="text-sm"
+            style={{
+              color: "#FFFFFF",
+            }}
+          >
+            {capitalizeFirstChar(item)}
+          </Text>
         </Pressable>
       </ImageBackground>
     </Card>
   );
 
   return (
-    <Card className="p-2">
+    <Card className="p-4 dark:bg-input/30 bg-background">
       <CardContent className="p-0 gap-2">
         <Text variant="large">Categories</Text>
         <FlatList

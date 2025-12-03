@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GAP } from "@/constants/style";
 import useTheme from "@/hooks/useTheme";
 import { PixabayImage } from "@/types/types";
-import { Ionicons } from "@expo/vector-icons";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { ChevronRight } from "lucide-react-native";
 import React from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import LoadingSkeleton from "../LoadingSkeleton/LoadingSkeleton";
@@ -32,17 +32,13 @@ const HorizontalList = ({
           <LoadingSkeleton />
         </View>
       ) : (
-        <Card className="w-full h-full p-4">
+        <Card className="w-full h-full p-4 dark:bg-input/30 bg-background gap-4">
           <Pressable onPress={onViewMore}>
             <CardHeader className="flex-row items-center justify-between p-0">
-              <CardTitle>
-                <Text variant="h4">{title}</Text>
+              <CardTitle className="p-0">
+                <Text variant="large">{title}</Text>
               </CardTitle>
-              <Ionicons
-                name="chevron-forward"
-                size={20}
-                color={theme.colors.primary}
-              />
+              <ChevronRight size={24} color={theme.colors.text} />
             </CardHeader>
           </Pressable>
           <CardContent className="flex-1 p-0">

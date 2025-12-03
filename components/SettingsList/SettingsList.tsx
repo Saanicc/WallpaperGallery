@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { useSettings } from "@/contexts/settings-context";
+import { capitalizeFirstChar } from "@/helpers/functions";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -54,7 +55,7 @@ const SettingsList = () => {
         <View className="gap-2">
           <Text className="text-muted-foreground">Theme</Text>
           <Select
-            value={{ value: theme, label: theme }}
+            value={{ value: theme, label: capitalizeFirstChar(theme) }}
             onValueChange={(option) => setTheme(option?.value as any)}
           >
             <SelectTrigger>
@@ -102,7 +103,10 @@ const SettingsList = () => {
         <View className="gap-2">
           <Text className="text-muted-foreground">Wallpaper Source</Text>
           <Select
-            value={{ value: wallpaperProvider, label: wallpaperProvider }}
+            value={{
+              value: wallpaperProvider,
+              label: capitalizeFirstChar(wallpaperProvider),
+            }}
             onValueChange={(option) =>
               setWallpaperProvider(option?.value as any)
             }

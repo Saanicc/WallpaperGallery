@@ -26,14 +26,15 @@ export interface WallpaperContextValue {
   getWallpapers: (
     order?: PixabayImageOrder,
     category?: Category,
-    perPage?: number
+    perPage?: number,
+    query?: string
   ) => UseInfiniteQueryResult<InfiniteData<PixabayImageResponse>, Error>;
 }
 
 export const WallpaperContext = createContext<WallpaperContextValue>({
-  getWallpaper: () => ({} as UseQueryResult<PixabayImageResponse, Error>),
+  getWallpaper: () => ({}) as UseQueryResult<PixabayImageResponse, Error>,
   getWallpapers: () =>
-    ({} as UseInfiniteQueryResult<InfiniteData<PixabayImageResponse>, Error>),
+    ({}) as UseInfiniteQueryResult<InfiniteData<PixabayImageResponse>, Error>,
 });
 
 const PIXABAY_API_URL = `https://pixabay.com/api/?key=${process.env.EXPO_PUBLIC_PIXABAY_API_KEY}`;
@@ -61,7 +62,8 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
     (
       order: PixabayImageOrder = PixabayImageOrder.POPULAR,
       category?: Category,
-      perPage: number = 20
+      perPage: number = 20,
+      query?: string
     ) =>
       useInfiniteQuery<PixabayImageResponse>({
         queryKey: [
@@ -69,6 +71,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
           order.toLowerCase(),
           category?.toLowerCase(),
           perPage,
+          query,
         ],
         queryFn: async ({ pageParam = 1 }) => {
           const imageType = `&image_type=photo`;
@@ -79,8 +82,9 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
           const orderParam = `&order=${order.toLowerCase()}`;
           const pageParameter = `&page=${pageParam}`;
           const perPageParam = `&per_page=${perPage}`;
+          const queryParam = query ? `&q=${encodeURIComponent(query)}` : "";
 
-          const URL = `${PIXABAY_API_URL}${imageType}${safeSearch}${categoryParam}${width}${height}${orderParam}${pageParameter}${perPageParam}`;
+          const URL = `${PIXABAY_API_URL}${imageType}${safeSearch}${categoryParam}${width}${height}${orderParam}${pageParameter}${perPageParam}${queryParam}`;
 
           return await fetch(URL).then((res) => {
             const rateLimitRemaining = res.headers.get("X-RateLimit-Remaining");

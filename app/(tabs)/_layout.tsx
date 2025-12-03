@@ -11,20 +11,19 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderColor: theme.colors.border,
           backgroundColor: theme.colors.background,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: theme.colors.background,
-          },
-          headerTitleStyle: { color: theme.colors.text },
-          title: "Home",
+          headerShown: false,
           tabBarActiveTintColor: theme.colors.primary,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons
@@ -33,9 +32,6 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: 12,
-          },
         }}
       />
       <Tabs.Screen
@@ -55,13 +51,6 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: 12,
-          },
-          tabBarStyle: {
-            backgroundColor: theme.colors.background,
-            borderTopWidth: 0,
-          },
         }}
       />
       <Tabs.Screen
@@ -82,13 +71,6 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: 12,
-          },
-          tabBarStyle: {
-            backgroundColor: theme.colors.background,
-            borderTopWidth: 0,
-          },
         }}
       />
       <Tabs.Screen
@@ -103,9 +85,6 @@ export default function TabLayout() {
               color={color}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: 12,
-          },
           headerShown: true,
           headerStyle: {
             backgroundColor: theme.colors.background,

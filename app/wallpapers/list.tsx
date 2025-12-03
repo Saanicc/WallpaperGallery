@@ -1,26 +1,31 @@
 import LoadingSkeleton from "@/components/LoadingSkeleton/LoadingSkeleton";
 import Photo from "@/components/Photo/Photo";
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
 import { BORDER_RADIUS, GAP } from "@/constants/style";
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import useTheme from "@/hooks/useTheme";
 import { Category, PixabayImage, PixabayImageOrder } from "@/types/types";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
 import React from "react";
 import { FlatList, View } from "react-native";
 
 export default function ListScreen() {
-  const { orderBy, category } = useLocalSearchParams<{
+  const { orderBy, category, query } = useLocalSearchParams<{
     orderBy: PixabayImageOrder;
     category: Category;
+    query: string;
   }>();
   const { getWallpapers } = useWallpaperContext();
   const { width } = useScreenSize();
   const theme = useTheme();
+  const router = useRouter();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    getWallpapers(orderBy, category);
+    getWallpapers(orderBy, category, undefined, query);
 
   const photos = data?.pages.flatMap((page) => page.hits) || [];
   const IMAGE_WIDTH = (width - GAP * 3) / 2;
@@ -38,7 +43,7 @@ export default function ListScreen() {
         options={{
           headerShown: true,
           headerTitle: capitalizeFirstChar(
-            (category || orderBy || "Wallpapers").toLowerCase()
+            (query || category || orderBy || "Wallpapers").toLowerCase()
           ),
           headerTintColor: theme.colors.text,
           headerStyle: { backgroundColor: theme.colors.background },
@@ -62,6 +67,16 @@ export default function ListScreen() {
               borderRadius={BORDER_RADIUS}
             />
           ))}
+        </View>
+      ) : photos.length === 0 ? (
+        <View className="flex-1 items-center justify-center gap-4">
+          <Text style={{ color: theme.colors.text }}>
+            No results matched your search
+          </Text>
+          <Button onPress={() => router.back()}>
+            <ArrowLeft color={theme.colors.background} />
+            <Text>Back</Text>
+          </Button>
         </View>
       ) : (
         <FlatList
