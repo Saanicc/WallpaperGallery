@@ -62,7 +62,7 @@ export default function RootLayout() {
                   headerShown: false,
                 }}
               >
-                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="(tabs)" options={{ headerTitle: "" }} />
                 <Stack.Screen
                   name="image/[id]"
                   options={{

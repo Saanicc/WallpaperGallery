@@ -3,7 +3,6 @@ import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { Pressable } from "react-native";
 import Animated, {
-  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -11,7 +10,7 @@ import Animated, {
 import { PhotoProps } from "./Photo.config";
 
 const Photo = memo(
-  ({ item, index, width, height, scrollX }: PhotoProps) => {
+  ({ item, width, height }: PhotoProps) => {
     const route = useRouter();
     const imageCardScale = useSharedValue(1);
 
@@ -19,18 +18,7 @@ const Photo = memo(
       return {
         transform: [
           {
-            scale: interpolate(
-              scrollX.value,
-              [index - 1, index, index + 1],
-              [0.78, imageCardScale.value, 0.78]
-            ),
-          },
-          {
-            rotate: `${interpolate(
-              scrollX.value,
-              [index - 1, index, index + 1],
-              [6, 0, -6]
-            )}deg`,
+            scale: imageCardScale.value,
           },
         ],
       };
@@ -39,7 +27,12 @@ const Photo = memo(
     return (
       <Animated.View
         style={[
-          { width, height, overflow: "hidden", borderRadius: BORDER_RADIUS },
+          {
+            width: width ?? "100%",
+            height: height ?? "100%",
+            overflow: "hidden",
+            borderRadius: BORDER_RADIUS,
+          },
           stylez,
         ]}
       >
@@ -64,11 +57,9 @@ const Photo = memo(
     );
   },
   (prev, next) =>
-    prev.item === next.item &&
-    prev.index === next.index &&
+    prev.item.id === next.item.id &&
     prev.width === next.width &&
-    prev.height === next.height &&
-    prev.scrollX === next.scrollX
+    prev.height === next.height
 );
 
 export default Photo;
