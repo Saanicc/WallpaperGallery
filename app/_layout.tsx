@@ -1,3 +1,5 @@
+import "../global.css";
+
 import { FavoriteContextProvider } from "@/contexts/favorite-context";
 import { WallpaperContextProvider } from "@/contexts/photos-context";
 import {
