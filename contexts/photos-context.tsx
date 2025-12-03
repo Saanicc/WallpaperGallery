@@ -13,18 +13,13 @@ import {
 } from "@tanstack/react-query";
 import {
   createContext,
-  Dispatch,
   PropsWithChildren,
-  SetStateAction,
   useCallback,
   useContext,
   useMemo,
-  useState,
 } from "react";
 
 export interface WallpaperContextValue {
-  orderBy: PixabayImageOrder;
-  selectedCategory: Category | undefined;
   getWallpaper: (
     wallpaperId: string
   ) => UseQueryResult<PixabayImageResponse, Error>;
@@ -33,30 +28,17 @@ export interface WallpaperContextValue {
     category?: Category,
     perPage?: number
   ) => UseInfiniteQueryResult<InfiniteData<PixabayImageResponse>, Error>;
-  setOrderBy: Dispatch<SetStateAction<PixabayImageOrder>>;
-  setSelectedCategory: Dispatch<SetStateAction<Category | undefined>>;
 }
 
 export const WallpaperContext = createContext<WallpaperContextValue>({
-  orderBy: PixabayImageOrder.POPULAR,
-  selectedCategory: undefined,
   getWallpaper: () => ({} as UseQueryResult<PixabayImageResponse, Error>),
   getWallpapers: () =>
     ({} as UseInfiniteQueryResult<InfiniteData<PixabayImageResponse>, Error>),
-  setOrderBy: () => Promise.resolve(),
-  setSelectedCategory: () => Promise.resolve(),
 });
 
 const PIXABAY_API_URL = `https://pixabay.com/api/?key=${process.env.EXPO_PUBLIC_PIXABAY_API_KEY}`;
 
 export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
-  const [orderBy, setOrderBy] = useState<PixabayImageOrder>(
-    PixabayImageOrder.POPULAR
-  );
-  const [selectedCategory, setSelectedCategory] = useState<
-    Category | undefined
-  >();
-
   const { actualWidthInPixels, actualHeightInPixels } = useScreenSize();
 
   const getWallpaper = useCallback(
@@ -115,21 +97,10 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
 
   const value = useMemo(() => {
     return {
-      orderBy,
-      selectedCategory,
       getWallpaper,
       getWallpapers,
-      setOrderBy,
-      setSelectedCategory,
     };
-  }, [
-    orderBy,
-    selectedCategory,
-    setOrderBy,
-    getWallpaper,
-    getWallpapers,
-    setSelectedCategory,
-  ]);
+  }, [getWallpaper, getWallpapers]);
 
   return (
     <WallpaperContext.Provider value={value}>
