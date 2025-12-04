@@ -1,5 +1,6 @@
 import CategoryList from "@/components/CategoryList/CategoryList";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import SurpriseMeButton from "@/components/SurpriseMeButton/SurpriseMeButton";
 import WallpaperOfTheDay from "@/components/WallpaperOfTheDay/WallpaperOfTheDay";
 import PexelsList from "@/components/Wallpapers/PexelsList";
 import PixabayList from "@/components/Wallpapers/PixabayList";
@@ -80,6 +81,7 @@ export default function Index() {
           onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
         />
       </ScrollView>
+      <SurpriseMeButton />
     </SafeAreaView>
   );
 }

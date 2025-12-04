@@ -2,6 +2,7 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import { getProvider } from "@/providers";
 import {
   Category,
+  IWallpaperProvider,
   PixabayImageOrder,
   Wallpaper,
   WallpaperResponse,
@@ -35,12 +36,14 @@ export interface WallpaperContextValue {
     perPage?: number;
     query?: string;
   }) => UseInfiniteQueryResult<InfiniteData<WallpaperResponse>, Error>;
+  provider: IWallpaperProvider;
 }
 
 export const WallpaperContext = createContext<WallpaperContextValue>({
   getWallpaper: () => ({}) as UseQueryResult<Wallpaper, Error>,
   getWallpapers: () =>
     ({}) as UseInfiniteQueryResult<InfiniteData<WallpaperResponse>, Error>,
+  provider: {} as any,
 });
 
 export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
@@ -105,8 +108,9 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
     return {
       getWallpaper,
       getWallpapers,
+      provider,
     };
-  }, [getWallpaper, getWallpapers]);
+  }, [getWallpaper, getWallpapers, provider]);
 
   return (
     <WallpaperContext.Provider value={value}>
