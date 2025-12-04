@@ -39,6 +39,7 @@ const WallpaperOfTheDay = () => {
         url: wallpaper.url,
         width: wallpaper.width,
         height: wallpaper.height,
+        provider: wallpaper.provider,
       },
     });
   };
