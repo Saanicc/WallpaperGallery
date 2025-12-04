@@ -7,6 +7,11 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Outfit_400Regular"],
+        bold: ["Outfit_700Bold"],
+        medium: ["Outfit_500Medium"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

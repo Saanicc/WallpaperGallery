@@ -16,13 +16,14 @@ export default function TabLayout() {
           backgroundColor: theme.colors.background,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontFamily: "Outfit_400Regular",
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
+          title: "Home",
           headerShown: false,
           tabBarActiveTintColor: theme.colors.primary,
           tabBarIcon: ({ color, focused, size }) => (
