@@ -39,7 +39,16 @@ const Photo = memo(
         <Pressable
           style={{ flex: 1 }}
           onPress={() => {
-            route.navigate(`/image/${item.id}`);
+            route.push({
+              pathname: "/image/[id]",
+              params: {
+                id: item.id,
+                thumbnail: item.thumbnail,
+                url: item.url,
+                width: item.width,
+                height: item.height,
+              },
+            });
           }}
           onPressIn={() => {
             imageCardScale.value = withSpring(0.95, {

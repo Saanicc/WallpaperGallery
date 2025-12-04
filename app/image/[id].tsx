@@ -33,14 +33,20 @@ type ImageDimensions = {
 export default function DetailedImage() {
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, thumbnail, url, width, height } = useLocalSearchParams<{
+    id: string;
+    thumbnail?: string;
+    url?: string;
+    width?: string;
+    height?: string;
+  }>();
   const { getWallpaper } = useWallpaperContext();
   const { addToFavorites, isWallpaperFavorited } = useFavoriteContext();
 
   const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
-    width: 0,
-    height: 0,
-    aspectRatio: 0,
+    width: width ? parseInt(width) : 0,
+    height: height ? parseInt(height) : 0,
+    aspectRatio: width && height ? parseInt(width) / parseInt(height) : 0,
   });
 
   const { width: screenWidth } = useScreenSize();
@@ -54,6 +60,7 @@ export default function DetailedImage() {
   const _headerHeight = Platform.OS === "ios" ? 140 : 100;
   const headerShadowHeight = useSharedValue(_headerHeight);
   const opacity = useSharedValue(1);
+  const imageOpacity = useSharedValue(0);
 
   const ANIMATION_DURATION = 500;
 
@@ -93,9 +100,9 @@ export default function DetailedImage() {
   }, []);
 
   useEffect(() => {
-    if (!wallpaper) return;
+    const imageUri = url || wallpaper?.url;
+    if (!imageUri) return;
 
-    const imageUri = wallpaper.url;
     getAspectRatio(imageUri)
       .then((imageDim) => {
         setImageDimensions(imageDim);
@@ -103,7 +110,7 @@ export default function DetailedImage() {
       .catch((error) => {
         console.error("Error fetching image dimensions:", error);
       });
-  }, [wallpaper?.url]);
+  }, [url, wallpaper?.url]);
 
   const centerContent = (width: number) => {
     const offsetX = (width - screenWidth) / 2;
@@ -134,16 +141,32 @@ export default function DetailedImage() {
               aspectRatio: imageDimensions.aspectRatio,
             }}
           >
-            <Image
-              defaultSource={{ uri: wallpaper?.thumbnail }}
-              source={{ uri: wallpaper?.url }}
-              style={{
-                width: undefined,
-                height: "100%",
-                aspectRatio: imageDimensions.aspectRatio,
-              }}
-              resizeMode="cover"
-            />
+            <View style={{ flex: 1 }}>
+              <Image
+                source={{ uri: thumbnail || wallpaper?.thumbnail }}
+                style={{
+                  width: undefined,
+                  height: "100%",
+                  aspectRatio: imageDimensions.aspectRatio,
+                }}
+                resizeMode="cover"
+                blurRadius={Platform.OS === "ios" ? 5 : 2}
+              />
+              <Animated.Image
+                source={{ uri: url || wallpaper?.url }}
+                style={{
+                  ...StyleSheet.absoluteFillObject,
+                  width: undefined,
+                  height: "100%",
+                  aspectRatio: imageDimensions.aspectRatio,
+                  opacity: imageOpacity,
+                }}
+                resizeMode="cover"
+                onLoad={() => {
+                  imageOpacity.value = withTiming(1, { duration: 300 });
+                }}
+              />
+            </View>
           </Pressable>
         </ScrollView>
       )}

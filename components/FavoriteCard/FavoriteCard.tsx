@@ -13,7 +13,16 @@ const FavoriteCard = ({ item }: { item: Wallpaper }) => {
   const { width } = useScreenSize();
 
   const handlePress = () => {
-    route.navigate(`/image/${item.id}`);
+    route.push({
+      pathname: "/image/[id]",
+      params: {
+        id: item.id,
+        thumbnail: item.thumbnail,
+        url: item.url,
+        width: item.width,
+        height: item.height,
+      },
+    });
   };
 
   return (
