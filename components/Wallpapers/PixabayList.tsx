@@ -6,7 +6,7 @@ import HorizontalList from "../HorizontalList/HorizontalList";
 const PixabayList = ({
   onHeaderPress,
 }: {
-  onHeaderPress: (orderBy?: PixabayImageOrder | undefined) => void;
+  onHeaderPress: (orderBy?: PixabayImageOrder) => void;
 }) => {
   const { getWallpapers } = useWallpaperContext();
 
@@ -28,14 +28,14 @@ const PixabayList = ({
   return (
     <>
       <HorizontalList
-        title="Latest Wallpapers"
+        title="Latest"
         data={wallpapers}
         isLoading={latestLoading}
         onViewMore={() => onHeaderPress(PixabayImageOrder.LATEST)}
       />
 
       <HorizontalList
-        title="Trending Wallpapers"
+        title="Trending"
         data={popularWallpapers}
         isLoading={popularLoading}
         onViewMore={() => onHeaderPress(PixabayImageOrder.POPULAR)}

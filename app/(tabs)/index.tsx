@@ -3,6 +3,7 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import WallpaperOfTheDay from "@/components/WallpaperOfTheDay/WallpaperOfTheDay";
 import PexelsList from "@/components/Wallpapers/PexelsList";
 import PixabayList from "@/components/Wallpapers/PixabayList";
+import ThematicList from "@/components/Wallpapers/ThematicList";
 import { GAP } from "@/constants/style";
 import { useSettings } from "@/contexts/settings-context";
 import useTheme from "@/hooks/useTheme";
@@ -17,10 +18,13 @@ export default function Index() {
   const router = useRouter();
   const theme = useTheme();
 
-  const navigateToWallpapers = (orderBy?: PixabayImageOrder) => {
+  const navigateToWallpapers = (
+    orderBy?: PixabayImageOrder,
+    query?: string
+  ) => {
     router.push({
       pathname: "/wallpapers/list",
-      params: { orderBy },
+      params: { orderBy, query },
     });
   };
 
@@ -58,6 +62,23 @@ export default function Index() {
         <WallpaperOfTheDay />
         <CategoryList />
         <ProviderData provider={wallpaperProvider} />
+        <ThematicList
+          title="Nature's Best"
+          query="nature"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
+
+        <ThematicList
+          title="Abstract Art"
+          query="abstract"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
+
+        <ThematicList
+          title="Minimalist"
+          query="minimalist"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
       </ScrollView>
     </SafeAreaView>
   );

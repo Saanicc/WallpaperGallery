@@ -1,13 +1,8 @@
 import { useWallpaperContext } from "@/contexts/photos-context";
-import { PixabayImageOrder } from "@/types/types";
 import React from "react";
 import HorizontalList from "../HorizontalList/HorizontalList";
 
-const PexelsList = ({
-  onHeaderPress,
-}: {
-  onHeaderPress: (orderBy?: PixabayImageOrder | undefined) => void;
-}) => {
+const PexelsList = ({ onHeaderPress }: { onHeaderPress: () => void }) => {
   const { getWallpapers } = useWallpaperContext();
 
   const { data: latestData, isLoading: latestLoading } = getWallpapers({
