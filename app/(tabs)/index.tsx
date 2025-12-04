@@ -1,5 +1,6 @@
 import CategoryList from "@/components/CategoryList/CategoryList";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import WallpaperOfTheDay from "@/components/WallpaperOfTheDay/WallpaperOfTheDay";
 import PexelsList from "@/components/Wallpapers/PexelsList";
 import PixabayList from "@/components/Wallpapers/PixabayList";
 import { GAP } from "@/constants/style";
@@ -54,6 +55,7 @@ export default function Index() {
         }}
       >
         <SearchBar />
+        <WallpaperOfTheDay />
         <CategoryList />
         <ProviderData provider={wallpaperProvider} />
       </ScrollView>

@@ -44,7 +44,7 @@ export default function SearchBar() {
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
           returnKeyType="search"
-          className="pl-12 h-14"
+          className="pl-12 h-14 rounded-lg"
         />
       </View>
       {query.length > 0 && (
