@@ -1,5 +1,8 @@
+import { WallpaperProvider } from "@/types/types";
+
 export type UploaderProps = {
-  imageUrl: string;
+  avatarUrl: string;
   username: string;
   userId: number;
+  dataProvider: WallpaperProvider;
 };

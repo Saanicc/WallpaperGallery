@@ -1,13 +1,13 @@
 import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { PixabayImage } from "@/types/types";
+import { Wallpaper } from "@/types/types";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ImageBackground, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
-const FavoriteCard = ({ item }: { item: PixabayImage }) => {
+const FavoriteCard = ({ item }: { item: Wallpaper }) => {
   const route = useRouter();
   const { stylez, handlePressIn, handlePressOut } = useScaleAnimation();
   const { width } = useScreenSize();
@@ -19,7 +19,7 @@ const FavoriteCard = ({ item }: { item: PixabayImage }) => {
   return (
     <Animated.View style={[{ flex: 1 / 2 }, stylez]}>
       <ImageBackground
-        source={{ uri: item.webformatURL }}
+        source={{ uri: item.thumbnail }}
         imageStyle={{ borderRadius: BORDER_RADIUS }}
       >
         <Pressable

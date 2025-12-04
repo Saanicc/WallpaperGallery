@@ -61,7 +61,7 @@ const Photo = memo(
           }}
         >
           <Animated.Image
-            source={{ uri: item.webformatURL }}
+            source={{ uri: item.thumbnail }}
             style={{ flex: 1 }}
           />
         </Pressable>

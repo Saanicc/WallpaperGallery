@@ -25,7 +25,7 @@ const StatItem = ({
 
 const Statistics = ({ views, downloads, likes }: StatisticsProps) => {
   return (
-    <Card className="border-0 bg-secondary/30">
+    <Card className="border-0 bg-secondary/30 mb-4">
       <CardContent className="flex-row justify-around py-4">
         <StatItem icon="eye-outline" value={views} label="Views" />
         <StatItem icon="download-outline" value={downloads} label="Downloads" />

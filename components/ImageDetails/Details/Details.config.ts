@@ -1,6 +1,6 @@
 export type DetailsProps = {
-  tags: string;
+  tags?: string;
   imageDim: { width: number; height: number };
-  type: string;
-  size: number;
+  type?: string;
+  size?: number;
 };

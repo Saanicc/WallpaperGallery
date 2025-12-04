@@ -1,5 +1,5 @@
 import Cache from "@/helpers/cache";
-import { PixabayImage } from "@/types/types";
+import { Wallpaper } from "@/types/types";
 import {
   createContext,
   PropsWithChildren,
@@ -10,8 +10,8 @@ import {
 } from "react";
 
 export interface FavoriteContextValue {
-  favoriteWallpapers: PixabayImage[];
-  addToFavorites: (wallpaper: PixabayImage) => void;
+  favoriteWallpapers: Wallpaper[];
+  addToFavorites: (wallpaper: Wallpaper) => void;
   deleteAllFavorites: () => void;
   isWallpaperFavorited: (wallpaperId: string) => boolean;
 }
@@ -24,15 +24,15 @@ export const FavoriteContext = createContext<FavoriteContextValue>({
 });
 
 export const FavoriteContextProvider = ({ children }: PropsWithChildren) => {
-  const [favorites, setFavorites] = useState<PixabayImage[]>([]);
+  const [favorites, setFavorites] = useState<Wallpaper[]>([]);
 
   useEffect(() => {
-    Cache.getData<PixabayImage[]>("favorites").then(
+    Cache.getData<Wallpaper[]>("favorites").then(
       (data) => data && setFavorites(data)
     );
   }, []);
 
-  const addToFavorites = (wallpaper: PixabayImage) => {
+  const addToFavorites = (wallpaper: Wallpaper) => {
     let newArr = [...favorites];
 
     if (!isWallpaperFavorited(String(wallpaper.id))) {
@@ -41,12 +41,12 @@ export const FavoriteContextProvider = ({ children }: PropsWithChildren) => {
       newArr = favorites.filter((item) => item.id !== wallpaper.id);
     }
 
-    Cache.storeData<PixabayImage[]>(newArr, "favorites");
+    Cache.storeData<Wallpaper[]>(newArr, "favorites");
     setFavorites(newArr);
   };
 
   const deleteAllFavorites = () => {
-    Cache.storeData<PixabayImage[]>([], "favorites");
+    Cache.storeData<Wallpaper[]>([], "favorites");
     setFavorites([]);
   };
 

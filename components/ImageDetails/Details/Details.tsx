@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Text } from "@/components/ui/text";
-import React from "react";
 import { View } from "react-native";
 import { DetailsProps } from "./Details.config";
 
@@ -12,7 +11,7 @@ const InfoRow = ({ label, value }: { label: string; value: string }) => (
 );
 
 const Details = ({ tags, imageDim, type, size }: DetailsProps) => {
-  const tagList = tags.split(",").map((tag) => tag.trim());
+  const tagList = tags?.split(",").map((tag) => tag.trim());
   const formatSize = (bytes: number) => {
     if (bytes === 0) return "0 B";
     const k = 1024;
@@ -22,20 +21,21 @@ const Details = ({ tags, imageDim, type, size }: DetailsProps) => {
   };
 
   return (
-    <View className="gap-6 my-4">
-      <View>
-        <Text variant="h4" className="mb-3">
-          Tags
-        </Text>
-        <View className="flex-row flex-wrap gap-2">
-          {tagList.map((tag, index) => (
-            <Badge key={index} variant="secondary">
-              <Text>{tag}</Text>
-            </Badge>
-          ))}
+    <View className="gap-6">
+      {tagList && tagList?.length > 0 && (
+        <View>
+          <Text variant="h4" className="mb-3">
+            Tags
+          </Text>
+          <View className="flex-row flex-wrap gap-2">
+            {tagList.map((tag, index) => (
+              <Badge key={index} variant="secondary">
+                <Text>{tag}</Text>
+              </Badge>
+            ))}
+          </View>
         </View>
-      </View>
-
+      )}
       <View>
         <Text variant="h4" className="mb-3">
           Image Info
@@ -44,8 +44,8 @@ const Details = ({ tags, imageDim, type, size }: DetailsProps) => {
           label="Resolution"
           value={`${imageDim.width} x ${imageDim.height}`}
         />
-        <InfoRow label="Type" value={type.toUpperCase()} />
-        <InfoRow label="Size" value={formatSize(size)} />
+        {type && <InfoRow label="Type" value={type.toUpperCase()} />}
+        {size && <InfoRow label="Size" value={formatSize(size)} />}
       </View>
     </View>
   );

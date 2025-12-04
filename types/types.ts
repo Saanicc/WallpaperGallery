@@ -43,6 +43,80 @@ export type PixabayImageResponse = {
   hits: PixabayImage[];
 };
 
+export type PexelsImage = {
+  id: number;
+  width: number;
+  height: number;
+  url: string;
+  photographer: string;
+  photographer_url: string;
+  photographer_id: number;
+  avg_color: string;
+  liked: boolean;
+  alt: string;
+  src: {
+    original: string;
+    large2x: string;
+    large: string;
+    medium: string;
+    small: string;
+    portrait: string;
+    landscape: string;
+    tiny: string;
+  };
+};
+
+export type PexelsImageResponse = {
+  total_results: number;
+  page: number;
+  per_page: number;
+  photos: PexelsImage[];
+  next_page: string;
+};
+
+export type WallpaperProvider = "pixabay" | "pexels" | "unsplash";
+
+export interface Wallpaper {
+  id: string;
+  url: string;
+  thumbnail: string;
+  width: number;
+  height: number;
+  photographer: string;
+  photographerUrl?: string;
+  photographerId?: number;
+  views?: number;
+  downloads?: number;
+  likes?: number;
+  tags?: string[];
+  provider: WallpaperProvider;
+  size?: number;
+}
+
+export interface WallpaperResponse {
+  wallpapers: Wallpaper[];
+  nextPage?: number;
+}
+
+export type WallpaperInput = {
+  page: number;
+  perPage: number;
+  order?: PixabayImageOrder;
+  category?: Category;
+  query?: string;
+};
+
+export interface IWallpaperProvider {
+  getWallpapers({
+    page,
+    perPage,
+    order,
+    category,
+    query,
+  }: WallpaperInput): Promise<WallpaperResponse>;
+  getWallpaper(id: string): Promise<Wallpaper>;
+}
+
 export const categories = [
   "backgrounds",
   "fashion",

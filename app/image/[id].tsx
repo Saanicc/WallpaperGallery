@@ -46,9 +46,7 @@ export default function DetailedImage() {
   const { width: screenWidth } = useScreenSize();
   const theme = useTheme();
 
-  const { data } = getWallpaper(id);
-
-  const wallpaper = data?.hits[0];
+  const { data: wallpaper } = getWallpaper(id);
 
   const scrollViewRef = useRef<ScrollView>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -97,7 +95,7 @@ export default function DetailedImage() {
   useEffect(() => {
     if (!wallpaper) return;
 
-    const imageUri = wallpaper?.largeImageURL;
+    const imageUri = wallpaper.url;
     getAspectRatio(imageUri)
       .then((imageDim) => {
         setImageDimensions(imageDim);
@@ -105,7 +103,7 @@ export default function DetailedImage() {
       .catch((error) => {
         console.error("Error fetching image dimensions:", error);
       });
-  }, [wallpaper?.largeImageURL]);
+  }, [wallpaper?.url]);
 
   const centerContent = (width: number) => {
     const offsetX = (width - screenWidth) / 2;
@@ -137,8 +135,8 @@ export default function DetailedImage() {
             }}
           >
             <Image
-              defaultSource={{ uri: wallpaper?.previewURL }}
-              source={{ uri: wallpaper?.largeImageURL }}
+              defaultSource={{ uri: wallpaper?.thumbnail }}
+              source={{ uri: wallpaper?.url }}
               style={{
                 width: undefined,
                 height: "100%",

@@ -3,7 +3,7 @@ import { Text } from "@/components/ui/text";
 import { GAP, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import useTheme from "@/hooks/useTheme";
-import { PixabayImage } from "@/types/types";
+import { Wallpaper } from "@/types/types";
 import React from "react";
 import { FlatList, View } from "react-native";
 
@@ -13,7 +13,7 @@ const favorites = () => {
 
   const getData = () => {
     if (favoriteWallpapers.length % 2 > 0)
-      return [...favoriteWallpapers, {} as PixabayImage];
+      return [...favoriteWallpapers, {} as Wallpaper];
     return favoriteWallpapers;
   };
 

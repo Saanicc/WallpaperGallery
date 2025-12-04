@@ -123,11 +123,7 @@ const SettingsList = () => {
                   value="unsplash"
                   disabled
                 />
-                <SelectItem
-                  label="Pexels (Coming Soon)"
-                  value="pexels"
-                  disabled
-                />
+                <SelectItem label="Pexels" value="pexels" />
               </SelectGroup>
             </SelectContent>
           </Select>

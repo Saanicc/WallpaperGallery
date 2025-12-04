@@ -1,41 +1,39 @@
 import CategoryList from "@/components/CategoryList/CategoryList";
-import HorizontalList from "@/components/HorizontalList/HorizontalList";
 import SearchBar from "@/components/SearchBar/SearchBar";
+import PexelsList from "@/components/Wallpapers/PexelsList";
+import PixabayList from "@/components/Wallpapers/PixabayList";
 import { GAP } from "@/constants/style";
-import { useWallpaperContext } from "@/contexts/photos-context";
+import { useSettings } from "@/contexts/settings-context";
 import useTheme from "@/hooks/useTheme";
-import { PixabayImageOrder } from "@/types/types";
+import { PixabayImageOrder, WallpaperProvider } from "@/types/types";
 import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
 import { Platform, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const { getWallpapers } = useWallpaperContext();
+  const { wallpaperProvider } = useSettings();
   const router = useRouter();
   const theme = useTheme();
 
-  const { data: popularData, isLoading: popularLoading } = getWallpapers(
-    PixabayImageOrder.POPULAR,
-    undefined,
-    10
-  );
-
-  const { data: latestData, isLoading: latestLoading } = getWallpapers(
-    PixabayImageOrder.LATEST,
-    undefined,
-    10
-  );
-
-  const popularWallpapers =
-    popularData?.pages.flatMap((page) => page.hits) || [];
-  const latestWallpapers = latestData?.pages.flatMap((page) => page.hits) || [];
-
-  const navigateToWallpapers = (orderBy: PixabayImageOrder) => {
+  const navigateToWallpapers = (orderBy?: PixabayImageOrder) => {
     router.push({
       pathname: "/wallpapers/list",
       params: { orderBy },
     });
+  };
+
+  const ProviderData = ({ provider }: { provider: WallpaperProvider }) => {
+    switch (provider) {
+      case "pixabay":
+        return <PixabayList onHeaderPress={navigateToWallpapers} />;
+      case "pexels":
+        return <PexelsList onHeaderPress={navigateToWallpapers} />;
+      case "unsplash":
+        return <></>;
+      default:
+        return <></>;
+    }
   };
 
   return (
@@ -57,19 +55,7 @@ export default function Index() {
       >
         <SearchBar />
         <CategoryList />
-        <HorizontalList
-          title="Latest Wallpapers"
-          data={latestWallpapers}
-          isLoading={latestLoading}
-          onViewMore={() => navigateToWallpapers(PixabayImageOrder.LATEST)}
-        />
-
-        <HorizontalList
-          title="Trending Wallpapers"
-          data={popularWallpapers}
-          isLoading={popularLoading}
-          onViewMore={() => navigateToWallpapers(PixabayImageOrder.POPULAR)}
-        />
+        <ProviderData provider={wallpaperProvider} />
       </ScrollView>
     </SafeAreaView>
   );

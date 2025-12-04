@@ -1,7 +1,7 @@
-import { PixabayImage } from "@/types/types";
+import { Wallpaper } from "@/types/types";
 
 export type PhotoProps = {
-  item: PixabayImage;
+  item: Wallpaper;
   width?: number;
   height?: number;
 };

@@ -7,7 +7,7 @@ import { useWallpaperContext } from "@/contexts/photos-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import useTheme from "@/hooks/useTheme";
-import { Category, PixabayImage, PixabayImageOrder } from "@/types/types";
+import { Category, PixabayImageOrder, Wallpaper } from "@/types/types";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import React from "react";
@@ -25,13 +25,17 @@ export default function ListScreen() {
   const router = useRouter();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    getWallpapers(orderBy, category, undefined, query);
+    getWallpapers({
+      order: orderBy,
+      category,
+      query,
+    });
 
-  const photos = data?.pages.flatMap((page) => page.hits) || [];
+  const photos = data?.pages.flatMap((page) => page.wallpapers) || [];
   const IMAGE_WIDTH = (width - GAP * 3) / 2;
   const IMAGE_HEIGHT = IMAGE_WIDTH * 1.5;
 
-  const renderItem = ({ item }: { item: PixabayImage }) => (
+  const renderItem = ({ item }: { item: Wallpaper }) => (
     <View style={{ marginBottom: GAP }}>
       <Photo item={item} width={IMAGE_WIDTH} height={IMAGE_HEIGHT} />
     </View>

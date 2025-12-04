@@ -7,7 +7,21 @@ import React from "react";
 import { Linking, View } from "react-native";
 import { UploaderProps } from "./Uploader.config";
 
-const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
+const Uploader = ({
+  avatarUrl,
+  username,
+  userId,
+  dataProvider,
+}: UploaderProps) => {
+  const getUploaderUrl = () => {
+    if (dataProvider === "pixabay") {
+      return `https://pixabay.com/users/${username}-${userId}`;
+    } else if (dataProvider === "pexels") {
+      return avatarUrl || "";
+    }
+    return "";
+  };
+
   return (
     <View
       style={{
@@ -18,24 +32,24 @@ const Uploader = ({ imageUrl, username, userId }: UploaderProps) => {
       }}
     >
       <View className="flex-row items-center gap-4">
-        <Avatar
-          alt="User Avatar"
-          style={{ width: SCREEN_WIDTH / 8, height: SCREEN_WIDTH / 8 }}
-          className="w-12 h-12"
-        >
-          <AvatarImage source={{ uri: imageUrl }} />
-          <AvatarFallback>
-            <Text>{username.charAt(0).toUpperCase()}</Text>
-          </AvatarFallback>
-        </Avatar>
+        {dataProvider !== "pexels" && (
+          <Avatar
+            alt="User Avatar"
+            style={{ width: SCREEN_WIDTH / 8, height: SCREEN_WIDTH / 8 }}
+            className="w-12 h-12"
+          >
+            <AvatarImage source={{ uri: avatarUrl }} />
+            <AvatarFallback>
+              <Text>{username.charAt(0).toUpperCase()}</Text>
+            </AvatarFallback>
+          </Avatar>
+        )}
         <Text variant="h4">{username}</Text>
       </View>
       <Button
         variant="secondary"
         size="default"
-        onPress={() =>
-          Linking.openURL(`https://pixabay.com/users/${username}-${userId}`)
-        }
+        onPress={() => Linking.openURL(getUploaderUrl())}
       >
         <Text>Visit Profile</Text>
       </Button>

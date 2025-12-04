@@ -7,7 +7,7 @@ const Link = ({ url, linkText }: LinkProps) => {
   const openUrl = () => Linking.openURL(url);
 
   return (
-    <Text variant="link" onPress={openUrl}>
+    <Text variant="link" onPress={openUrl} className="text-sm">
       {linkText}
     </Text>
   );

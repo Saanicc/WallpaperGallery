@@ -2,7 +2,7 @@ import Photo from "@/components/Photo/Photo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GAP } from "@/constants/style";
 import useTheme from "@/hooks/useTheme";
-import { PixabayImage } from "@/types/types";
+import { Wallpaper } from "@/types/types";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { ChevronRight } from "lucide-react-native";
 import React from "react";
@@ -12,7 +12,7 @@ import { Text } from "../ui/text";
 
 interface HorizontalListProps {
   title: string;
-  data: PixabayImage[];
+  data: Wallpaper[];
   onViewMore: () => void;
   isLoading: boolean;
 }
