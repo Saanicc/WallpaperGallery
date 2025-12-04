@@ -20,12 +20,13 @@ export class PexelsProvider implements IWallpaperProvider {
     const pageParameter = `?page=${page}`;
     const perPageParam = `&per_page=${perPage}`;
     const sizeParam = `&size=small`;
-    const queryParam =
-      query || category
-        ? `&query=${encodeURIComponent(query || category || "")}`
-        : "";
+    const isSearch = query || category;
+    const endpoint = isSearch ? "/search" : "/curated";
+    const queryParam = isSearch
+      ? `&query=${encodeURIComponent(query || category || "")}`
+      : "";
 
-    const URL = `${PEXELS_BASE_URL}/curated${pageParameter}${perPageParam}${sizeParam}${queryParam}`;
+    const URL = `${PEXELS_BASE_URL}${endpoint}${pageParameter}${perPageParam}${sizeParam}${queryParam}`;
 
     const response = await fetch(URL, {
       headers: {
