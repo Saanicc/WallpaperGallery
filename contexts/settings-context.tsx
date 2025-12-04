@@ -12,6 +12,7 @@ interface SettingsContextType {
   setWallpaperProvider: (provider: WallpaperProvider) => void;
   accentColor: string;
   setAccentColor: (color: string) => void;
+  clearCache: () => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -70,6 +71,15 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     await AsyncStorage.setItem("settings.accentColor", color);
   };
 
+  const clearCache = async () => {
+    await AsyncStorage.removeItem("settings.theme");
+    await AsyncStorage.removeItem("settings.wallpaperProvider");
+    await AsyncStorage.removeItem("settings.accentColor");
+    setThemeState("system");
+    setWallpaperProviderState("pixabay");
+    setAccentColorState("");
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -79,6 +89,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         setWallpaperProvider,
         accentColor,
         setAccentColor,
+        clearCache,
       }}
     >
       {children}

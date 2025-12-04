@@ -2,6 +2,7 @@ import "../global.css";
 
 import { FavoriteContextProvider } from "@/contexts/favorite-context";
 import { WallpaperContextProvider } from "@/contexts/photos-context";
+import { RecentlyViewedProvider } from "@/contexts/recently-viewed-context";
 import { SettingsProvider } from "@/contexts/settings-context";
 import {
   ArimaMadurai_100Thin,
@@ -61,23 +62,25 @@ export default function RootLayout() {
         <SettingsProvider>
           <WallpaperContextProvider>
             <FavoriteContextProvider>
-              <EventProvider>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                  }}
-                >
-                  <Stack.Screen name="(tabs)" options={{ headerTitle: "" }} />
-                  <Stack.Screen
-                    name="image/[id]"
-                    options={{
-                      animation: "fade",
-                      presentation: "transparentModal",
+              <RecentlyViewedProvider>
+                <EventProvider>
+                  <Stack
+                    screenOptions={{
+                      headerShown: false,
                     }}
-                  />
-                </Stack>
-                <PortalHost />
-              </EventProvider>
+                  >
+                    <Stack.Screen name="(tabs)" options={{ headerTitle: "" }} />
+                    <Stack.Screen
+                      name="image/[id]"
+                      options={{
+                        animation: "fade",
+                        presentation: "transparentModal",
+                      }}
+                    />
+                  </Stack>
+                  <PortalHost />
+                </EventProvider>
+              </RecentlyViewedProvider>
             </FavoriteContextProvider>
           </WallpaperContextProvider>
         </SettingsProvider>

@@ -4,6 +4,7 @@ import SurpriseMeButton from "@/components/SurpriseMeButton/SurpriseMeButton";
 import WallpaperOfTheDay from "@/components/WallpaperOfTheDay/WallpaperOfTheDay";
 import PexelsList from "@/components/Wallpapers/PexelsList";
 import PixabayList from "@/components/Wallpapers/PixabayList";
+import RecentlyViewedList from "@/components/Wallpapers/RecentlyViewedList";
 import ThematicList from "@/components/Wallpapers/ThematicList";
 import { GAP } from "@/constants/style";
 import { useSettings } from "@/contexts/settings-context";
@@ -80,6 +81,7 @@ export default function Index() {
           query="minimalist"
           onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
         />
+        <RecentlyViewedList />
       </ScrollView>
       <SurpriseMeButton />
     </SafeAreaView>

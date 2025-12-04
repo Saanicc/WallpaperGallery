@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
+import { useRecentlyViewed } from "@/contexts/recently-viewed-context";
 import { useSettings } from "@/contexts/settings-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useQueryClient } from "@tanstack/react-query";
@@ -35,12 +36,20 @@ const SettingsList = () => {
     setWallpaperProvider,
     accentColor,
     setAccentColor,
+    clearCache,
   } = useSettings();
   const queryClient = useQueryClient();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { clearRecentlyViewed } = useRecentlyViewed();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleClearCache = async () => {
+    queryClient.clear();
+    await clearRecentlyViewed();
+    await clearCache();
+  };
 
   return (
     <ScrollView
@@ -149,10 +158,7 @@ const SettingsList = () => {
             <DialogFooter>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button
-                    variant="destructive"
-                    onPress={() => queryClient.clear()}
-                  >
+                  <Button variant="destructive" onPress={handleClearCache}>
                     <Text>Confirm</Text>
                   </Button>
                 </DialogTrigger>

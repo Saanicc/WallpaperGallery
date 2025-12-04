@@ -5,6 +5,7 @@ import { Text } from "@/components/ui/text";
 import { BORDER_RADIUS, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import { useRecentlyViewed } from "@/contexts/recently-viewed-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import useTheme from "@/hooks/useTheme";
 import { NAV_THEME } from "@/lib/theme";
@@ -42,6 +43,7 @@ export default function DetailedImage() {
   }>();
   const { getWallpaper } = useWallpaperContext();
   const { addToFavorites, isWallpaperFavorited } = useFavoriteContext();
+  const { addToRecentlyViewed } = useRecentlyViewed();
 
   const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
     width: width ? parseInt(width) : 0,
@@ -98,6 +100,12 @@ export default function DetailedImage() {
       );
     });
   }, []);
+
+  useEffect(() => {
+    if (wallpaper) {
+      addToRecentlyViewed(wallpaper);
+    }
+  }, [wallpaper, addToRecentlyViewed]);
 
   useEffect(() => {
     const imageUri = url || wallpaper?.url;
