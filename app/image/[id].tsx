@@ -9,6 +9,7 @@ import { useRecentlyViewed } from "@/contexts/recently-viewed-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import useTheme from "@/hooks/useTheme";
 import { NAV_THEME } from "@/lib/theme";
+import { WallpaperProvider } from "@/types/types";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -34,8 +35,9 @@ type ImageDimensions = {
 export default function DetailedImage() {
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
-  const { id, thumbnail, url, width, height } = useLocalSearchParams<{
+  const { id, thumbnail, url, width, height, provider } = useLocalSearchParams<{
     id: string;
+    provider: WallpaperProvider;
     thumbnail?: string;
     url?: string;
     width?: string;
@@ -54,7 +56,7 @@ export default function DetailedImage() {
   const { width: screenWidth } = useScreenSize();
   const theme = useTheme();
 
-  const { data: wallpaper } = getWallpaper(id);
+  const { data: wallpaper } = getWallpaper(id, provider);
 
   const scrollViewRef = useRef<ScrollView>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);

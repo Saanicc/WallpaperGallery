@@ -39,7 +39,7 @@ const ImageDetails = ({ item }: { item: Wallpaper }) => {
         </>
       )}
       <Download pageURL={item.url} />
-      <Attribution />
+      <Attribution provider={item.provider} />
     </React.Fragment>
   );
 };

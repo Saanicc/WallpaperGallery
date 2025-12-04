@@ -37,6 +37,7 @@ const SurpriseMeButton = () => {
             url: randomWallpaper.url,
             width: randomWallpaper.width,
             height: randomWallpaper.height,
+            provider: randomWallpaper.provider,
           },
         });
       }

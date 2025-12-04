@@ -5,6 +5,7 @@ import {
   IWallpaperProvider,
   PixabayImageOrder,
   Wallpaper,
+  WallpaperProvider,
   WallpaperResponse,
 } from "@/types/types";
 import {
@@ -24,7 +25,10 @@ import {
 import { useSettings } from "./settings-context";
 
 export interface WallpaperContextValue {
-  getWallpaper: (wallpaperId: string) => UseQueryResult<Wallpaper, Error>;
+  getWallpaper: (
+    wallpaperId: string,
+    providerName: WallpaperProvider
+  ) => UseQueryResult<Wallpaper, Error>;
   getWallpapers: ({
     order,
     category,
@@ -61,12 +65,19 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   const getWallpaper = useCallback(
-    (wallpaperId: string) =>
+    (wallpaperId: string, providerName: WallpaperProvider) =>
       useQuery<Wallpaper>({
-        queryKey: ["wallpaper", wallpaperId, wallpaperProvider],
-        queryFn: async () => provider.getWallpaper(wallpaperId),
+        queryKey: ["wallpaper", wallpaperId, providerName],
+        queryFn: async () => {
+          const targetProvider = getProvider(
+            providerName,
+            actualWidthInPixels,
+            actualHeightInPixels
+          );
+          return targetProvider.getWallpaper(wallpaperId);
+        },
       }),
-    [provider, wallpaperProvider]
+    [actualWidthInPixels, actualHeightInPixels]
   );
 
   const getWallpapers = useCallback(

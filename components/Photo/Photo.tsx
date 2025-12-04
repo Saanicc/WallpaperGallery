@@ -47,6 +47,7 @@ const Photo = memo(
                 url: item.url,
                 width: item.width,
                 height: item.height,
+                provider: item.provider,
               },
             });
           }}

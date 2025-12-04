@@ -1,15 +1,13 @@
 import Link from "@/components/Link/Link";
 import { Text } from "@/components/ui/text";
-import { useSettings } from "@/contexts/settings-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
+import { WallpaperProvider } from "@/types/types";
 import React from "react";
 import { View } from "react-native";
 
-const Attribution = () => {
-  const { wallpaperProvider } = useSettings();
-
+const Attribution = ({ provider }: { provider: WallpaperProvider }) => {
   const providerLink = () => {
-    switch (wallpaperProvider) {
+    switch (provider) {
       case "pixabay":
         return "https://pixabay.com";
       case "pexels":
@@ -25,10 +23,7 @@ const Attribution = () => {
     <View className="items-center mt-4 mb-8">
       <Text className="text-muted-foreground text-sm">
         Image provided by{" "}
-        <Link
-          url={providerLink()}
-          linkText={capitalizeFirstChar(wallpaperProvider)}
-        />
+        <Link url={providerLink()} linkText={capitalizeFirstChar(provider)} />
       </Text>
     </View>
   );
