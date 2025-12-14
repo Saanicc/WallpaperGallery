@@ -1,6 +1,6 @@
-import FavoriteCard from "@/components/FavoriteCard/FavoriteCard";
+import Photo from "@/components/Photo/Photo";
 import { Text } from "@/components/ui/text";
-import { GAP, PADDING } from "@/constants/style";
+import { GAP, IMAGE_HEIGHT, IMAGE_WIDTH } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import useTheme from "@/hooks/useTheme";
 import { Wallpaper } from "@/types/types";
@@ -17,6 +17,12 @@ const favorites = () => {
     return favoriteWallpapers;
   };
 
+  const renderItem = ({ item }: { item: Wallpaper }) => (
+    <View style={{ marginBottom: GAP }}>
+      <Photo item={item} width={IMAGE_WIDTH} height={IMAGE_HEIGHT} />
+    </View>
+  );
+
   return (
     <View
       style={{
@@ -27,13 +33,10 @@ const favorites = () => {
       <FlatList
         data={getData()}
         keyExtractor={(wallpaper) => String(wallpaper.id)}
-        renderItem={({ item }) => <FavoriteCard item={item} />}
+        renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={{ gap: GAP }}
-        contentContainerStyle={{
-          padding: PADDING,
-          gap: GAP,
-        }}
+        contentContainerStyle={{ padding: GAP }}
         ListEmptyComponent={() => (
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
