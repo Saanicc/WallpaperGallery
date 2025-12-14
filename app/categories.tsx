@@ -4,7 +4,7 @@ import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import useTheme from "@/hooks/useTheme";
 import { categories, PixabayImageOrder } from "@/types/types";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
 import { FlatList, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -29,6 +29,15 @@ const Categories = () => {
         backgroundColor: theme.colors.background,
       }}
     >
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: "Categories",
+          headerTintColor: theme.colors.text,
+          headerStyle: { backgroundColor: theme.colors.background },
+          animation: "slide_from_right",
+        }}
+      />
       <FlatList
         data={categories}
         keyExtractor={(_, index) => categories[index]}

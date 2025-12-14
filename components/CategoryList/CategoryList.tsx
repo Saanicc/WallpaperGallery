@@ -1,4 +1,5 @@
 import { capitalizeFirstChar } from "@/helpers/functions";
+import useTheme from "@/hooks/useTheme";
 import {
   categories,
   Category,
@@ -6,13 +7,15 @@ import {
   PixabayImageOrder,
 } from "@/types/types";
 import { useRouter } from "expo-router";
+import { ChevronRight } from "lucide-react-native";
 import React from "react";
 import { FlatList, ImageBackground, Pressable } from "react-native";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Text } from "../ui/text";
 
 const CategoryList = () => {
   const router = useRouter();
+  const theme = useTheme();
 
   const navigateToWallpapers = (
     orderBy: PixabayImageOrder,
@@ -51,11 +54,18 @@ const CategoryList = () => {
   );
 
   return (
-    <Card className="p-4 dark:bg-input/30 bg-background">
-      <CardContent className="p-0 gap-2">
-        <Text variant="large">Categories</Text>
+    <Card className="p-4 dark:bg-input/30 bg-background gap-4">
+      <Pressable onPress={() => router.push("/categories")}>
+        <CardHeader className="flex-row items-center justify-between p-0">
+          <CardTitle className="p-0">
+            <Text variant="large">Categories</Text>
+          </CardTitle>
+          <ChevronRight size={24} color={theme.colors.text} />
+        </CardHeader>
+      </Pressable>
+      <CardContent className="p-0">
         <FlatList
-          data={categories}
+          data={categories.slice(0, 10)}
           horizontal
           showsHorizontalScrollIndicator={false}
           keyExtractor={(_, index) => categories[index]}

@@ -36,18 +36,18 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="categories"
+        name="search"
         options={{
+          title: "Search",
           headerShown: true,
           headerStyle: {
             backgroundColor: theme.colors.background,
           },
           headerTitleStyle: { color: theme.colors.text },
-          title: "Categories",
           tabBarActiveTintColor: theme.colors.primary,
           tabBarIcon: ({ color, focused, size }) => (
             <Ionicons
-              name={focused ? "apps" : "apps-outline"}
+              name={focused ? "search" : "search-outline"}
               size={size}
               color={color}
             />

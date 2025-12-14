@@ -2,12 +2,23 @@ import { BORDER_RADIUS } from "@/constants/style";
 import useTheme from "@/hooks/useTheme";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Input } from "../ui/input";
 
-export default function SearchBar() {
-  const [query, setQuery] = useState("");
+interface SearchBarProps {
+  placeholder: string;
+  query: string;
+  setQuery: (query: string) => void;
+  onSearch?: () => void;
+}
+
+export default function SearchBar({
+  placeholder,
+  query,
+  setQuery,
+  onSearch,
+}: SearchBarProps) {
   const router = useRouter();
   const theme = useTheme();
 
@@ -15,7 +26,9 @@ export default function SearchBar() {
     if (query.trim()) {
       router.push({
         pathname: "/wallpapers/list",
-        params: { query: query.trim() },
+        params: {
+          query: query.trim(),
+        },
       });
       setQuery("");
     }
@@ -35,16 +48,16 @@ export default function SearchBar() {
           size={20}
           color={theme.colors.text}
           className="absolute left-4 z-10"
-          onPress={handleSearch}
+          onPress={onSearch || handleSearch}
           disabled={query.trim().length === 0}
         />
         <Input
-          placeholder="Search wallpapers..."
+          placeholder={placeholder}
           value={query}
           onChangeText={setQuery}
-          onSubmitEditing={handleSearch}
+          onSubmitEditing={onSearch || handleSearch}
           returnKeyType="search"
-          className="pl-12 h-14 rounded-lg"
+          className="pl-12 rounded-lg"
         />
       </View>
       {query.length > 0 && (
@@ -52,7 +65,7 @@ export default function SearchBar() {
           onPress={() => setQuery("")}
           className="absolute right-4"
         >
-          <Ionicons name="close-circle" size={24} color={theme.colors.text} />
+          <Ionicons name="close-circle" size={20} color={theme.colors.text} />
         </TouchableOpacity>
       )}
     </View>
