@@ -12,16 +12,16 @@ const favorites = () => {
   const theme = useTheme();
 
   const getData = () => {
-    if (favoriteWallpapers.length % 2 > 0)
-      return [...favoriteWallpapers, {} as Wallpaper];
+    if (favoriteWallpapers.length % 2 > 0) return [...favoriteWallpapers, null];
     return favoriteWallpapers;
   };
 
-  const renderItem = ({ item }: { item: Wallpaper }) => (
-    <View style={{ marginBottom: GAP }}>
-      <Photo item={item} width={IMAGE_WIDTH} height={IMAGE_HEIGHT} />
-    </View>
-  );
+  const renderItem = ({ item }: { item: Wallpaper | null }) =>
+    item && (
+      <View style={{ marginBottom: GAP }}>
+        <Photo item={item} width={IMAGE_WIDTH} height={IMAGE_HEIGHT} />
+      </View>
+    );
 
   return (
     <View
@@ -32,7 +32,7 @@ const favorites = () => {
     >
       <FlatList
         data={getData()}
-        keyExtractor={(wallpaper) => String(wallpaper.id)}
+        keyExtractor={(wallpaper) => String(wallpaper?.id)}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={{ gap: GAP }}
