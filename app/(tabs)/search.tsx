@@ -30,8 +30,8 @@ export default function SearchScreen() {
       <Button onPress={handleSearch} className="mt-4">
         <Text style={{ color: theme.colors.background }}>Search</Text>
       </Button>
-      <Button onPress={handleReset} variant="destructive">
-        <Text style={{ color: theme.colors.background }}>Reset</Text>
+      <Button variant="ghost" onPress={handleReset}>
+        <Text style={{ color: theme.colors.text }}>Clear</Text>
       </Button>
     </ScrollView>
   );
