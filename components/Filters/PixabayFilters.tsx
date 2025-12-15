@@ -1,46 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Text } from "@/components/ui/text";
+import { useFilterContext } from "@/contexts/filter-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import useTheme from "@/hooks/useTheme";
-import {
-  Category,
-  ColorType,
-  Orientation,
-  PixabayImageOrder,
-} from "@/types/types";
+import { PixabayImageOrder } from "@/types/types";
 import React from "react";
 import { Pressable, View } from "react-native";
 import CategoriesFilter from "./shared/Categories";
 import ColorsFilter from "./shared/Colors";
 import OrientationFilter from "./shared/Orientation";
 
-interface PixabayFiltersProps {
-  order: PixabayImageOrder;
-  setOrder: (order: PixabayImageOrder) => void;
-  orientation: Orientation;
-  setOrientation: (orientation: Orientation) => void;
-  category: Category | "";
-  setCategory: (category: Category | "") => void;
-  color: ColorType | "";
-  setColor: (color: ColorType | "") => void;
-  editorsChoice: boolean;
-  setEditorsChoice: (editorsChoice: boolean) => void;
-}
-
-export default function PixabayFilters({
-  order,
-  setOrder,
-  orientation,
-  setOrientation,
-  category,
-  setCategory,
-  color,
-  setColor,
-  editorsChoice,
-  setEditorsChoice,
-}: PixabayFiltersProps) {
+export default function PixabayFilters() {
   const theme = useTheme();
+
+  const {
+    order,
+    setOrder,
+    selectedOrientation,
+    setSelectedOrientation,
+    category,
+    setCategory,
+    color,
+    setColor,
+    editorsChoice,
+    setEditorsChoice,
+  } = useFilterContext();
 
   return (
     <View className="gap-4">
@@ -70,8 +55,8 @@ export default function PixabayFilters({
         </View>
       </View>
       <OrientationFilter
-        orientation={orientation}
-        setOrientation={setOrientation}
+        orientation={selectedOrientation}
+        setOrientation={setSelectedOrientation}
       />
       <CategoriesFilter category={category} setCategory={setCategory} />
       <ColorsFilter color={color} setColor={setColor} />

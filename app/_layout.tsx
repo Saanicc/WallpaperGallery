@@ -1,6 +1,7 @@
 import "../global.css";
 
 import { FavoriteContextProvider } from "@/contexts/favorite-context";
+import { FilterContextProvider } from "@/contexts/filter-context";
 import { WallpaperContextProvider } from "@/contexts/photos-context";
 import { RecentlyViewedProvider } from "@/contexts/recently-viewed-context";
 import { SettingsProvider } from "@/contexts/settings-context";
@@ -91,23 +92,28 @@ export default function RootLayout() {
           <WallpaperContextProvider>
             <FavoriteContextProvider>
               <RecentlyViewedProvider>
-                <EventProvider>
-                  <Stack
-                    screenOptions={{
-                      headerShown: false,
-                    }}
-                  >
-                    <Stack.Screen name="(tabs)" options={{ headerTitle: "" }} />
-                    <Stack.Screen
-                      name="image/[id]"
-                      options={{
-                        animation: "fade",
-                        presentation: "transparentModal",
+                <FilterContextProvider>
+                  <EventProvider>
+                    <Stack
+                      screenOptions={{
+                        headerShown: false,
                       }}
-                    />
-                  </Stack>
-                  <PortalHost />
-                </EventProvider>
+                    >
+                      <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerTitle: "" }}
+                      />
+                      <Stack.Screen
+                        name="image/[id]"
+                        options={{
+                          animation: "fade",
+                          presentation: "transparentModal",
+                        }}
+                      />
+                    </Stack>
+                    <PortalHost />
+                  </EventProvider>
+                </FilterContextProvider>
               </RecentlyViewedProvider>
             </FavoriteContextProvider>
           </WallpaperContextProvider>

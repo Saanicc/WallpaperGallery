@@ -1,4 +1,5 @@
 import { BORDER_RADIUS } from "@/constants/style";
+import { useFilterContext } from "@/contexts/filter-context";
 import useTheme from "@/hooks/useTheme";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -9,23 +10,18 @@ import { Text } from "../ui/text";
 
 interface SearchBarProps {
   placeholder: string;
-  query: string;
-  setQuery: (query: string) => void;
   onSearch?: () => void;
   disableReturnKey?: boolean;
-  error?: string;
 }
 
 export default function SearchBar({
   placeholder,
-  query,
-  setQuery,
   onSearch,
   disableReturnKey = false,
-  error,
 }: SearchBarProps) {
   const router = useRouter();
   const theme = useTheme();
+  const { query, setQuery, error, setError } = useFilterContext();
 
   const handleSearch = () => {
     if (query.trim()) {
@@ -36,6 +32,7 @@ export default function SearchBar({
         },
       });
       setQuery("");
+      setError(undefined);
     }
   };
 
