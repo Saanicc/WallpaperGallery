@@ -84,6 +84,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
           params.orientation?.toLowerCase(),
           params.color?.toLowerCase(),
           params.editorsChoice,
+          params.size,
           wallpaperProvider,
         ],
         queryFn: async ({ pageParam = 1 }) =>
@@ -96,6 +97,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
             orientation: params.orientation,
             color: params.color,
             editorsChoice: params.editorsChoice,
+            size: params.size,
           }),
         initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPage,

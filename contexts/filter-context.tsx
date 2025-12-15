@@ -2,6 +2,7 @@ import {
   Category,
   ColorType,
   Orientation,
+  PexelsImageSize,
   PexelsOrientation,
   PixabayImageOrder,
   PixabayOrientation,
@@ -32,6 +33,8 @@ interface FilterContextValue {
   setColor: (color: ColorType | "") => void;
   editorsChoice: boolean;
   setEditorsChoice: (editorsChoice: boolean) => void;
+  selectedSize: PexelsImageSize | "";
+  setSelectedSize: (size: PexelsImageSize | "") => void;
   handleReset: () => void;
   handleSearch: () => void;
 }
@@ -51,6 +54,8 @@ const FilterContext = createContext<FilterContextValue>({
   setColor: () => {},
   editorsChoice: false,
   setEditorsChoice: () => {},
+  selectedSize: "",
+  setSelectedSize: () => {},
   handleReset: () => {},
   handleSearch: () => {},
 });
@@ -72,6 +77,7 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
   const [category, setCategory] = useState<Category | "">("");
   const [color, setColor] = useState<ColorType | "">("");
   const [editorsChoice, setEditorsChoice] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<PexelsImageSize | "">("");
 
   useEffect(() => {
     handleReset();
@@ -91,16 +97,21 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
         pathname: "/wallpapers/list",
         params: {
           query: query.trim(),
-          orderBy: wallpaperProvider === "pixabay" ? order : undefined,
+          color: color === "" ? undefined : color,
           orientation:
             selectedOrientation !== PixabayOrientation.ALL &&
             selectedOrientation !== PexelsOrientation.ALL
               ? selectedOrientation
               : undefined,
+
+          // Pixabay specific
+          orderBy: wallpaperProvider === "pixabay" ? order : undefined,
           category: category === "" ? undefined : category,
-          color: color === "" ? undefined : color,
           editorsChoice:
             wallpaperProvider === "pixabay" ? String(editorsChoice) : undefined,
+
+          // Pexels specific
+          size: selectedSize,
         },
       });
     }
@@ -117,6 +128,7 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
     );
     setCategory("");
     setColor("");
+    setSelectedSize("");
     setEditorsChoice(false);
   };
 
@@ -136,6 +148,8 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
       setColor,
       editorsChoice,
       setEditorsChoice,
+      selectedSize,
+      setSelectedSize,
       handleReset,
       handleSearch,
     };
@@ -154,6 +168,8 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
     setColor,
     editorsChoice,
     setEditorsChoice,
+    selectedSize,
+    setSelectedSize,
     handleReset,
     handleSearch,
   ]);

@@ -148,6 +148,10 @@ export enum PexelsColor {
   WHITE = "white",
 }
 
+export const PexelsImageSizes = ["small", "medium", "large"] as const;
+
+export type PexelsImageSize = (typeof PexelsImageSizes)[number];
+
 export type WallpaperInput = {
   page: number;
   perPage: number;
@@ -157,6 +161,7 @@ export type WallpaperInput = {
   orientation?: PixabayOrientation | PexelsOrientation;
   color?: ColorType;
   editorsChoice?: boolean;
+  size?: PexelsImageSize;
 };
 
 export interface IWallpaperProvider {
