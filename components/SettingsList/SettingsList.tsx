@@ -23,11 +23,11 @@ import { GAP, PADDING } from "@/constants/style";
 import { useRecentlyViewed } from "@/contexts/recently-viewed-context";
 import { useSettings } from "@/contexts/settings-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
+import { WallpaperProviders } from "@/types/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const SettingsList = () => {
   const {
@@ -39,10 +39,11 @@ const SettingsList = () => {
   } = useSettings();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { clearRecentlyViewed } = useRecentlyViewed();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [themeTriggerWidth, setThemeTriggerWidth] = useState(0);
+  const [providerTriggerWidth, setProviderTriggerWidth] = useState(0);
 
   const handleClearCache = async () => {
     queryClient.clear();
@@ -66,10 +67,14 @@ const SettingsList = () => {
             value={{ value: theme, label: capitalizeFirstChar(theme) }}
             onValueChange={(option) => setTheme(option?.value as any)}
           >
-            <SelectTrigger>
+            <SelectTrigger
+              onLayout={(ev) => {
+                setThemeTriggerWidth(ev.nativeEvent.layout.width);
+              }}
+            >
               <SelectValue placeholder="Select theme" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent style={{ width: themeTriggerWidth }}>
               <SelectGroup>
                 <SelectLabel>Theme</SelectLabel>
                 <SelectItem label="System" value="system" />
@@ -94,19 +99,30 @@ const SettingsList = () => {
               setWallpaperProvider(option?.value as any)
             }
           >
-            <SelectTrigger>
+            <SelectTrigger
+              onLayout={(ev) => {
+                setProviderTriggerWidth(ev.nativeEvent.layout.width);
+              }}
+            >
               <SelectValue placeholder="Select source" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent style={{ width: providerTriggerWidth }}>
               <SelectGroup>
                 <SelectLabel>Provider</SelectLabel>
-                <SelectItem label="Pixabay" value="pixabay" />
-                <SelectItem
-                  label="Unsplash (Coming Soon)"
-                  value="unsplash"
-                  disabled
-                />
-                <SelectItem label="Pexels" value="pexels" />
+                {[...WallpaperProviders]
+                  .sort((a, b) => a.localeCompare(b))
+                  .map((provider) => (
+                    <SelectItem
+                      key={provider}
+                      label={
+                        provider === "unsplash"
+                          ? "Unsplash (Coming Soon)"
+                          : capitalizeFirstChar(provider)
+                      }
+                      value={provider}
+                      disabled={provider === "unsplash"}
+                    />
+                  ))}
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -121,12 +137,11 @@ const SettingsList = () => {
               <Text>Clear Cache</Text>
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="p-4">
             <DialogHeader>
               <DialogTitle>Clear Cache</DialogTitle>
               <DialogDescription>
-                Are you sure you want to clear the image cache? This will remove
-                all downloaded images and data.
+                {`Are you sure you want to clear the image cache?\nThis will remove all cached images and data.`}
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -136,7 +151,7 @@ const SettingsList = () => {
                     <Text>Confirm</Text>
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="p-4">
                   <DialogHeader>
                     <DialogTitle>Cache</DialogTitle>
                     <DialogDescription>

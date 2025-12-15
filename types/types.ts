@@ -74,7 +74,9 @@ export type PexelsImageResponse = {
   next_page: string;
 };
 
-export type WallpaperProvider = "pixabay" | "pexels" | "unsplash";
+export const WallpaperProviders = ["pixabay", "pexels", "unsplash"] as const;
+
+export type WallpaperProvider = (typeof WallpaperProviders)[number];
 
 export interface Wallpaper {
   id: string;
