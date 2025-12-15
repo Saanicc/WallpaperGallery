@@ -38,7 +38,7 @@ const ImageDetails = ({ item }: { item: Wallpaper }) => {
           <Details imageDim={{ width: item.width, height: item.height }} />
         </>
       )}
-      <Download pageURL={item.url} />
+      <Download pageURL={item.url} provider={item.provider} />
       <Attribution provider={item.provider} />
     </React.Fragment>
   );
