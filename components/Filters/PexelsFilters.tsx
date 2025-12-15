@@ -41,14 +41,23 @@ export default function PexelsFilters() {
               className="border border-border bg-background p-4"
               align="end"
             >
-              <View className="gap-2">
-                <Text className="color-primary text-base">
-                  Size of the images you want to search for
+              <View className="gap-3">
+                <Text className="font-semibold text-foreground">
+                  Image Size Guide
                 </Text>
-                <View>
-                  <Text className="color-primary text-base">Small (4MP)</Text>
-                  <Text className="color-primary text-base">Medium (12MP)</Text>
-                  <Text className="color-primary text-base">Large (24MP)</Text>
+                <View className="gap-2">
+                  <View className="flex-row items-center justify-between gap-4">
+                    <Text className="text-foreground">Small</Text>
+                    <Text className="text-muted-foreground">4 MP</Text>
+                  </View>
+                  <View className="flex-row items-center justify-between gap-4">
+                    <Text className="text-foreground">Medium</Text>
+                    <Text className="text-muted-foreground">12 MP</Text>
+                  </View>
+                  <View className="flex-row items-center justify-between gap-4">
+                    <Text className="text-foreground">Large</Text>
+                    <Text className="text-muted-foreground">24 MP</Text>
+                  </View>
                 </View>
               </View>
             </TooltipContent>
