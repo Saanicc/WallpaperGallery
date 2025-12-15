@@ -1,20 +1,20 @@
 import SettingsList from "@/components/SettingsList/SettingsList";
 import useTheme from "@/hooks/useTheme";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "react-native";
 
 const settings = () => {
   const theme = useTheme();
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: theme.colors.background,
       }}
     >
       <SettingsList />
-    </SafeAreaView>
+    </View>
   );
 };
 

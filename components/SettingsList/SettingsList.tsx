@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
+import { GAP, PADDING } from "@/constants/style";
 import { useRecentlyViewed } from "@/contexts/recently-viewed-context";
 import { useSettings } from "@/contexts/settings-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
@@ -34,8 +35,6 @@ const SettingsList = () => {
     setTheme,
     wallpaperProvider,
     setWallpaperProvider,
-    accentColor,
-    setAccentColor,
     clearCache,
   } = useSettings();
   const queryClient = useQueryClient();
@@ -54,13 +53,13 @@ const SettingsList = () => {
   return (
     <ScrollView
       contentContainerStyle={{
-        padding: 16,
-        gap: 24,
-        paddingBottom: insets.bottom + 16,
+        marginVertical: PADDING,
+        paddingHorizontal: PADDING,
+        gap: GAP,
       }}
     >
-      <View className="gap-4">
-        <Text variant="h3">Appearance</Text>
+      <View className="gap-2">
+        <Text variant="large">Appearance</Text>
         <View className="gap-2">
           <Text className="text-muted-foreground">Theme</Text>
           <Select
@@ -80,35 +79,10 @@ const SettingsList = () => {
             </SelectContent>
           </Select>
         </View>
-
-        <View className="gap-2">
-          <Text className="text-muted-foreground">Accent Color</Text>
-          <Select
-            value={{
-              value: accentColor || "default",
-              label: accentColor ? "Custom" : "Default",
-            }}
-            onValueChange={(option) => setAccentColor(option?.value as string)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select accent color" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Colors</SelectLabel>
-                <SelectItem label="Default" value="" />
-                <SelectItem label="Blue" value="#3b82f6" />
-                <SelectItem label="Red" value="#ef4444" />
-                <SelectItem label="Green" value="#22c55e" />
-                <SelectItem label="Purple" value="#a855f7" />
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </View>
       </View>
 
-      <View className="gap-4">
-        <Text variant="h3">Content</Text>
+      <View className="gap-2">
+        <Text variant="large">Content</Text>
         <View className="gap-2">
           <Text className="text-muted-foreground">Wallpaper Source</Text>
           <Select
@@ -139,8 +113,8 @@ const SettingsList = () => {
         </View>
       </View>
 
-      <View className="gap-4">
-        <Text variant="h3">Data & Storage</Text>
+      <View className="gap-2">
+        <Text variant="large">Data & Storage</Text>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button variant="destructive">
@@ -186,8 +160,8 @@ const SettingsList = () => {
         </Dialog>
       </View>
 
-      <View className="gap-4">
-        <Text variant="h3">About</Text>
+      <View className="gap-2">
+        <Text variant="large">About</Text>
         <Button variant="outline" onPress={() => router.push("/about" as any)}>
           <Text>About App</Text>
         </Button>

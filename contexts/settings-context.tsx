@@ -10,8 +10,6 @@ interface SettingsContextType {
   setTheme: (theme: Theme) => void;
   wallpaperProvider: WallpaperProvider;
   setWallpaperProvider: (provider: WallpaperProvider) => void;
-  accentColor: string;
-  setAccentColor: (color: string) => void;
   clearCache: () => void;
 }
 
@@ -25,7 +23,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [theme, setThemeState] = useState<Theme>("system");
   const [wallpaperProvider, setWallpaperProviderState] =
     useState<WallpaperProvider>("pixabay");
-  const [accentColor, setAccentColorState] = useState<string>("");
 
   useEffect(() => {
     loadSettings();
@@ -45,12 +42,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       const storedProvider = await AsyncStorage.getItem(
         "settings.wallpaperProvider"
       );
-      const storedAccent = await AsyncStorage.getItem("settings.accentColor");
 
       if (storedTheme) setThemeState(storedTheme as Theme);
       if (storedProvider)
         setWallpaperProviderState(storedProvider as WallpaperProvider);
-      if (storedAccent) setAccentColorState(storedAccent);
     } catch (error) {
       console.error("Failed to load settings:", error);
     }
@@ -66,18 +61,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     await AsyncStorage.setItem("settings.wallpaperProvider", provider);
   };
 
-  const setAccentColor = async (color: string) => {
-    setAccentColorState(color);
-    await AsyncStorage.setItem("settings.accentColor", color);
-  };
-
   const clearCache = async () => {
     await AsyncStorage.removeItem("settings.theme");
     await AsyncStorage.removeItem("settings.wallpaperProvider");
-    await AsyncStorage.removeItem("settings.accentColor");
     setThemeState("system");
     setWallpaperProviderState("pixabay");
-    setAccentColorState("");
   };
 
   return (
@@ -87,8 +75,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         setTheme,
         wallpaperProvider,
         setWallpaperProvider,
-        accentColor,
-        setAccentColor,
         clearCache,
       }}
     >
