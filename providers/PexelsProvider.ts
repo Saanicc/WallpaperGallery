@@ -16,13 +16,13 @@ export class PexelsProvider implements IWallpaperProvider {
     query,
     category,
     orientation,
-    colors,
+    color,
   }: WallpaperInput): Promise<WallpaperResponse> {
     const pageParameter = `?page=${page}`;
     const perPageParam = `&per_page=${perPage}`;
     const sizeParam = `&size=small`;
     const orientationParam = orientation ? `&orientation=${orientation}` : "";
-    const colorParam = colors ? `&color=${colors}` : "";
+    const colorParam = color ? `&color=${color}` : "";
     const searchQuery = [query, category].filter(Boolean).join(" ");
     const isSearch = !!searchQuery;
     const endpoint = isSearch ? "/search" : "/curated";

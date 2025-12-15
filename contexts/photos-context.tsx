@@ -23,7 +23,7 @@ import {
 } from "react";
 import { useSettings } from "./settings-context";
 
-type SearchParams = Omit<WallpaperInput, "perPage" | "page">;
+type SearchParams = Omit<WallpaperInput, "page">;
 
 export interface WallpaperContextValue {
   getWallpaper: (
@@ -82,7 +82,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
           params.category?.toLowerCase(),
           params.query?.toLowerCase(),
           params.orientation?.toLowerCase(),
-          params.colors?.toLowerCase(),
+          params.color?.toLowerCase(),
           params.editorsChoice,
           wallpaperProvider,
         ],
@@ -94,7 +94,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
             category: params.category,
             query: params.query,
             orientation: params.orientation,
-            colors: params.colors,
+            color: params.color,
             editorsChoice: params.editorsChoice,
           }),
         initialPageParam: 1,

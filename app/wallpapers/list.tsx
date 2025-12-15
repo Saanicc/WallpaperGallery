@@ -9,7 +9,7 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import useTheme from "@/hooks/useTheme";
 import {
   Category,
-  PixabayColor,
+  ColorType,
   PixabayImageOrder,
   PixabayOrientation,
   Wallpaper,
@@ -20,13 +20,13 @@ import React from "react";
 import { FlatList, View } from "react-native";
 
 export default function ListScreen() {
-  const { orderBy, category, query, orientation, colors, editorsChoice } =
+  const { orderBy, category, query, orientation, color, editorsChoice } =
     useLocalSearchParams<{
       orderBy: PixabayImageOrder;
       category: Category;
       query: string;
       orientation: PixabayOrientation;
-      colors: PixabayColor;
+      color: ColorType;
       editorsChoice: string;
     }>();
   const { getWallpapers } = useWallpaperContext();
@@ -36,11 +36,12 @@ export default function ListScreen() {
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     getWallpapers({
+      perPage: 20,
       order: orderBy,
       category,
       query,
       orientation,
-      colors,
+      color,
       editorsChoice: editorsChoice === "true",
     });
 

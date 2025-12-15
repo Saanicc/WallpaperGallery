@@ -98,6 +98,8 @@ export interface WallpaperResponse {
   nextPage?: number;
 }
 
+export type Orientation = PixabayOrientation | PexelsOrientation;
+
 export enum PixabayOrientation {
   ALL = "all",
   HORIZONTAL = "horizontal",
@@ -110,6 +112,8 @@ export enum PexelsOrientation {
   PORTRAIT = "portrait",
   SQUARE = "square",
 }
+
+export type ColorType = PixabayColor | PexelsColor;
 
 export enum PixabayColor {
   TRANSPARENT = "transparent",
@@ -149,7 +153,7 @@ export type WallpaperInput = {
   category?: Category;
   query?: string;
   orientation?: PixabayOrientation | PexelsOrientation;
-  colors?: PixabayColor | PexelsColor;
+  color?: ColorType;
   editorsChoice?: boolean;
 };
 
