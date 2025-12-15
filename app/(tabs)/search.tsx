@@ -9,12 +9,14 @@ import useTheme from "@/hooks/useTheme";
 import {
   categories,
   Category,
+  PexelsColor,
+  PexelsOrientation,
   PixabayColor,
   PixabayImageOrder,
   PixabayOrientation,
 } from "@/types/types";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 
 export default function SearchScreen() {
@@ -25,27 +27,40 @@ export default function SearchScreen() {
   const [order, setOrder] = useState<PixabayImageOrder>(
     PixabayImageOrder.POPULAR
   );
-  const [orientation, setOrientation] = useState<PixabayOrientation>(
-    PixabayOrientation.ALL
-  );
+  const [orientation, setOrientation] = useState<
+    PixabayOrientation | PexelsOrientation
+  >(PixabayOrientation.ALL);
   const [category, setCategory] = useState<Category | "">("");
-  const [colors, setColors] = useState<PixabayColor | "">("");
+  const [colors, setColors] = useState<PixabayColor | PexelsColor | "">("");
   const [editorsChoice, setEditorsChoice] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    handleReset();
+  }, [wallpaperProvider]);
 
   const handleSearch = () => {
+    if (wallpaperProvider === "pexels") {
+      if (!query) {
+        setError("Pexels requires a search query");
+        return;
+      }
+    }
     if (query.trim() || query === "") {
+      setError(undefined);
+
       router.push({
         pathname: "/wallpapers/list",
         params: {
           query: query.trim(),
           orderBy: wallpaperProvider === "pixabay" ? order : undefined,
           orientation:
-            wallpaperProvider === "pixabay" &&
-            orientation !== PixabayOrientation.ALL
+            orientation !== PixabayOrientation.ALL &&
+            orientation !== PexelsOrientation.ALL
               ? orientation
               : undefined,
-          category: wallpaperProvider === "pixabay" ? category : undefined,
-          colors: wallpaperProvider === "pixabay" ? colors : undefined,
+          category,
+          colors,
           editorsChoice:
             wallpaperProvider === "pixabay" ? String(editorsChoice) : undefined,
         },
@@ -54,9 +69,15 @@ export default function SearchScreen() {
   };
 
   const handleReset = () => {
+    setError(undefined);
     setQuery("");
     setOrder(PixabayImageOrder.POPULAR);
-    setOrientation(PixabayOrientation.ALL);
+    setOrder(PixabayImageOrder.POPULAR);
+    setOrientation(
+      wallpaperProvider === "pixabay"
+        ? PixabayOrientation.ALL
+        : PexelsOrientation.ALL
+    );
     setCategory("");
     setColors("");
     setEditorsChoice(false);
@@ -74,6 +95,7 @@ export default function SearchScreen() {
         setQuery={setQuery}
         onSearch={handleSearch}
         disableReturnKey
+        error={error}
       />
 
       <View className="gap-4">
@@ -236,7 +258,81 @@ export default function SearchScreen() {
           </View>
         )}
 
-        {wallpaperProvider !== "pixabay" && (
+        {wallpaperProvider === "pexels" && (
+          <View className="gap-4">
+            {/* Orientation */}
+            <View className="gap-2">
+              <Text>Orientation</Text>
+              <View className="flex-row gap-2 flex-wrap">
+                {Object.values(PexelsOrientation).map((item) => (
+                  <Button
+                    key={item}
+                    variant={orientation === item ? "default" : "outline"}
+                    size="sm"
+                    onPress={() => setOrientation(item)}
+                  >
+                    <Text
+                      style={{
+                        color:
+                          orientation === item
+                            ? theme.colors.background
+                            : theme.colors.text,
+                      }}
+                    >
+                      {capitalizeFirstChar(item)}
+                    </Text>
+                  </Button>
+                ))}
+              </View>
+            </View>
+
+            {/* Colors */}
+            <View className="gap-2">
+              <Text>Colors</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View className="flex-row gap-2">
+                  <Button
+                    variant={colors === "" ? "default" : "outline"}
+                    size="sm"
+                    onPress={() => setColors("")}
+                  >
+                    <Text
+                      style={{
+                        color:
+                          colors === ""
+                            ? theme.colors.background
+                            : theme.colors.text,
+                      }}
+                    >
+                      All
+                    </Text>
+                  </Button>
+                  {Object.values(PexelsColor).map((item) => (
+                    <Button
+                      key={item}
+                      variant={colors === item ? "default" : "outline"}
+                      size="sm"
+                      onPress={() => setColors(item)}
+                    >
+                      <Text
+                        style={{
+                          color:
+                            colors === item
+                              ? theme.colors.background
+                              : theme.colors.text,
+                        }}
+                      >
+                        {capitalizeFirstChar(item)}
+                      </Text>
+                    </Button>
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+        )}
+
+        {wallpaperProvider !== "pixabay" && wallpaperProvider !== "pexels" && (
           <Text className="text-muted-foreground">
             No specific filters available for {wallpaperProvider} yet.
           </Text>

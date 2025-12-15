@@ -104,6 +104,13 @@ export enum PixabayOrientation {
   VERTICAL = "vertical",
 }
 
+export enum PexelsOrientation {
+  ALL = "all",
+  LANDSCAPE = "landscape",
+  PORTRAIT = "portrait",
+  SQUARE = "square",
+}
+
 export enum PixabayColor {
   TRANSPARENT = "transparent",
   RED = "red",
@@ -120,14 +127,29 @@ export enum PixabayColor {
   BROWN = "brown",
 }
 
+export enum PexelsColor {
+  RED = "red",
+  ORANGE = "orange",
+  YELLOW = "yellow",
+  GREEN = "green",
+  TURQUOISE = "turquoise",
+  BLUE = "blue",
+  VIOLET = "violet",
+  PINK = "pink",
+  BROWN = "brown",
+  BLACK = "black",
+  GRAY = "gray",
+  WHITE = "white",
+}
+
 export type WallpaperInput = {
   page: number;
   perPage: number;
   order?: PixabayImageOrder;
   category?: Category;
   query?: string;
-  orientation?: PixabayOrientation;
-  colors?: PixabayColor;
+  orientation?: PixabayOrientation | PexelsOrientation;
+  colors?: PixabayColor | PexelsColor;
   editorsChoice?: boolean;
 };
 
