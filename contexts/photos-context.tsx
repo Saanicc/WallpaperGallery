@@ -1,10 +1,9 @@
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { getProvider } from "@/providers";
 import {
-  Category,
   IWallpaperProvider,
-  PixabayImageOrder,
   Wallpaper,
+  WallpaperInput,
   WallpaperProvider,
   WallpaperResponse,
 } from "@/types/types";
@@ -24,22 +23,16 @@ import {
 } from "react";
 import { useSettings } from "./settings-context";
 
+type SearchParams = Omit<WallpaperInput, "perPage" | "page">;
+
 export interface WallpaperContextValue {
   getWallpaper: (
     wallpaperId: string,
     providerName: WallpaperProvider
   ) => UseQueryResult<Wallpaper, Error>;
-  getWallpapers: ({
-    order,
-    category,
-    perPage,
-    query,
-  }: {
-    order?: PixabayImageOrder;
-    category?: Category;
-    perPage?: number;
-    query?: string;
-  }) => UseInfiniteQueryResult<InfiniteData<WallpaperResponse>, Error>;
+  getWallpapers: (
+    params: SearchParams
+  ) => UseInfiniteQueryResult<InfiniteData<WallpaperResponse>, Error>;
   provider: IWallpaperProvider;
 }
 
@@ -81,33 +74,28 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   const getWallpapers = useCallback(
-    ({
-      order,
-      category,
-      perPage = 20,
-      query,
-    }: {
-      order?: PixabayImageOrder;
-      category?: Category;
-      perPage?: number;
-      query?: string;
-    }) =>
+    (params: SearchParams) =>
       useInfiniteQuery<WallpaperResponse>({
         queryKey: [
           "wallpapers",
-          order?.toLowerCase(),
-          category?.toLowerCase(),
-          perPage,
-          query,
+          params.order?.toLowerCase(),
+          params.category?.toLowerCase(),
+          params.query?.toLowerCase(),
+          params.orientation?.toLowerCase(),
+          params.colors?.toLowerCase(),
+          params.editorsChoice,
           wallpaperProvider,
         ],
         queryFn: async ({ pageParam = 1 }) =>
           provider.getWallpapers({
             page: pageParam as number,
-            perPage,
-            order,
-            category,
-            query,
+            perPage: 20,
+            order: params.order,
+            category: params.category,
+            query: params.query,
+            orientation: params.orientation,
+            colors: params.colors,
+            editorsChoice: params.editorsChoice,
           }),
         initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPage,

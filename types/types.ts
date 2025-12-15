@@ -98,12 +98,37 @@ export interface WallpaperResponse {
   nextPage?: number;
 }
 
+export enum PixabayOrientation {
+  ALL = "all",
+  HORIZONTAL = "horizontal",
+  VERTICAL = "vertical",
+}
+
+export enum PixabayColor {
+  TRANSPARENT = "transparent",
+  RED = "red",
+  ORANGE = "orange",
+  YELLOW = "yellow",
+  GREEN = "green",
+  TURQUOISE = "turquoise",
+  BLUE = "blue",
+  LILAC = "lilac",
+  PINK = "pink",
+  WHITE = "white",
+  GRAY = "gray",
+  BLACK = "black",
+  BROWN = "brown",
+}
+
 export type WallpaperInput = {
   page: number;
   perPage: number;
   order?: PixabayImageOrder;
   category?: Category;
   query?: string;
+  orientation?: PixabayOrientation;
+  colors?: PixabayColor;
+  editorsChoice?: boolean;
 };
 
 export interface IWallpaperProvider {

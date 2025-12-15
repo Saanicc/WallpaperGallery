@@ -24,6 +24,9 @@ export class PixabayProvider implements IWallpaperProvider {
     order,
     category,
     query,
+    orientation,
+    colors,
+    editorsChoice,
   }: WallpaperInput): Promise<WallpaperResponse> {
     const imageType = `&image_type=photo`;
     const safeSearch = `&safesearch=true`;
@@ -34,8 +37,11 @@ export class PixabayProvider implements IWallpaperProvider {
     const pageParameter = `&page=${page}`;
     const perPageParam = `&per_page=${perPage}`;
     const queryParam = query ? `&q=${encodeURIComponent(query)}` : "";
+    const orientationParam = orientation ? `&orientation=${orientation}` : "";
+    const colorsParam = colors ? `&colors=${colors}` : "";
+    const editorsChoiceParam = editorsChoice ? `&editors_choice=true` : "";
 
-    const URL = `${PIXABAY_API_URL}${imageType}${safeSearch}${categoryParam}${widthParam}${heightParam}${orderParam}${pageParameter}${perPageParam}${queryParam}`;
+    const URL = `${PIXABAY_API_URL}${imageType}${safeSearch}${categoryParam}${widthParam}${heightParam}${orderParam}${pageParameter}${perPageParam}${queryParam}${orientationParam}${colorsParam}${editorsChoiceParam}`;
 
     const response = await fetch(URL);
     const data: PixabayImageResponse = await response.json();

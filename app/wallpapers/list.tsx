@@ -7,18 +7,28 @@ import { useWallpaperContext } from "@/contexts/photos-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import useTheme from "@/hooks/useTheme";
-import { Category, PixabayImageOrder, Wallpaper } from "@/types/types";
+import {
+  Category,
+  PixabayColor,
+  PixabayImageOrder,
+  PixabayOrientation,
+  Wallpaper,
+} from "@/types/types";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import React from "react";
 import { FlatList, View } from "react-native";
 
 export default function ListScreen() {
-  const { orderBy, category, query } = useLocalSearchParams<{
-    orderBy: PixabayImageOrder;
-    category: Category;
-    query: string;
-  }>();
+  const { orderBy, category, query, orientation, colors, editorsChoice } =
+    useLocalSearchParams<{
+      orderBy: PixabayImageOrder;
+      category: Category;
+      query: string;
+      orientation: PixabayOrientation;
+      colors: PixabayColor;
+      editorsChoice: string;
+    }>();
   const { getWallpapers } = useWallpaperContext();
   const { width } = useScreenSize();
   const theme = useTheme();
@@ -29,6 +39,9 @@ export default function ListScreen() {
       order: orderBy,
       category,
       query,
+      orientation,
+      colors,
+      editorsChoice: editorsChoice === "true",
     });
 
   const photos = data?.pages.flatMap((page) => page.wallpapers) || [];

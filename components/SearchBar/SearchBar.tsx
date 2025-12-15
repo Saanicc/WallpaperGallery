@@ -11,6 +11,7 @@ interface SearchBarProps {
   query: string;
   setQuery: (query: string) => void;
   onSearch?: () => void;
+  disableReturnKey?: boolean;
 }
 
 export default function SearchBar({
@@ -18,6 +19,7 @@ export default function SearchBar({
   query,
   setQuery,
   onSearch,
+  disableReturnKey = false,
 }: SearchBarProps) {
   const router = useRouter();
   const theme = useTheme();
@@ -55,9 +57,12 @@ export default function SearchBar({
           placeholder={placeholder}
           value={query}
           onChangeText={setQuery}
-          onSubmitEditing={onSearch || handleSearch}
-          returnKeyType="search"
+          onSubmitEditing={
+            disableReturnKey ? undefined : onSearch || handleSearch
+          }
           className="pl-12 rounded-lg"
+          returnKeyLabel="Search"
+          returnKeyType={disableReturnKey ? "done" : "search"}
         />
       </View>
       {query.length > 0 && (
