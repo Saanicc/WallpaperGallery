@@ -23,11 +23,11 @@ export class PexelsProvider implements IWallpaperProvider {
     const sizeParam = `&size=small`;
     const orientationParam = orientation ? `&orientation=${orientation}` : "";
     const colorParam = colors ? `&color=${colors}` : "";
-    const searchQuery = query || category;
+    const searchQuery = [query, category].filter(Boolean).join(" ");
     const isSearch = !!searchQuery;
     const endpoint = isSearch ? "/search" : "/curated";
     const queryParam = isSearch
-      ? `&query=${encodeURIComponent(searchQuery || "")}`
+      ? `&query=${encodeURIComponent(searchQuery)}`
       : "";
 
     const URL = `${PEXELS_BASE_URL}${endpoint}${pageParameter}${perPageParam}${sizeParam}${queryParam}${orientationParam}${colorParam}`;

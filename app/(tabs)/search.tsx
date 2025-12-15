@@ -41,8 +41,8 @@ export default function SearchScreen() {
 
   const handleSearch = () => {
     if (wallpaperProvider === "pexels") {
-      if (!query) {
-        setError("Pexels requires a search query");
+      if (!query && !category) {
+        setError("Pexels requires a search query or category");
         return;
       }
     }
@@ -284,6 +284,50 @@ export default function SearchScreen() {
                   </Button>
                 ))}
               </View>
+            </View>
+
+            {/* Category */}
+            <View className="gap-2">
+              <Text>Category</Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View className="flex-row gap-2">
+                  <Button
+                    variant={category === "" ? "default" : "outline"}
+                    size="sm"
+                    onPress={() => setCategory("")}
+                  >
+                    <Text
+                      style={{
+                        color:
+                          category === ""
+                            ? theme.colors.background
+                            : theme.colors.text,
+                      }}
+                    >
+                      All
+                    </Text>
+                  </Button>
+                  {categories.map((item) => (
+                    <Button
+                      key={item}
+                      variant={category === item ? "default" : "outline"}
+                      size="sm"
+                      onPress={() => setCategory(item)}
+                    >
+                      <Text
+                        style={{
+                          color:
+                            category === item
+                              ? theme.colors.background
+                              : theme.colors.text,
+                        }}
+                      >
+                        {capitalizeFirstChar(item)}
+                      </Text>
+                    </Button>
+                  ))}
+                </View>
+              </ScrollView>
             </View>
 
             {/* Colors */}
