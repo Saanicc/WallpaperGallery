@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -36,7 +37,7 @@ interface FilterContextValue {
   selectedSize: PexelsImageSize | "";
   setSelectedSize: (size: PexelsImageSize | "") => void;
   handleReset: () => void;
-  handleSearch: () => void;
+  handleSearch: () => boolean;
 }
 
 const FilterContext = createContext<FilterContextValue>({
@@ -57,7 +58,7 @@ const FilterContext = createContext<FilterContextValue>({
   selectedSize: "",
   setSelectedSize: () => {},
   handleReset: () => {},
-  handleSearch: () => {},
+  handleSearch: () => false,
 });
 
 export const FilterContextProvider = ({ children }: PropsWithChildren) => {
@@ -79,15 +80,30 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
   const [editorsChoice, setEditorsChoice] = useState(false);
   const [selectedSize, setSelectedSize] = useState<PexelsImageSize | "">("");
 
-  useEffect(() => {
-    handleReset();
+  const handleReset = useCallback(() => {
+    setError(undefined);
+    setQuery("");
+    setOrder(PixabayImageOrder.POPULAR);
+    setSelectedOrientation(
+      wallpaperProvider === "pixabay"
+        ? PixabayOrientation.ALL
+        : PexelsOrientation.ALL
+    );
+    setCategory("");
+    setColor("");
+    setSelectedSize("");
+    setEditorsChoice(false);
   }, [wallpaperProvider]);
 
-  const handleSearch = () => {
+  useEffect(() => {
+    handleReset();
+  }, [handleReset]);
+
+  const handleSearch = useCallback(() => {
     if (wallpaperProvider === "pexels") {
       if (!query && !category) {
         setError("Pexels requires a search query or category");
-        return;
+        return false;
       }
     }
     if (query.trim() || query === "") {
@@ -114,23 +130,20 @@ export const FilterContextProvider = ({ children }: PropsWithChildren) => {
           size: selectedSize,
         },
       });
+      return true;
     }
-  };
-
-  const handleReset = () => {
-    setError(undefined);
-    setQuery("");
-    setOrder(PixabayImageOrder.POPULAR);
-    setSelectedOrientation(
-      wallpaperProvider === "pixabay"
-        ? PixabayOrientation.ALL
-        : PexelsOrientation.ALL
-    );
-    setCategory("");
-    setColor("");
-    setSelectedSize("");
-    setEditorsChoice(false);
-  };
+    return false;
+  }, [
+    wallpaperProvider,
+    query,
+    category,
+    router,
+    color,
+    selectedOrientation,
+    order,
+    editorsChoice,
+    selectedSize,
+  ]);
 
   const value = useMemo(() => {
     return {
