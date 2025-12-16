@@ -12,7 +12,6 @@ import useTheme from "@/hooks/useTheme";
 import { PixabayImageOrder, WallpaperProvider } from "@/types/types";
 import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { Platform, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -20,7 +19,6 @@ export default function Index() {
   const { wallpaperProvider } = useSettings();
   const router = useRouter();
   const theme = useTheme();
-  const [searchQuery, setSearchQuery] = useState("");
 
   const navigateToWallpapers = (
     orderBy?: PixabayImageOrder,
@@ -62,11 +60,7 @@ export default function Index() {
           paddingBottom: Platform.OS === "ios" ? 100 : 130,
         }}
       >
-        <SearchBar
-          placeholder="Quick search..."
-          query={searchQuery}
-          setQuery={setSearchQuery}
-        />
+        <SearchBar placeholder="Quick search..." />
         <WallpaperOfTheDay />
         <CategoryList />
         <ProviderData provider={wallpaperProvider} />
