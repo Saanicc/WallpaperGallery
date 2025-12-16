@@ -73,20 +73,28 @@ export default function ListScreen() {
       />
       {isLoading ? (
         <View
+          className="flex-row flex-wrap"
           style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
             gap: GAP,
             padding: GAP,
           }}
         >
           {Array.from({ length: 6 }).map((_, index) => (
-            <LoadingSkeleton
+            <View
               key={index}
-              width={IMAGE_WIDTH}
-              height={IMAGE_HEIGHT}
-              borderRadius={BORDER_RADIUS}
-            />
+              style={{
+                width: IMAGE_WIDTH,
+                height: IMAGE_HEIGHT,
+              }}
+              className="bg-background dark:bg-input/30 rounded-lg border border-border"
+            >
+              <LoadingSkeleton
+                width={IMAGE_WIDTH}
+                height={IMAGE_HEIGHT}
+                borderRadius={BORDER_RADIUS}
+                size="large"
+              />
+            </View>
           ))}
         </View>
       ) : photos.length === 0 ? (

@@ -22,8 +22,8 @@ const WallpaperOfTheDay = () => {
 
   if (isLoading) {
     return (
-      <Card className="h-64 w-full rounded-lg overflow-hidden p-0 items-center justify-center">
-        <LoadingSkeleton />
+      <Card className="h-64 w-full rounded-lg overflow-hidden p-0 items-center justify-center bg-background dark:bg-input/30">
+        <LoadingSkeleton size="large" />
       </Card>
     );
   }
