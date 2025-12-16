@@ -1,26 +1,13 @@
 import CategoryCard from "@/components/CategoryCard/CategoryCard";
-import { Text } from "@/components/ui/text";
-import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
-import { useScaleAnimation } from "@/hooks/animations/scale";
+import { GAP, PADDING } from "@/constants/style";
 import useTheme from "@/hooks/useTheme";
-import { categories, PixabayImageOrder } from "@/types/types";
-import { Stack, useRouter } from "expo-router";
+import { categories } from "@/types/types";
+import { Stack } from "expo-router";
 import React from "react";
-import { FlatList, Pressable, View } from "react-native";
-import Animated from "react-native-reanimated";
+import { FlatList, View } from "react-native";
 
 const Categories = () => {
-  const router = useRouter();
   const theme = useTheme();
-
-  const { stylez, handlePressIn, handlePressOut } = useScaleAnimation();
-
-  const handlePress = () => {
-    router.push({
-      pathname: "/wallpapers/list",
-      params: { orderBy: PixabayImageOrder.LATEST },
-    });
-  };
 
   return (
     <View
@@ -49,32 +36,6 @@ const Categories = () => {
           paddingTop: 0,
           gap: GAP,
         }}
-        ListHeaderComponent={
-          <Animated.View
-            style={[
-              {
-                borderRadius: BORDER_RADIUS,
-                marginTop: PADDING,
-                borderColor: theme.colors.border,
-                borderWidth: 1,
-              },
-              stylez,
-            ]}
-          >
-            <Pressable
-              onPress={handlePress}
-              onPressIn={handlePressIn}
-              onPressOut={handlePressOut}
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                padding: PADDING,
-              }}
-            >
-              <Text>All</Text>
-            </Pressable>
-          </Animated.View>
-        }
       />
     </View>
   );
