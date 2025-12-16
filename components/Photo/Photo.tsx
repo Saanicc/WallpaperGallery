@@ -1,28 +1,15 @@
 import { BORDER_RADIUS } from "@/constants/style";
+import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useRouter } from "expo-router";
 import React, { memo } from "react";
 import { Pressable } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { PhotoProps } from "./Photo.config";
 
 const Photo = memo(
   ({ item, width, height }: PhotoProps) => {
     const route = useRouter();
-    const imageCardScale = useSharedValue(1);
-
-    const stylez = useAnimatedStyle(() => {
-      return {
-        transform: [
-          {
-            scale: imageCardScale.value,
-          },
-        ],
-      };
-    });
+    const { handlePressIn, handlePressOut, stylez } = useScaleAnimation();
 
     return (
       <Animated.View
@@ -51,24 +38,8 @@ const Photo = memo(
               },
             });
           }}
-          onPressIn={() => {
-            imageCardScale.value = withSpring(0.95, {
-              stiffness: 900,
-              damping: 90,
-              mass: 4,
-              overshootClamping: false,
-              velocity: 0,
-            });
-          }}
-          onPressOut={() => {
-            imageCardScale.value = withSpring(1, {
-              stiffness: 900,
-              damping: 90,
-              mass: 4,
-              overshootClamping: false,
-              velocity: 0,
-            });
-          }}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
         >
           <Animated.Image
             source={{ uri: item.thumbnail }}
