@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { useWallpaperContext } from "@/contexts/photos-context";
+import { useDailyWallpaper } from "@/hooks/useDailyWallpaper";
 import useTheme from "@/hooks/useTheme";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
@@ -12,13 +12,7 @@ import { Card } from "../ui/card";
 const WallpaperOfTheDay = () => {
   const router = useRouter();
   const theme = useTheme();
-  const { getWallpapers } = useWallpaperContext();
-
-  const { data, isLoading } = getWallpapers({
-    perPage: 3,
-  });
-
-  const wallpaper = data?.pages[0]?.wallpapers[0];
+  const { wallpaper, isLoading } = useDailyWallpaper();
 
   if (isLoading) {
     return (
@@ -71,8 +65,11 @@ const WallpaperOfTheDay = () => {
         <LinearGradient colors={gradientColors}>
           <View className="gap-0 p-4">
             <View className="bg-primary/80 self-start px-2 py-[2px] rounded-sm">
-              <Text className="text-xs font-bold text-background uppercase">
-                Wallpaper of the Day
+              <Text
+                className="text-xs font-bold text-background uppercase"
+                numberOfLines={1}
+              >
+                Daily Feature
               </Text>
             </View>
             <Text variant="h3" className="w-2/3">
