@@ -92,6 +92,30 @@ export default function Index() {
           query="minimalist"
           onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
         />
+
+        <ThematicList
+          title="Neon Vibes"
+          query="neon"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
+
+        <ThematicList
+          title="Retro Gaming"
+          query="retro gaming"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
+
+        <ThematicList
+          title="Space Exploration"
+          query="space"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
+
+        <ThematicList
+          title="Underwater World"
+          query="underwater"
+          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+        />
         <RecentlyViewedList />
       </ScrollView>
       <SurpriseMeButton />
