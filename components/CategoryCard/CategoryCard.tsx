@@ -1,49 +1,27 @@
 import { BORDER_RADIUS, GAP, PADDING } from "@/constants/style";
-import { useWallpaperContext } from "@/contexts/photos-context";
 import { capitalizeFirstChar } from "@/helpers/functions";
 import { useScaleAnimation } from "@/hooks/animations/scale";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { Category } from "@/types/types";
+import { NAV_THEME } from "@/lib/theme";
+import { Category, categoryImageMap, PixabayImageOrder } from "@/types/types";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ImageBackground, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
-import { ThemedText } from "../ThemedText/ThemedText";
-
-const categoryImageMap: Record<Category, any> = {
-  backgrounds: require(`@/assets/images/category/backgrounds.jpg`),
-  fashion: require(`@/assets/images/category/fashion.jpg`),
-  nature: require(`@/assets/images/category/nature.jpg`),
-  science: require(`@/assets/images/category/science.jpg`),
-  education: require(`@/assets/images/category/education.jpg`),
-  feelings: require(`@/assets/images/category/feelings.jpg`),
-  health: require(`@/assets/images/category/health.jpg`),
-  people: require(`@/assets/images/category/people.jpg`),
-  religion: require(`@/assets/images/category/religion.jpg`),
-  places: require(`@/assets/images/category/places.jpg`),
-  animals: require(`@/assets/images/category/animals.jpg`),
-  industry: require(`@/assets/images/category/industry.jpg`),
-  computer: require(`@/assets/images/category/computer.jpg`),
-  food: require(`@/assets/images/category/food.jpg`),
-  sports: require(`@/assets/images/category/sports.jpg`),
-  transportation: require(`@/assets/images/category/transportation.jpg`),
-  travel: require(`@/assets/images/category/travel.jpg`),
-  buildings: require(`@/assets/images/category/buildings.jpg`),
-  business: require(`@/assets/images/category/business.jpg`),
-  music: require(`@/assets/images/category/music.jpg`),
-};
+import { Text } from "../ui/text";
 
 const CategoryCard = ({ item }: { item: Category }) => {
-  const route = useRouter();
-  const { setSelectedCategory } = useWallpaperContext();
+  const router = useRouter();
   const { stylez, handlePressIn, handlePressOut } = useScaleAnimation();
 
   const { width } = useScreenSize();
 
   const handlePress = () => {
-    setSelectedCategory(item);
-    route.navigate("/");
+    router.push({
+      pathname: "/wallpapers/list",
+      params: { orderBy: PixabayImageOrder.LATEST, category: item },
+    });
   };
 
   return (
@@ -77,12 +55,16 @@ const CategoryCard = ({ item }: { item: Category }) => {
               borderRadius: BORDER_RADIUS,
             }}
           />
-          <ThemedText
-            type="defaultSemiBold"
-            style={{ position: "absolute", bottom: PADDING, left: PADDING }}
+          <Text
+            style={{
+              position: "absolute",
+              bottom: PADDING,
+              left: PADDING,
+              color: NAV_THEME.dark.colors.text,
+            }}
           >
             {capitalizeFirstChar(item)}
-          </ThemedText>
+          </Text>
         </Pressable>
       </ImageBackground>
     </Animated.View>

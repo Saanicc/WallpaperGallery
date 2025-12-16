@@ -1,144 +1,117 @@
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { getProvider } from "@/providers";
 import {
-  Category,
-  PixabayImage,
-  PixabayImageOrder,
-  PixabayImageResponse,
+  IWallpaperProvider,
+  Wallpaper,
+  WallpaperInput,
+  WallpaperProvider,
+  WallpaperResponse,
 } from "@/types/types";
 import {
+  InfiniteData,
   useInfiniteQuery,
+  UseInfiniteQueryResult,
   useQuery,
   UseQueryResult,
 } from "@tanstack/react-query";
 import {
   createContext,
-  Dispatch,
   PropsWithChildren,
-  SetStateAction,
   useCallback,
   useContext,
   useMemo,
-  useState,
 } from "react";
+import { useSettings } from "./settings-context";
+
+type SearchParams = Omit<WallpaperInput, "page">;
 
 export interface WallpaperContextValue {
-  allWallpapers: PixabayImage[];
-  loading: boolean;
-  isLoadingMore: boolean;
-  orderBy: PixabayImageOrder;
-  selectedCategory: Category | undefined;
-  loadMore: () => void;
   getWallpaper: (
-    wallpaperId: string
-  ) => UseQueryResult<PixabayImageResponse, Error>;
-  setOrderBy: Dispatch<SetStateAction<PixabayImageOrder>>;
-  setSelectedCategory: Dispatch<SetStateAction<Category | undefined>>;
+    wallpaperId: string,
+    providerName: WallpaperProvider
+  ) => UseQueryResult<Wallpaper, Error>;
+  getWallpapers: (
+    params: SearchParams
+  ) => UseInfiniteQueryResult<InfiniteData<WallpaperResponse>, Error>;
+  provider: IWallpaperProvider;
 }
 
 export const WallpaperContext = createContext<WallpaperContextValue>({
-  allWallpapers: [],
-  loading: false,
-  isLoadingMore: false,
-  orderBy: PixabayImageOrder.POPULAR,
-  selectedCategory: undefined,
-  loadMore: () => Promise.resolve(),
-  getWallpaper: () => ({} as UseQueryResult<PixabayImageResponse, Error>),
-  setOrderBy: () => Promise.resolve(),
-  setSelectedCategory: () => Promise.resolve(),
+  getWallpaper: () => ({}) as UseQueryResult<Wallpaper, Error>,
+  getWallpapers: () =>
+    ({}) as UseInfiniteQueryResult<InfiniteData<WallpaperResponse>, Error>,
+  provider: {} as any,
 });
 
-const PIXABAY_API_URL = `https://pixabay.com/api/?key=${process.env.EXPO_PUBLIC_PIXABAY_API_KEY}`;
-
 export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
-  const [orderBy, setOrderBy] = useState<PixabayImageOrder>(
-    PixabayImageOrder.POPULAR
-  );
-  const [selectedCategory, setSelectedCategory] = useState<
-    Category | undefined
-  >();
-
   const { actualWidthInPixels, actualHeightInPixels } = useScreenSize();
+  const { wallpaperProvider } = useSettings();
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<PixabayImageResponse>({
-      queryKey: [
-        orderBy.toLowerCase(),
-        selectedCategory?.toLowerCase(),
-        "wallpapers",
-      ],
-      queryFn: async ({ pageParam = 1 }) => {
-        const imageType = `&image_type=photo`;
-        const safeSearch = `&safesearch=true`;
-        const category = `&category=${selectedCategory}`;
-        const width = `&min_width=${actualWidthInPixels}`;
-        const height = `&min_height=${actualHeightInPixels}`;
-        const order = `&order=${orderBy.toLowerCase()}`;
-        const page = `&page=${pageParam}`;
-        const perPage = `&per_page=10`;
-
-        const URL = `${PIXABAY_API_URL}${imageType}${safeSearch}${
-          selectedCategory ? category : ""
-        }${width}${height}${order}${page}${perPage}`;
-
-        return await fetch(URL).then((res) => {
-          const rateLimitRemaining = res.headers.get("X-RateLimit-Remaining");
-          console.log("X-RateLimit-Remaining:", rateLimitRemaining);
-
-          return res.json();
-        });
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, pages) =>
-        lastPage?.hits?.length ? pages.length + 1 : undefined,
-    });
-
-  const photos = data?.pages.flatMap((page) => page.hits) || [];
-
-  const loadMore = () => {
-    if (hasNextPage && !isLoading) {
-      fetchNextPage();
-    }
-  };
+  const provider = useMemo(
+    () =>
+      getProvider(
+        wallpaperProvider as any,
+        actualWidthInPixels,
+        actualHeightInPixels
+      ),
+    [wallpaperProvider, actualWidthInPixels, actualHeightInPixels]
+  );
 
   const getWallpaper = useCallback(
-    (wallpaperId: string) =>
-      useQuery<PixabayImageResponse>({
-        queryKey: ["wallpaper", wallpaperId],
+    (wallpaperId: string, providerName: WallpaperProvider) =>
+      useQuery<Wallpaper>({
+        queryKey: ["wallpaper", wallpaperId, providerName],
         queryFn: async () => {
-          const URL = `${PIXABAY_API_URL}&id=${wallpaperId}`;
-          return await fetch(URL).then((res) => {
-            const rateLimitRemaining = res.headers.get("X-RateLimit-Remaining");
-            console.log("X-RateLimit-Remaining:", rateLimitRemaining);
-            return res.json();
-          });
+          const targetProvider = getProvider(
+            providerName,
+            actualWidthInPixels,
+            actualHeightInPixels
+          );
+          return targetProvider.getWallpaper(wallpaperId);
         },
       }),
-    []
+    [actualWidthInPixels, actualHeightInPixels]
+  );
+
+  const getWallpapers = useCallback(
+    (params: SearchParams) =>
+      useInfiniteQuery<WallpaperResponse>({
+        queryKey: [
+          "wallpapers",
+          params.order?.toLowerCase(),
+          params.category?.toLowerCase(),
+          params.query?.toLowerCase(),
+          params.orientation?.toLowerCase(),
+          params.color?.toLowerCase(),
+          params.editorsChoice,
+          params.size,
+          wallpaperProvider,
+        ],
+        queryFn: async ({ pageParam = 1 }) =>
+          provider.getWallpapers({
+            page: pageParam as number,
+            perPage: 20,
+            order: params.order,
+            category: params.category,
+            query: params.query,
+            orientation: params.orientation,
+            color: params.color,
+            editorsChoice: params.editorsChoice,
+            size: params.size,
+          }),
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+      }),
+    [provider, wallpaperProvider]
   );
 
   const value = useMemo(() => {
     return {
-      allWallpapers: photos,
-      loading: isLoading,
-      isLoadingMore: isFetchingNextPage,
-      orderBy,
-      selectedCategory,
-      loadMore,
       getWallpaper,
-      setOrderBy,
-      setSelectedCategory,
+      getWallpapers,
+      provider,
     };
-  }, [
-    photos,
-    isLoading,
-    isFetchingNextPage,
-    orderBy,
-    selectedCategory,
-    loadMore,
-    setOrderBy,
-    getWallpaper,
-    setSelectedCategory,
-  ]);
+  }, [getWallpaper, getWallpapers, provider]);
 
   return (
     <WallpaperContext.Provider value={value}>

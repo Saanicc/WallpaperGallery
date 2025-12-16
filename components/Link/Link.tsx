@@ -1,15 +1,15 @@
+import { Text } from "@/components/ui/text";
 import React from "react";
 import { Linking } from "react-native";
-import { ThemedText } from "../ThemedText/ThemedText";
 import { LinkProps } from "./Link.config";
 
 const Link = ({ url, linkText }: LinkProps) => {
   const openUrl = () => Linking.openURL(url);
 
   return (
-    <ThemedText type="link" onPress={openUrl}>
+    <Text variant="link" onPress={openUrl} className="text-sm">
       {linkText}
-    </ThemedText>
+    </Text>
   );
 };
 

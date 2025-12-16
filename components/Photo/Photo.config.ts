@@ -1,10 +1,7 @@
-import { PixabayImage } from "@/api/pixabay/types";
-import { SharedValue } from "react-native-reanimated";
+import { Wallpaper } from "@/types/types";
 
 export type PhotoProps = {
-  item: PixabayImage;
-  index: number;
-  width: number;
-  height: number;
-  scrollX: SharedValue<number>;
+  item: Wallpaper;
+  width?: number;
+  height?: number;
 };

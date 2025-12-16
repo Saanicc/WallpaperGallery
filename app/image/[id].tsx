@@ -1,16 +1,19 @@
 import Header from "@/components/Header/Header";
 import ImageDetails from "@/components/ImageDetails/ImageDetails";
 import MenuButton from "@/components/MenuButton/MenuButton";
-import { ThemedText } from "@/components/ThemedText/ThemedText";
-import { colors } from "@/constants/colors";
+import { Text } from "@/components/ui/text";
 import { BORDER_RADIUS, PADDING } from "@/constants/style";
 import { useFavoriteContext } from "@/contexts/favorite-context";
 import { useWallpaperContext } from "@/contexts/photos-context";
+import { useRecentlyViewed } from "@/contexts/recently-viewed-context";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import useTheme from "@/hooks/useTheme";
+import { NAV_THEME } from "@/lib/theme";
+import { WallpaperProvider } from "@/types/types";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Image,
   Platform,
@@ -32,21 +35,28 @@ type ImageDimensions = {
 export default function DetailedImage() {
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, thumbnail, url, width, height, provider } = useLocalSearchParams<{
+    id: string;
+    provider: WallpaperProvider;
+    thumbnail?: string;
+    url?: string;
+    width?: string;
+    height?: string;
+  }>();
   const { getWallpaper } = useWallpaperContext();
   const { addToFavorites, isWallpaperFavorited } = useFavoriteContext();
+  const { addToRecentlyViewed } = useRecentlyViewed();
 
   const [imageDimensions, setImageDimensions] = useState<ImageDimensions>({
-    width: 0,
-    height: 0,
-    aspectRatio: 0,
+    width: width ? parseInt(width) : 0,
+    height: height ? parseInt(height) : 0,
+    aspectRatio: width && height ? parseInt(width) / parseInt(height) : 0,
   });
 
   const { width: screenWidth } = useScreenSize();
+  const theme = useTheme();
 
-  const { data } = getWallpaper(id);
-
-  const wallpaper = data?.hits[0];
+  const { data: wallpaper } = getWallpaper(id, provider);
 
   const scrollViewRef = useRef<ScrollView>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -54,6 +64,7 @@ export default function DetailedImage() {
   const _headerHeight = Platform.OS === "ios" ? 140 : 100;
   const headerShadowHeight = useSharedValue(_headerHeight);
   const opacity = useSharedValue(1);
+  const imageOpacity = useSharedValue(0);
 
   const ANIMATION_DURATION = 500;
 
@@ -93,9 +104,15 @@ export default function DetailedImage() {
   }, []);
 
   useEffect(() => {
-    if (!wallpaper) return;
+    if (wallpaper) {
+      addToRecentlyViewed(wallpaper);
+    }
+  }, [wallpaper, addToRecentlyViewed]);
 
-    const imageUri = wallpaper?.largeImageURL;
+  useEffect(() => {
+    const imageUri = url || wallpaper?.url;
+    if (!imageUri) return;
+
     getAspectRatio(imageUri)
       .then((imageDim) => {
         setImageDimensions(imageDim);
@@ -103,15 +120,19 @@ export default function DetailedImage() {
       .catch((error) => {
         console.error("Error fetching image dimensions:", error);
       });
-  }, [wallpaper?.largeImageURL]);
+  }, [url, wallpaper?.url]);
 
   const centerContent = (width: number) => {
     const offsetX = (width - screenWidth) / 2;
     scrollViewRef.current?.scrollTo({ x: offsetX, animated: false });
   };
 
+  const snapPoints = useMemo(() => ["25%", "50%", "100%"], []);
+
   return (
-    <GestureHandlerRootView style={styles.gestureContainer}>
+    <GestureHandlerRootView
+      style={{ flex: 1, backgroundColor: theme.colors.background }}
+    >
       {imageDimensions.width >= screenWidth && (
         <ScrollView
           ref={scrollViewRef}
@@ -130,16 +151,32 @@ export default function DetailedImage() {
               aspectRatio: imageDimensions.aspectRatio,
             }}
           >
-            <Image
-              defaultSource={{ uri: wallpaper?.previewURL }}
-              source={{ uri: wallpaper?.largeImageURL }}
-              style={{
-                width: undefined,
-                height: "100%",
-                aspectRatio: imageDimensions.aspectRatio,
-              }}
-              resizeMode="cover"
-            />
+            <View style={{ flex: 1 }}>
+              <Image
+                source={{ uri: thumbnail || wallpaper?.thumbnail }}
+                style={{
+                  width: undefined,
+                  height: "100%",
+                  aspectRatio: imageDimensions.aspectRatio,
+                }}
+                resizeMode="cover"
+                blurRadius={Platform.OS === "ios" ? 5 : 2}
+              />
+              <Animated.Image
+                source={{ uri: url || wallpaper?.url }}
+                style={{
+                  ...StyleSheet.absoluteFillObject,
+                  width: undefined,
+                  height: "100%",
+                  aspectRatio: imageDimensions.aspectRatio,
+                  opacity: imageOpacity,
+                }}
+                resizeMode="cover"
+                onLoad={() => {
+                  imageOpacity.value = withTiming(1, { duration: 300 });
+                }}
+              />
+            </View>
           </Pressable>
         </ScrollView>
       )}
@@ -157,12 +194,17 @@ export default function DetailedImage() {
       <Animated.View style={{ opacity, top }}>
         <Header
           leftComponent={
-            <MenuButton icon="arrow-back" onPress={() => navigation.goBack()} />
+            <MenuButton
+              icon="arrow-back"
+              onPress={() => navigation.goBack()}
+              iconColor={NAV_THEME.dark.colors.text}
+            />
           }
           rightComponent={
             <MenuButton
               icon={isWallpaperFavorited(id) ? "star" : "star-outline"}
               onPress={() => wallpaper && addToFavorites(wallpaper)}
+              iconColor={NAV_THEME.dark.colors.text}
             />
           }
         />
@@ -170,20 +212,24 @@ export default function DetailedImage() {
 
       <BottomSheet
         ref={bottomSheetRef}
-        backgroundStyle={styles.bottomSheetBackgroundStyle}
-        handleStyle={styles.bottomSheetHandleStyle}
-        handleIndicatorStyle={styles.bottomSheetHandleIndicatorStyle}
-        snapPoints={["10%", "40%"]}
+        index={0}
+        snapPoints={snapPoints}
+        enablePanDownToClose={false}
+        backgroundStyle={{ backgroundColor: theme.colors.background }}
+        handleStyle={{
+          backgroundColor: theme.colors.background,
+          borderRadius: BORDER_RADIUS,
+        }}
+        handleIndicatorStyle={{ backgroundColor: theme.colors.primary }}
+        containerStyle={{ marginTop: Platform.OS === "ios" ? top + 10 : top }}
       >
         <BottomSheetScrollView
-          contentContainerStyle={styles.bottomSheetScrollViewContainerStyle}
+          contentContainerStyle={{ flex: 1, padding: PADDING }}
         >
           {wallpaper && <ImageDetails item={wallpaper} />}
           {!wallpaper && (
             <View style={{ alignItems: "center" }}>
-              <ThemedText type="default">
-                No wallpaper information was found.
-              </ThemedText>
+              <Text>No wallpaper information was found.</Text>
             </View>
           )}
         </BottomSheetScrollView>
@@ -191,24 +237,3 @@ export default function DetailedImage() {
     </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  gestureContainer: {
-    flex: 1,
-    backgroundColor: colors.darkerBackground,
-  },
-  bottomSheetBackgroundStyle: {
-    backgroundColor: colors.darkerBackground,
-  },
-  bottomSheetHandleStyle: {
-    backgroundColor: colors.darkerBackground,
-    borderRadius: BORDER_RADIUS,
-  },
-  bottomSheetHandleIndicatorStyle: {
-    backgroundColor: colors.primary,
-  },
-  bottomSheetScrollViewContainerStyle: {
-    flex: 1,
-    padding: PADDING,
-  },
-});
