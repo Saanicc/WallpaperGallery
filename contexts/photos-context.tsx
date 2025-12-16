@@ -90,7 +90,7 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
         queryFn: async ({ pageParam = 1 }) =>
           provider.getWallpapers({
             page: pageParam as number,
-            perPage: 20,
+            perPage: params.perPage,
             order: params.order,
             category: params.category,
             query: params.query,
