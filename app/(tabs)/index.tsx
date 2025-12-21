@@ -1,4 +1,3 @@
-import CategoryList from "@/components/CategoryList/CategoryList";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import SurpriseMeButton from "@/components/SurpriseMeButton/SurpriseMeButton";
 import WallpaperOfTheDay from "@/components/WallpaperOfTheDay/WallpaperOfTheDay";
@@ -10,11 +9,12 @@ import { GAP } from "@/constants/style";
 import { useFilterContext } from "@/contexts/filter-context";
 import { useSettings } from "@/contexts/settings-context";
 import useTheme from "@/hooks/useTheme";
+import { wallpaperThemes } from "@/lib/wallpaperThemes";
 import { PixabayImageOrder, WallpaperProvider } from "@/types/types";
 import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback } from "react";
-import { Platform, ScrollView } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -56,7 +56,7 @@ export default function Index() {
 
   return (
     <SafeAreaView
-      className="flex-1 pt-4"
+      className="flex-1"
       style={{ backgroundColor: theme.colors.background }}
     >
       <ScrollView
@@ -70,52 +70,22 @@ export default function Index() {
           gap: GAP,
           paddingBottom: Platform.OS === "ios" ? 100 : 130,
         }}
+        showsVerticalScrollIndicator={false}
       >
-        <SearchBar placeholder="Quick search..." />
+        <View className="flex-1 pt-4">
+          <SearchBar placeholder="Quick search..." />
+        </View>
         <WallpaperOfTheDay />
-        <CategoryList />
         <ProviderData provider={wallpaperProvider} />
-        <ThematicList
-          title="Nature's Best"
-          query="nature"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
 
-        <ThematicList
-          title="Abstract Art"
-          query="abstract"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
-
-        <ThematicList
-          title="Minimalist"
-          query="minimalist"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
-
-        <ThematicList
-          title="Neon Vibes"
-          query="neon"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
-
-        <ThematicList
-          title="Retro Gaming"
-          query="retro gaming"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
-
-        <ThematicList
-          title="Space Exploration"
-          query="space"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
-
-        <ThematicList
-          title="Underwater World"
-          query="underwater"
-          onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
-        />
+        {wallpaperThemes.map(({ title, query }) => (
+          <ThematicList
+            key={query}
+            title={title}
+            query={query}
+            onHeaderPress={(q) => navigateToWallpapers(undefined, q)}
+          />
+        ))}
         <RecentlyViewedList />
       </ScrollView>
       <SurpriseMeButton />

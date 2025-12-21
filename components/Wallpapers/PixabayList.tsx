@@ -1,6 +1,7 @@
 import { useWallpaperContext } from "@/contexts/photos-context";
 import { PixabayImageOrder } from "@/types/types";
 import React from "react";
+import CategoryList from "../CategoryList/CategoryList";
 import HorizontalList from "../HorizontalList/HorizontalList";
 
 const PixabayList = ({
@@ -27,6 +28,7 @@ const PixabayList = ({
 
   return (
     <>
+      <CategoryList />
       <HorizontalList
         title="Latest"
         data={wallpapers}
