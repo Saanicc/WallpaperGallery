@@ -17,12 +17,13 @@ const SettingsContext = createContext<SettingsContextType | undefined>(
   undefined
 );
 
-export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const SettingsProvider: React.FC<{
+  children: React.ReactNode;
+  initialWallpaperProvider: WallpaperProvider;
+}> = ({ children, initialWallpaperProvider }) => {
   const [theme, setThemeState] = useState<Theme>("system");
   const [wallpaperProvider, setWallpaperProviderState] =
-    useState<WallpaperProvider>("pixabay");
+    useState<WallpaperProvider>(initialWallpaperProvider);
 
   useEffect(() => {
     loadSettings();
@@ -39,13 +40,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const loadSettings = async () => {
     try {
       const storedTheme = await AsyncStorage.getItem("settings.theme");
-      const storedProvider = await AsyncStorage.getItem(
-        "settings.wallpaperProvider"
-      );
 
       if (storedTheme) setThemeState(storedTheme as Theme);
-      if (storedProvider)
-        setWallpaperProviderState(storedProvider as WallpaperProvider);
     } catch (error) {
       console.error("Failed to load settings:", error);
     }

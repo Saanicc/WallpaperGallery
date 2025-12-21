@@ -1,3 +1,4 @@
+import { fetchWallpapers } from "@/helpers/fetchWallpapers";
 import "../global.css";
 
 import { FavoriteContextProvider } from "@/contexts/favorite-context";
@@ -5,6 +6,9 @@ import { FilterContextProvider } from "@/contexts/filter-context";
 import { WallpaperContextProvider } from "@/contexts/photos-context";
 import { RecentlyViewedProvider } from "@/contexts/recently-viewed-context";
 import { SettingsProvider } from "@/contexts/settings-context";
+import { getStoredProvider, StoredProvider } from "@/helpers/getStoredProvider";
+import { wallpapersInfiniteKey } from "@/helpers/wallpapersInfiniteKey";
+import { wallpaperThemes } from "@/lib/wallpaperThemes";
 import {
   Outfit_100Thin,
   Outfit_200ExtraLight,
@@ -57,28 +61,41 @@ export default function RootLayout() {
   });
 
   const [isReady, setIsReady] = useState(false);
+  const [initialProvider, setInitialProvider] = useState<
+    StoredProvider | undefined
+  >(undefined);
 
   useEffect(() => {
-    async function prepare() {
+    const prefetchQueries = async () => {
+      const { provider, wallpaperProvider } = await getStoredProvider();
+      setInitialProvider({ provider, wallpaperProvider });
+
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      } catch (e) {
-        console.warn(e);
+        await Promise.all(
+          wallpaperThemes.map(({ query }) => {
+            const params = {
+              perPage: 10,
+              query,
+            };
+            return queryClient.prefetchInfiniteQuery({
+              queryKey: wallpapersInfiniteKey(params, wallpaperProvider),
+              queryFn: async ({ pageParam = 1 }) =>
+                await fetchWallpapers(provider, params, pageParam as number),
+              initialPageParam: 1,
+            });
+          })
+        );
+      } catch (error) {
+        console.error(error);
       } finally {
         setIsReady(true);
+        SplashScreen.hideAsync();
       }
-    }
-
-    prepare();
+    };
+    prefetchQueries();
   }, []);
 
-  useEffect(() => {
-    if (fontsLoaded && isReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, isReady]);
-
-  if (!fontsLoaded || !isReady) {
+  if (!fontsLoaded || !isReady || !initialProvider) {
     return null;
   }
 
@@ -88,7 +105,9 @@ export default function RootLayout() {
         client={queryClient}
         persistOptions={{ persister: asyncStoragePersister }}
       >
-        <SettingsProvider>
+        <SettingsProvider
+          initialWallpaperProvider={initialProvider.wallpaperProvider}
+        >
           <WallpaperContextProvider>
             <FavoriteContextProvider>
               <RecentlyViewedProvider>

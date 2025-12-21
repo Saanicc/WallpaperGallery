@@ -164,6 +164,8 @@ export type WallpaperInput = {
   size?: PexelsImageSize;
 };
 
+export type SearchParams = Omit<WallpaperInput, "page">;
+
 export interface IWallpaperProvider {
   getWallpapers({
     page,

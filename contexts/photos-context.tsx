@@ -1,9 +1,11 @@
+import { fetchWallpapers } from "@/helpers/fetchWallpapers";
+import { wallpapersInfiniteKey } from "@/helpers/wallpapersInfiniteKey";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import { getProvider } from "@/providers";
 import {
   IWallpaperProvider,
+  SearchParams,
   Wallpaper,
-  WallpaperInput,
   WallpaperProvider,
   WallpaperResponse,
 } from "@/types/types";
@@ -22,8 +24,6 @@ import {
   useMemo,
 } from "react";
 import { useSettings } from "./settings-context";
-
-type SearchParams = Omit<WallpaperInput, "page">;
 
 export interface WallpaperContextValue {
   getWallpaper: (
@@ -76,29 +76,9 @@ export const WallpaperContextProvider = ({ children }: PropsWithChildren) => {
   const getWallpapers = useCallback(
     (params: SearchParams) =>
       useInfiniteQuery<WallpaperResponse>({
-        queryKey: [
-          "wallpapers",
-          params.order?.toLowerCase(),
-          params.category?.toLowerCase(),
-          params.query?.toLowerCase(),
-          params.orientation?.toLowerCase(),
-          params.color?.toLowerCase(),
-          params.editorsChoice,
-          params.size,
-          wallpaperProvider,
-        ],
+        queryKey: wallpapersInfiniteKey(params, wallpaperProvider),
         queryFn: async ({ pageParam = 1 }) =>
-          provider.getWallpapers({
-            page: pageParam as number,
-            perPage: params.perPage,
-            order: params.order,
-            category: params.category,
-            query: params.query,
-            orientation: params.orientation,
-            color: params.color,
-            editorsChoice: params.editorsChoice,
-            size: params.size,
-          }),
+          await fetchWallpapers(provider, params, pageParam as number),
         initialPageParam: 1,
         getNextPageParam: (lastPage) => lastPage.nextPage,
       }),
