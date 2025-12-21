@@ -114,6 +114,7 @@ export default function ListScreen() {
           numColumns={2}
           columnWrapperStyle={{ gap: GAP }}
           contentContainerStyle={{ padding: GAP }}
+          showsVerticalScrollIndicator={false}
           renderItem={renderItem}
           onEndReached={() => {
             if (hasNextPage) fetchNextPage();

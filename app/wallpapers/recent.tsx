@@ -41,6 +41,7 @@ export default function RecentListScreen() {
         columnWrapperStyle={{ gap: GAP }}
         contentContainerStyle={{ padding: GAP }}
         renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

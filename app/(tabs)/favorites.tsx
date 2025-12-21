@@ -37,6 +37,7 @@ const favorites = () => {
         numColumns={2}
         columnWrapperStyle={{ gap: GAP }}
         contentContainerStyle={{ padding: GAP }}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
