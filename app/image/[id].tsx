@@ -14,17 +14,16 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import {
-  Image,
-  Platform,
-  Pressable,
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
   ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+} from "react-native-gesture-handler";
 import Animated, { useSharedValue, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { scheduleOnRN } from "react-native-worklets";
 
 type ImageDimensions = {
   width: number;
@@ -66,21 +65,32 @@ export default function DetailedImage() {
   const opacity = useSharedValue(1);
   const imageOpacity = useSharedValue(0);
 
-  const ANIMATION_DURATION = 500;
+  const ANIMATION_DURATION = 200;
 
-  const handleLongPress = () => {
+  const handleLongPressStart = () => {
     headerShadowHeight.value = withTiming(0, { duration: ANIMATION_DURATION });
     opacity.value = withTiming(0, { duration: ANIMATION_DURATION });
     bottomSheetRef.current?.close({ duration: ANIMATION_DURATION });
   };
 
-  const handlePressOut = () => {
+  const handleLongPressFinalize = () => {
     headerShadowHeight.value = withTiming(_headerHeight, {
       duration: ANIMATION_DURATION,
     });
     opacity.value = withTiming(1, { duration: ANIMATION_DURATION });
     bottomSheetRef.current?.snapToIndex(0, { duration: ANIMATION_DURATION });
   };
+
+  const longPressGesture = Gesture.LongPress()
+    .minDuration(250)
+    .maxDistance(Number.MAX_SAFE_INTEGER)
+    .simultaneousWithExternalGesture(scrollViewRef as any)
+    .onStart(() => {
+      scheduleOnRN(handleLongPressStart);
+    })
+    .onFinalize(() => {
+      scheduleOnRN(handleLongPressFinalize);
+    });
 
   const AnimatedLinearGradient =
     Animated.createAnimatedComponent(LinearGradient);
@@ -143,25 +153,15 @@ export default function DetailedImage() {
           }}
           onContentSizeChange={(w) => centerContent(w)}
         >
-          <Pressable
-            onLongPress={handleLongPress}
-            onPressOut={handlePressOut}
-            style={{
-              flex: 1,
-              aspectRatio: imageDimensions.aspectRatio,
-            }}
+          <GestureDetector
+            gesture={Gesture.Simultaneous(longPressGesture, Gesture.Native())}
           >
-            <View style={{ flex: 1 }}>
-              <Image
-                source={{ uri: thumbnail || wallpaper?.thumbnail }}
-                style={{
-                  width: undefined,
-                  height: "100%",
-                  aspectRatio: imageDimensions.aspectRatio,
-                }}
-                resizeMode="cover"
-                blurRadius={Platform.OS === "ios" ? 5 : 2}
-              />
+            <View
+              style={{
+                flex: 1,
+                aspectRatio: imageDimensions.aspectRatio,
+              }}
+            >
               <Animated.Image
                 source={{ uri: url || wallpaper?.url }}
                 style={{
@@ -177,7 +177,7 @@ export default function DetailedImage() {
                 }}
               />
             </View>
-          </Pressable>
+          </GestureDetector>
         </ScrollView>
       )}
       <AnimatedLinearGradient
