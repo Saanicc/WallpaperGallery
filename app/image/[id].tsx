@@ -11,10 +11,11 @@ import useTheme from "@/hooks/useTheme";
 import { NAV_THEME } from "@/lib/theme";
 import { WallpaperProvider } from "@/types/types";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Image, Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -63,7 +64,6 @@ export default function DetailedImage() {
   const _headerHeight = Platform.OS === "ios" ? 140 : 100;
   const headerShadowHeight = useSharedValue(_headerHeight);
   const opacity = useSharedValue(1);
-  const imageOpacity = useSharedValue(0);
 
   const ANIMATION_DURATION = 200;
 
@@ -95,41 +95,40 @@ export default function DetailedImage() {
   const AnimatedLinearGradient =
     Animated.createAnimatedComponent(LinearGradient);
 
-  const getAspectRatio = useCallback((imageUri: string) => {
-    return new Promise<ImageDimensions>((resolve, reject) => {
-      Image.getSize(
-        imageUri,
-        (width, height) => {
-          resolve({
-            width,
-            height,
-            aspectRatio: width / height,
-          });
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }, []);
-
   useEffect(() => {
     if (wallpaper) {
       addToRecentlyViewed(wallpaper);
     }
   }, [wallpaper, addToRecentlyViewed]);
 
+  const getAspectRatio = useCallback((imageUri: string) => {
+    return new Promise<ImageDimensions>(async (resolve, reject) => {
+      try {
+        const { width, height } = await Image.loadAsync(imageUri);
+        resolve({
+          width,
+          height,
+          aspectRatio: width / height,
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     const imageUri = url || wallpaper?.url;
     if (!imageUri) return;
 
-    getAspectRatio(imageUri)
-      .then((imageDim) => {
+    const fetchImageDimensions = async () => {
+      try {
+        const imageDim = await getAspectRatio(imageUri);
         setImageDimensions(imageDim);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching image dimensions:", error);
-      });
+      }
+    };
+    fetchImageDimensions();
   }, [url, wallpaper?.url]);
 
   const centerContent = (width: number) => {
@@ -143,43 +142,28 @@ export default function DetailedImage() {
     <GestureHandlerRootView
       style={{ flex: 1, backgroundColor: theme.colors.background }}
     >
-      {imageDimensions.width >= screenWidth && (
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          style={StyleSheet.absoluteFillObject}
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-          onContentSizeChange={(w) => centerContent(w)}
+      <ScrollView
+        ref={scrollViewRef}
+        horizontal
+        style={StyleSheet.absoluteFillObject}
+        onContentSizeChange={(w) => centerContent(w)}
+      >
+        <GestureDetector
+          gesture={Gesture.Simultaneous(longPressGesture, Gesture.Native())}
         >
-          <GestureDetector
-            gesture={Gesture.Simultaneous(longPressGesture, Gesture.Native())}
-          >
-            <View
-              style={{
-                flex: 1,
-                aspectRatio: imageDimensions.aspectRatio,
-              }}
-            >
-              <Animated.Image
-                source={{ uri: url || wallpaper?.url }}
-                style={{
-                  ...StyleSheet.absoluteFillObject,
-                  width: undefined,
-                  height: "100%",
-                  aspectRatio: imageDimensions.aspectRatio,
-                  opacity: imageOpacity,
-                }}
-                resizeMode="cover"
-                onLoad={() => {
-                  imageOpacity.value = withTiming(1, { duration: 300 });
-                }}
-              />
-            </View>
-          </GestureDetector>
-        </ScrollView>
-      )}
+          <Image
+            source={{ uri: url || wallpaper?.url }}
+            placeholder={thumbnail || wallpaper?.thumbnail}
+            placeholderContentFit="contain"
+            contentFit="contain"
+            contentPosition="center"
+            style={{
+              flex: 1,
+              aspectRatio: imageDimensions.aspectRatio,
+            }}
+          />
+        </GestureDetector>
+      </ScrollView>
       <AnimatedLinearGradient
         colors={["#000000", "transparent"]}
         style={{
