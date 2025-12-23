@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02C72CF6DF4D6E9CCCA36009 /* libPods-WallpaperGallery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D368306876DB1CA141F0662E /* libPods-WallpaperGallery.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		52D3F03960EF5E00B551DEFC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F04BD672E585217186209848 /* PrivacyInfo.xcprivacy */; };
+		562392B9A830478C7097E455 /* libPods-WallpaperGallery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 955FD6B9990D70A61AECE025 /* libPods-WallpaperGallery.a */; };
+		88CF58E735DB0BC450AD3320 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 81CAE95B26D7E8C9B585526B /* PrivacyInfo.xcprivacy */; };
+		931803C7A0CF90E9DEFC5EEE /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBACFE72A69BBE8157864289 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C1F6955C3667719594618159 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF23466B3696D966F5CA1711 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		01DC8E2295D954D76E5F8456 /* Pods-WallpaperGallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WallpaperGallery.debug.xcconfig"; path = "Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* WallpaperGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WallpaperGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = WallpaperGallery/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WallpaperGallery/Info.plist; sourceTree = "<group>"; };
-		37B6329C309580A143190EFD /* Pods-WallpaperGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WallpaperGallery.release.xcconfig"; path = "Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery.release.xcconfig"; sourceTree = "<group>"; };
+		5C6A7CBB61D914D135F54088 /* Pods-WallpaperGallery.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WallpaperGallery.debug.xcconfig"; path = "Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery.debug.xcconfig"; sourceTree = "<group>"; };
+		7F09D71549F3462625F843B4 /* Pods-WallpaperGallery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WallpaperGallery.release.xcconfig"; path = "Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery.release.xcconfig"; sourceTree = "<group>"; };
+		81CAE95B26D7E8C9B585526B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = WallpaperGallery/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		955FD6B9990D70A61AECE025 /* libPods-WallpaperGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WallpaperGallery.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = WallpaperGallery/SplashScreen.storyboard; sourceTree = "<group>"; };
-		AF23466B3696D966F5CA1711 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-WallpaperGallery/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		D368306876DB1CA141F0662E /* libPods-WallpaperGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WallpaperGallery.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F04BD672E585217186209848 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = WallpaperGallery/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = WallpaperGallery/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* WallpaperGallery-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "WallpaperGallery-Bridging-Header.h"; path = "WallpaperGallery/WallpaperGallery-Bridging-Header.h"; sourceTree = "<group>"; };
+		FBACFE72A69BBE8157864289 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-WallpaperGallery/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02C72CF6DF4D6E9CCCA36009 /* libPods-WallpaperGallery.a in Frameworks */,
+				562392B9A830478C7097E455 /* libPods-WallpaperGallery.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,34 +53,36 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				F04BD672E585217186209848 /* PrivacyInfo.xcprivacy */,
+				81CAE95B26D7E8C9B585526B /* PrivacyInfo.xcprivacy */,
 			);
 			name = WallpaperGallery;
+			sourceTree = "<group>";
+		};
+		1A4BAC26DE71E8AE32E36FB1 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				8869A4B08E7650A537997B6C /* WallpaperGallery */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				D368306876DB1CA141F0662E /* libPods-WallpaperGallery.a */,
+				955FD6B9990D70A61AECE025 /* libPods-WallpaperGallery.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4ED7A3CB81BF4B003BD1A5A1 /* WallpaperGallery */ = {
+		3730135A41D863A380320330 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AF23466B3696D966F5CA1711 /* ExpoModulesProvider.swift */,
+				5C6A7CBB61D914D135F54088 /* Pods-WallpaperGallery.debug.xcconfig */,
+				7F09D71549F3462625F843B4 /* Pods-WallpaperGallery.release.xcconfig */,
 			);
-			name = WallpaperGallery;
-			sourceTree = "<group>";
-		};
-		66592711566B48F9B7CE9A4A /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				4ED7A3CB81BF4B003BD1A5A1 /* WallpaperGallery */,
-			);
-			name = ExpoModulesProviders;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -97,8 +99,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				DBB46FCA3B4619665A4AA2DD /* Pods */,
-				66592711566B48F9B7CE9A4A /* ExpoModulesProviders */,
+				3730135A41D863A380320330 /* Pods */,
+				1A4BAC26DE71E8AE32E36FB1 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -113,6 +115,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8869A4B08E7650A537997B6C /* WallpaperGallery */ = {
+			isa = PBXGroup;
+			children = (
+				FBACFE72A69BBE8157864289 /* ExpoModulesProvider.swift */,
+			);
+			name = WallpaperGallery;
+			sourceTree = "<group>";
+		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,16 +130,6 @@
 			);
 			name = Supporting;
 			path = WallpaperGallery/Supporting;
-			sourceTree = "<group>";
-		};
-		DBB46FCA3B4619665A4AA2DD /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				01DC8E2295D954D76E5F8456 /* Pods-WallpaperGallery.debug.xcconfig */,
-				37B6329C309580A143190EFD /* Pods-WallpaperGallery.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "WallpaperGallery" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				9436974C53864CD63C865273 /* [Expo] Configure project */,
+				9C8ADF49C1E835520EE6DFAC /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				5DB10B56CD6DEB58FB77AEA5 /* [CP] Embed Pods Frameworks */,
+				857D54D979E0919E953184C2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				52D3F03960EF5E00B551DEFC /* PrivacyInfo.xcprivacy in Resources */,
+				88CF58E735DB0BC450AD3320 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,28 +242,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5DB10B56CD6DEB58FB77AEA5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -306,7 +284,29 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9436974C53864CD63C865273 /* [Expo] Configure project */ = {
+		857D54D979E0919E953184C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/React-Core-prebuilt/React.framework/React",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ReactNativeDependencies/ReactNativeDependencies.framework/ReactNativeDependencies",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactNativeDependencies.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WallpaperGallery/Pods-WallpaperGallery-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C8ADF49C1E835520EE6DFAC /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -338,7 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				C1F6955C3667719594618159 /* ExpoModulesProvider.swift in Sources */,
+				931803C7A0CF90E9DEFC5EEE /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +347,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01DC8E2295D954D76E5F8456 /* Pods-WallpaperGallery.debug.xcconfig */;
+			baseConfigurationReference = 5C6A7CBB61D914D135F54088 /* Pods-WallpaperGallery.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -383,7 +383,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37B6329C309580A143190EFD /* Pods-WallpaperGallery.release.xcconfig */;
+			baseConfigurationReference = 7F09D71549F3462625F843B4 /* Pods-WallpaperGallery.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
