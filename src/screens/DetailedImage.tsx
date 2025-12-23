@@ -14,6 +14,7 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import {
@@ -175,6 +176,7 @@ const DetailedImage = ({
       />
 
       <Animated.View style={{ opacity, top }}>
+        <StatusBar style="light" />
         <Header
           leftComponent={
             <MenuButton

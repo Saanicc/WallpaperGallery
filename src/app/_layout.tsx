@@ -28,6 +28,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { EventProvider } from "react-native-outside-press";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -101,6 +102,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar />
       <PersistQueryClientProvider
         client={queryClient}
         persistOptions={{ persister: asyncStoragePersister }}
