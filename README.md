@@ -19,13 +19,9 @@ Welcome to the repository for my cross-platform photo gallery app! This app allo
 ## 🖼 Photo Previews
 Here are some screenshots of the app in action:
 
-<div style="width: 100%; display: flex; flex-wrap: wrap">
-   <img src="docs/preview_images/homescreen.png" width="350" title="Homescreen">
-   <img src="docs/preview_images/image.png" width="350" title="Image">
-   <img src="docs/preview_images/image_details.png" width="350" title="Image details">
-   <img src="docs/preview_images/categories.png" width="350" title="Categories">
-   <img src="docs/preview_images/empty_favorites.png" width="350" title="Empty favorties">
-   <img src="docs/preview_images/favorites.png" width="350" title="Favorites">
+<div style="width: 100%; display: flex; flex-direction: column;">
+   <img src="docs/preview_images/wallpaper-gallery.jpeg" width="50%">
+   <img src="docs/preview_images/wallpaper-gallery-2.jpeg" width="50%">
 </div>
 
 ## 📦 Setup & Installation
