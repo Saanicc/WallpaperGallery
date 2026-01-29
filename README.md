@@ -20,8 +20,8 @@ Welcome to the repository for my cross-platform photo gallery app! This app allo
 Here are some screenshots of the app in action:
 
 <div style="width: 100%; display: flex; flex-direction: column;">
-   <img src="docs/preview_images/wallpaper-gallery.jpeg" width="50%">
-   <img src="docs/preview_images/wallpaper-gallery-2.jpeg" width="50%">
+   <img src="docs/preview_images/wallpaper-gallery.jpeg" width="100%">
+   <img src="docs/preview_images/wallpaper-gallery-2.jpeg" width="75%">
 </div>
 
 ## 📦 Setup & Installation
